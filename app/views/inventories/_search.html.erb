@@ -1,0 +1,55 @@
+<%= form_tag inventories_path, method: :get, remote: true do %>
+
+  <div class="row form-group">
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :code_or_name, nil, class: "text-left" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :code_or_name, nil, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :inventory_type_id, "Type", class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= select_tag :inventory_type_id, options_from_collection_for_select(InventoryType.all, "id", "name"), prompt: "- Select a type -", class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :team, nil, class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= select_tag :team, options_from_collection_for_select(Team.all, "id", "name"), prompt: "- Select a team -", class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :description, nil, class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :description, nil, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :reg_date, "Register date", class: "text-left" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :reg_date, nil, class: 'datepicker form-control' %>
+      </div>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-sm-12">
+      <div class="col-sm-12">
+        <input class="btn btn-default pull-right" type="submit" value="Search">
+      </div>
+    </div>
+  </div>
+  
+<% end %> 

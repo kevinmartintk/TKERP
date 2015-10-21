@@ -1,0 +1,11 @@
+<h1 class="page-header">Invoice - <%= @invoice.headquarter.country.get_abrev %> <small>Editing</small></h1>
+
+<% if !@invoice.is_to_be_issued? %>
+  <%= disabled_info 'form_invoice' %>
+<%end%>
+
+<% if @headquarter.is_peru? %>
+  <%= render partial: "form" %>
+<% else %>
+  <%= render partial: "form_us" %>
+<% end %>

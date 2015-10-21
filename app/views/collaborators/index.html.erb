@@ -1,0 +1,24 @@
+<h1>
+  Collaborators
+  <%= link_to 'New Collaborator', new_collaborator_path, class: "btn btn-primary align-right"  %>
+</h1>
+
+<div class="well">
+  <%= render 'search' %>
+</div>
+
+<div id="collaborators-table">
+  <%= render 'table', collaborator: @collaborator %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.datepicker').datepicker({
+      format: "yyyy/mm",
+      startView: "months", 
+      minViewMode: "months",
+      autoclose: true
+    });
+    $('.dropdown-toggle').dropdown()
+  });             
+</script>

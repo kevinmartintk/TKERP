@@ -1,0 +1,197 @@
+<%= nested_form_for([@prospect], html: {id: "form_prospect", role: "form", class: "form-horizontal validate", multipart: true}) do |f|  %>
+  <% if @prospect.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@prospect.errors.count, "error") %> prohibited this prospect from being saved:</h2>
+
+      <ul>
+      <% @prospect.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= f.label :client_id, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6 autocomplete-field">
+        <%= autocomplete_field_tag 'prospect_client', (@prospect.client.name unless @prospect.client.nil?) , autocomplete_client_name_prospects_path, :id_element => '#client_id_field', class: "form-control validate[required]" %>
+        <%= f.hidden_field :client_id, :id => "client_id_field" %>
+      </div>
+    </div>
+  
+    <div class="form-group col-sm-6">
+      <%= label_tag :country, nil, class: "col-sm-4 text-left"%>
+      <div class="col-sm-6">
+        <%= text_field_tag :country_textfield, (@prospect.client.country.name unless @prospect.client.nil?), readonly: true, class: "form-control" %>    
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= label_tag :address, nil, class: "col-sm-4 text-left"%>
+      <div class="col-sm-6">
+        <%= text_field_tag :address_textfield, (@prospect.client.address unless @prospect.client.nil?), readonly: true, class: "form-control" %>    
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <%= label_tag :legal_id, "Legal Identification", class: "col-sm-4 text-left"%>
+      <div class="col-sm-6">
+        <%= text_field_tag :legal_id_textfield, (@prospect.client.legal_id unless @prospect.client.nil?), readonly: true, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= f.label :prospect_name, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.text_field :name, class: "form-control validate[required]" %>
+      </div>
+    </div>
+    
+    <div class="form-group col-sm-6">
+      <%= f.label :prospect_type, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.collection_select :prospect_type, prospect_types_array,:id,:name, {prompt: 'Select a Type'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= f.label :contacts, class: "col-sm-4 text-left" %>
+      <div id="contacts-fields" class="col-sm-6 <%= 'hide' if @prospect.client.nil? %>">
+        <%= f.fields_for :prospect_contacts do |r| %>
+          <% unless @prospect.client.nil? %>
+            <div class="form-group col-sm-12">
+              <%= r.collection_select(:contact_id, @prospect.client.contacts, :id, :name, { :include_blank => 'Select contact' }, {:class => "form-control"} ) %>
+              <%= r.link_to_remove "Remove" , id: "remove-contact"%>
+            </div>
+          <% end %>
+        <% end %>
+        <%= f.link_to_add '<i class="glyphicon glyphicon-plus"></i> Add'.html_safe, :prospect_contacts, class: "col-sm-1", id: "add-contact" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6">
+      <%= f.label :arrival_date, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.text_field :arrival_date, class: "datepicker form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= f.label :account_id, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.collection_select :account_id, Collaborator.get_accounts,:id,:name, {prompt: 'Select an Account'}, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6">
+      <%= f.label :team, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.collection_select :team, teams_array,:id,:name, {prompt: 'Select a Team'}, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= f.label :arrival_team_date, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+      <%= f.text_field :arrival_team_date, class: "datepicker form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6">
+      <%= f.label :status, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.collection_select :status, prospect_status_array,:id,:name, {prompt: 'Select a Status'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= f.label :observation, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.text_area :observation, class: "form-control custom-textarea" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6">
+      <%= f.label :approved_at, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.text_field :approved_at, class: "datepicker form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-10 col-sm-10 col-xs-12">
+      <div class="col-sm-12 text-right">
+        <%= f.submit "Save", class: "btn btn-primary", id:"save-btn" %> <%= link_to 'Cancel', prospects_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    var myDate = new Date();
+    var today = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
+    
+    $('#prospect_approved_at').datepicker({
+      format: "yyyy-mm-dd",
+      autoclose: true,
+      todayHighlight: true
+    });
+
+    $('#prospect_arrival_team_date').datepicker({
+      format: "yyyy-mm-dd",
+      autoclose: true,
+      todayHighlight: true,
+      endDate: myDate
+    });
+
+    $('#prospect_arrival_date').datepicker({
+      format: "yyyy-mm-dd",
+      autoclose: true,
+      todayHighlight: true,
+      endDate: myDate
+    });
+
+    if($('#prospect_arrival_date').val() == null ||  $('#prospect_arrival_date').val() == ""){
+      $("#prospect_arrival_date").datepicker("setDate", today);
+    }
+
+  });
+
+  $('#prospect_client').bind('railsAutocomplete.select', function(event, data){
+    var client_selected_id = data.item.id;
+    var client_path = "<%= client_path('client_id')%>";
+    client_path = client_path.replace('client_id',client_selected_id);
+    $.ajax({
+      type: 'GET',
+      dataType: "json",
+      url: client_path,
+      success: function( response ){
+        $('#country_textfield').val(response["country"]);
+        $('#address_textfield').val(response["address"]);
+        $('#legal_id_textfield').val(response["legal_id"]);
+        $('.fields').remove();
+        var blueprint = '<div class="fields"><div class="form-group col-sm-12"><select class="form-control" name="prospect[prospect_contacts_attributes][new_prospect_contacts][contact_id]" id="prospect_prospect_contacts_attributes_new_prospect_contacts_contact_id"><option value="">Select contact</option>';
+        $.each(response['contacts'], function (index, contact){
+          blueprint += '<option value="' + contact["id"] + '">' + contact["name"] + '</option>';
+        });
+        blueprint += '</select><input type="hidden" value="false" name="prospect[prospect_contacts_attributes][new_prospect_contacts][_destroy]" id="prospect_prospect_contacts_attributes_new_prospect_contacts__destroy" /><a class="remove_nested_fields" data-association="prospect_contacts" href="javascript:void(0)">Remove</a></div></div>';
+        $('#prospect_contacts_fields_blueprint').data('blueprint', blueprint);
+        $('#contacts-fields').removeClass('hide');
+      }
+    });
+  });
+</script>

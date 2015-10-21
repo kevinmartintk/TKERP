@@ -1,0 +1,63 @@
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Client</th>
+          <th>Prospect Type</th>
+          <th>Team</th>
+          <th>Status</th>
+          <th>Nº Estimations</th>
+          <th>Nº Quotations</th>
+          <th>Actions</th>
+          <th>Estimations</th>
+          <th>Quotations</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @prospects.each do |prospect| %>
+        <tr>
+          <td><%= prospect.name %></td>
+          <td><%= prospect.client.name %></td>
+          <td><%= ProspectType.find(prospect.prospect_type).name if !prospect.prospect_type.nil? %></td>
+          <td><%= Team.find(prospect.team).name if !prospect.team.nil? %></td>
+          <td><%= ProspectStatus.find(prospect.status).name if !prospect.status.nil? %></td>
+          <%if prospect.estimations.size > 0%>
+            <td><%= prospect.estimations.size%></td>
+          <%else%>
+            <td>No Estimations</td>
+          <%end%>
+          <%if prospect.quotations.size > 0%>
+            <td><%= prospect.quotations.size%></td>
+          <%else%>
+            <td>No Quotations</td>
+          <%end%> 
+          <td>
+            <%= link_to '<span class="glyphicon glyphicon-search"></span>'.html_safe,  [prospect], class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Show" %>
+            <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe,  edit_prospect_path(prospect), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
+            <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, [prospect], method: :delete ,data: { toggle: "tooltip", confirm: "Are you sure?" }, title: "Delete", class: "btn btn-default btn-sm" %>
+          </td>
+          <% if prospect.estimations.size > 0 %>
+            <td>
+              <%= link_to 'See All Estimations', prospect_estimations_path(prospect) %>
+            </td>
+            <% if prospect.quotations.size > 0 %>
+              <td>
+                <%= link_to 'See All Quotations', prospect_quotations_path(prospect) %>
+              </td>
+            <%else%>
+              <td>
+                <%= link_to 'New Quotation', new_prospect_quotation_path(prospect)%>
+              </td>
+            <%end%>
+          <%else%>
+            <td>
+              <%= link_to 'New Estimation', new_prospect_estimation_path(prospect)%>
+            </td>
+            <td>-----------------</td>
+          <%end%>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,28 @@
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <thead>
+      <th></th>
+      <th>#</th>
+      <th>Technology</th>
+      <th>Days</th>
+      <th>Est. Days</th>
+      <th>Hours</th>
+      <th>Est. Hours</th>
+      <th>Price</th>
+    </thead>
+    <tbody>
+      <% @estimations.each do |estimation| %>
+        <tr>
+          <td><%= check_box_tag "estimations[#{estimation.id}]", estimation.id%></td>
+          <td><%= estimation.id%></td>
+          <td><%= estimation.technology.name %></td>
+          <td><%= text_field_tag "estimations[#{estimation.days}]", estimation.days.round, disabled: true, class: "form-control" %></td>
+          <td><%= text_field :days_est,nil, class:"form-control" %></td>    
+          <td><%= text_field_tag "estimations[#{estimation.hours}]", estimation.hours.round, disabled: true, class: "form-control" %></td>
+          <td><%= text_field :hours_est,nil, class:"form-control" %></td>    
+          <td><%= text_field :price,nil, class:"form-control", disabled:true %></td>    
+        </tr>
+      <% end %>
+    </tbody>
+  </table>  
+</div>

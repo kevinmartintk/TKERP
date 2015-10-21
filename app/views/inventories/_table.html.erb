@@ -1,0 +1,33 @@
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Brand</th>     
+        <th>Type</th>
+        <th>Description</th>
+        <th>Team</th>
+        <th>Register Day</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @inventories.each do |inventory| %>
+        <tr>
+          <td><%= inventory.code_inventory %></td>
+          <td><%= inventory.name %></td>
+          <td><%= inventory.brand %></td>
+          <td><%= inventory.inventory_type.name %></td>
+          <td><%= inventory.description %></td>
+          <td><%= Team.find(inventory.team).name %></td>
+          <td><%= inventory.reg_date %></td>
+          <td>
+            <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_inventory_path(inventory), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
+            <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, [inventory], method: :delete ,data: { toggle: "tooltip", confirm: "Are you sure?" }, title: "Delete", class: "btn btn-default btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

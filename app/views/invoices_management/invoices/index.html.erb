@@ -1,0 +1,31 @@
+<h1>
+  Invoice - <%= @headquarter.country.get_abrev %>
+  <%= link_to 'New Invoice', new_invoices_management_country_invoice_path(@headquarter.country), class: "btn btn-primary align-right"  %>
+</h1>
+
+<div class="well">
+  <% if @headquarter.country.id == 173 %>
+    <%= render 'search_peru' %>
+  <% else %>
+    <%= render 'search' %>
+  <% end %>
+</div>
+
+<div id="invoices-table">
+  <% if @headquarter.country.id == 173 %>
+    <%= render 'table_peru', invoices: @invoices %>
+  <% else %>
+    <%= render 'table', invoices: @invoices %>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.datepicker').datepicker({
+      format: "yyyy-mm-dd",
+      autoclose: true,
+      endDate: new Date()
+    });
+    $('.dropdown-toggle').dropdown()
+  });             
+</script>

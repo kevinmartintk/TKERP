@@ -1,0 +1,90 @@
+<%= form_for @contact, :html => { class: "form-horizontal validate" } do |f| %>
+  <% if @contact.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+      &times;
+        </button>
+        <h2><%= pluralize(@contact.errors.count, "error") %> prohibited this contact from being saved:</h2>
+        <ul>
+          <% @contact.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :name, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.text_field :name, class: "form-control validate[required]" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :email, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.text_field :email, class: "form-control validate[required]" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :phone, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.text_field :phone, class: "form-control validate[custom[customPhone]]" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :mobile, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.text_field :mobile, class: "form-control validate[custom[customMobile]]" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :birthday, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.text_field :birthday, class: "datepicker form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :client_id, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6 autocomplete-field">
+      <%= autocomplete_field_tag 'contact_client', (@contact.client.name unless @contact.client.nil?) , autocomplete_client_name_contacts_path, :id_element => '#client_id_field', class: "form-control validate[required]" %>
+      <%= f.hidden_field :client_id, :id => "client_id_field" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-8 col-sm-8 col-xs-12">
+      <div class="col-sm-12 text-right">
+        <%= f.submit "Save", class: "btn btn-primary" %> <%= link_to 'Cancel', contacts_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  
+  $(document).ready(function () {
+    $('.datepicker').datepicker({
+      format: "yyyy-mm-dd",
+      autoclose: true,
+      endDate: new Date()
+    });
+  });    
+
+  $('#contact_client').bind('railsAutocomplete.select', function(event, data){
+    var client_selected_id = data.item.id;
+    var client_path = "<%= client_path('client_id')%>";
+    client_path = client_path.replace('client_id',client_selected_id);
+    $.ajax({
+      type: 'GET',
+      dataType: "json",
+      url: client_path,
+    });
+  });         
+</script>

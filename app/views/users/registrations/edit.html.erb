@@ -1,0 +1,78 @@
+<h1 class="page-header">My Profile<small> Editing</small></h1>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "validate" }) do |f| %>
+  
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times; </button> 
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this task from being saved:</h2>
+        <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="col-lg-3 text-center">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= image_tag @user.full_image, class: "img-rounded", size: "200x200" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-9 content-fields">
+    <div class="input-group">
+      <span class="input-group-addon">Email</span>
+      <%= f.email_field :email, autofocus: true ,class: "form-control" %>
+    </div>
+    </br>
+
+    <div class="input-group">
+      <span class="input-group-addon">First name</span>
+      <%= f.text_field :first_name, autofocus: true ,class: "form-control" %>
+    </div>
+    </br>
+
+    <div class="input-group">
+      <span class="input-group-addon">Last name</span>
+      <%= f.text_field :last_name, autofocus: true ,class: "form-control" %>
+    </div>
+    </br>
+
+    <div class="input-group">
+      <span class="input-group-addon">Team</span>
+      <%= f.collection_select :team, teams_array,:id,:name, {prompt: 'Select a Team'}, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="actions col-sm-12 center-content">
+    <%= f.submit "Update", class: "btn btn-lg btn-warning" %>
+    <%= link_to "Back", :back, class: "btn btn-lg btn-primary" %>
+  </div>
+
+  <!--
+  <hr></hr>
+  <div class="input-group">
+    <span class="input-group-addon">Current password</span-->
+    <!--%= f.password_field :current_password, autocomplete: "off" ,class: "form-control", placeholder: "we need your current password to confirm your changes" %>
+  </div>
+  <hr></hr>
+
+  <div class="input-group">
+    <span class="input-group-addon">New Password</span-->
+    <!--%= f.password_field :password, autocomplete: "off" ,class: "form-control", placeholder: "leave blank if you don't want to change it" %>
+  </div>
+  </br>
+
+  <div class="input-group">
+    <span class="input-group-addon">New Password confirmation </span-->
+    <!--%= f.password_field :password_confirmation, autocomplete: "off" ,class: "form-control" %>
+  </div>
+  </br>
+-->
+<% end %>
+

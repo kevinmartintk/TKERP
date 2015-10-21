@@ -1,0 +1,8 @@
+<h1 class="page-header"> <%= @prospect.name %> <small>Detail</small></h1>
+<p id="notice"><%= notice %></p>
+<%= render 'form'%>
+<%= disabled_info 'form_prospect' %>
+<div class="form-group col-sm-8">
+  <td><%= link_to 'Estimations', prospect_estimations_path(@prospect.id) %></td>
+  <td><%= link_to 'Quotations', prospect_quotations_path(@prospect.id) %></td>
+</div>

@@ -1,0 +1,83 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+
+    <%= link_to image_tag('Tekton_logo.png'), root_path, class: "navbar-brand" %>
+      
+  <p> </p>
+  </div>
+  <% if user_signed_in? %>
+    <!-- Top Menu Items -->
+    <ul class="nav navbar-right top-nav">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= current_user.full_name %> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li>
+            <%= link_to edit_user_registration_path do %>
+              Profile
+            <% end %>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <%= link_to destroy_user_session_path, method: :delete do %>
+              <i class="fa fa-fw fa-power-off"></i> Log Out
+            <% end %>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav side-nav">
+        <li>
+          <%= link_to clients_path do %>
+              <i class="fa fa-fw fa-building"></i>
+              Clients
+          <% end %>
+        </li>
+        <li>
+          <%= link_to invoices_management_countries_path do %>
+              <i class="fa fa-fw fa-money"></i>
+              Invoices
+          <% end %>
+        </li>
+      
+        <li>
+          <%= link_to contacts_path do %>
+              <i class="fa fa-fw fa-users"></i>
+              Contacts
+          <% end %>
+        </li>
+        
+         <li>
+          <%= link_to prospects_path do %>
+              <i class="fa fa-fw fa-sitemap"></i>
+              Prospects
+          <% end %>
+        </li>
+
+        <li>
+          <%= link_to collaborators_path do %>
+              <i class="fa fa-fw fa-sitemap"></i>
+              Collaborators
+          <% end %>
+        </li>
+
+        <li>
+          <%= link_to inventories_path do %>
+              <i class="fa fa-fw fa-laptop"></i>
+              Inventories
+          <% end %>
+        </li>
+
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  <% end %>
+</nav>

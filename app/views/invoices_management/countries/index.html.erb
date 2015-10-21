@@ -1,0 +1,7 @@
+<h1>Invoices</h1>
+
+<div class="text-center">
+  <% @headquarters_to_invoice.each do |headquarter| %>
+    <td><%= link_to link_to image_tag(headquarter.image.url), invoices_management_country_invoices_path(:country_id => headquarter.country.friendly_id)%></td>
+  <% end %>
+</div>

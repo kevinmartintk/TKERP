@@ -1,0 +1,86 @@
+<%= form_for @client, :html => { class: "form-horizontal validate" } do |f| %>
+  <% if @client.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+      &times;
+        </button>
+        <h2><%#= pluralize(@client.errors.count, "error") %> All fields must be filled</h2>
+        <ul>
+          <% @client.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :client, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.text_field :name, class: "form-control validate[required]" %>
+    </div>
+  </div>
+  <div class="form-group col-sm-12">
+    <%= f.label :address, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.text_field :address, class: "form-control validate[required]" %>
+    </div>
+  </div>
+  
+  <div class="form-group col-sm-12">
+    <%= f.label :country_id, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.collection_select :country_id, Country.all, :id, :name,  {prompt: '- Select a country -'}, class: "form-control validate[required]" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :legal_identification, class: "col-sm-2 text-left", id: "legal_id_label" %>
+    <div class="col-sm-6">
+      <%= f.text_field :legal_id, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :corporate_name, class: "col-sm-2 text-left", id: "legal_id_label" %>
+    <div class="col-sm-6">
+      <%= f.text_field :corporate_name, class: "form-control" %>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-md-8 col-sm-8 col-xs-12">
+      <div class="col-sm-12 text-right">
+        <%= f.submit "Save", class: "btn btn-primary" %> <%= link_to 'Cancel', clients_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  
+  var validate_legalid = function () {
+    var country = $('#client_country_id').val();
+    switch(country){
+      case "173":
+        $('#legal_id_label').text("RUC");
+        $('#client_legal_id').addClass("validate[required, custom[customRuc]]");
+        $('#client_legal_id').removeClass("validate[required]");
+        break;
+      case "232":
+        $('#legal_id_label').text("Legal identification");
+        $('#client_legal_id').addClass("validate[required]");
+        $('#client_legal_id').removeClass("validate[required, custom[customRuc]]");
+        break;
+      default:
+        $('#legal_id_label').text("Legal identification");
+        $('#client_legal_id').removeClass("validate[required]");
+        $('#client_legal_id').removeClass("validate[required, custom[customRuc]]");
+    }  
+  }
+
+  $('#client_country_id').on("change", validate_legalid);
+  $(document).ready(validate_legalid);
+
+</script>

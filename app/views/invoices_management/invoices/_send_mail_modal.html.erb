@@ -1,0 +1,40 @@
+<div class="modal fade" id="send_invoice_modal_<%=invoice.id%>" tabindex="-1" role="dialog" aria-labelledby="timesheetModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-center" id="timesheetModalLabel"> <strong> Send Invoice </strong></h4>
+      </div>
+      <div id="send-invoice-form" class="modal-body">
+        <%= form_tag send_mail_invoices_management_country_invoices_path, method: :get, remote: true do %>
+          <div class="input-padding">
+            <div class="form-group col-sm-12">
+              <%= label_tag :contact, "Contact", class: "col-sm-2 text-left" %>
+              <div class="col-sm-10">
+                <%= select_tag :contact, options_from_collection_for_select(invoice.contacts, "id", "name"), prompt: "- Select a contact -", class: "form-control" %>
+              </div>
+            </div> 
+            <div class="form-group col-sm-12">
+              <%= label_tag :message, "Message", class: "col-sm-2 text-left" %>
+              <div class="col-sm-10">
+                <div class="field">
+                  <%= text_area_tag :message, '', :rows => "5", :class => "form-control text-area-style"%>
+                </div>
+              </div>
+            </div>
+            <%= hidden_field_tag 'id', invoice.id %>
+            <br>
+          </div>
+          <div class="inline-elements">
+            <div class="message-modal">
+              <p>* Invoice wikk be attached in PDF format.</p>
+            </div>
+            <div class="float-right">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <%= submit_tag "Send", :name => nil, :class => 'btn btn-primary'%>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

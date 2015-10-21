@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Tektoneytr ERP</title>
+    <%= stylesheet_link_tag    'backend', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'backend', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <%= render "layouts/backend/navbar" %>
+      <div id="page-wrapper">
+        <% if user_signed_in? %>
+          <ol class="breadcrumb">
+            <%= render_breadcrumbs :tag => :li, :separator => "" %>
+          </ol>
+        <% end %>
+        
+        <%= render "layouts/messages" %>
+
+        <div class="container-fluid">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

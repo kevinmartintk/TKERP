@@ -1,0 +1,51 @@
+<%= form_tag invoices_management_country_invoices_path(:country_id => @headquarter.country.friendly_id), method: :get, remote: true do %>
+  <div class="row form-group">
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :client, "Company", class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :client, nil, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :from_date, 'From Date', class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :from_date, nil, class: 'datepicker form-control' %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :end_date, 'To Date', class: "control-tag control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :end_date, nil, class: 'datepicker form-control' %>
+      </div>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :invoice_number, "Nº Invoice", class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :invoice_number, nil, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :status, nil, class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= select_tag :status, options_from_collection_for_select(status_array, "id", "name"), prompt: "- Select a status -", class: 'form-control ' %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="col-sm-12">
+        <input class="btn btn-default pull-right" type="submit" value="Search">
+      </div>
+    </div>
+  </div>
+<% end %> 

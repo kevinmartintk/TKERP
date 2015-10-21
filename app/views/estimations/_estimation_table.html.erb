@@ -1,0 +1,28 @@
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Technology </th>
+        <th>Estimation</th>
+        <th>Nº Developers</th> 
+        <th>Sent at</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @estimations.each do |estimation| %>
+        <tr>
+          <td><%= Technology.find(estimation.technology_id).name %></td>
+          <td><%= EstimationType.find(estimation.estimation_type).name %></td>
+          <td><%= estimation.developers%></td>
+          <td><%= estimation.sent_at%></td>
+          <td>
+            <%= link_to '<span class="glyphicon glyphicon-search"></span>'.html_safe, prospect_estimation_path(id: estimation.id), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Show" %>
+            <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_prospect_estimation_path(id: estimation.id), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
+            <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, prospect_estimation_path(id: estimation.id), method: :delete ,data: { toggle: "tooltip", confirm: "Are you sure?" }, title: "Delete", class: "btn btn-default btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

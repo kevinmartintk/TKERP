@@ -1,0 +1,1 @@
+$('#contacts-table').html('<%= escape_javascript(render(:partial => "table", locals: {contacts: @contacts})).html_safe %>');

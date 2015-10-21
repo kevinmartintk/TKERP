@@ -1,0 +1,12 @@
+<h1>
+  Prospects
+  <%= link_to 'New Prospect', new_prospect_path, class: "btn btn-primary align-right"%>
+</h1>
+
+<div class="well">
+  <%= render 'search' %>
+</div>
+
+<div id="prospects-table">
+  <%= render 'prospects_table', prospects: @prospects %>
+</div>

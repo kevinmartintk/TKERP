@@ -1,0 +1,149 @@
+<%= nested_form_for([@prospect,@quotation], html: {id: "form_quotation", role: "form", class: "form-horizontal validate"}) do |f| %>
+  <% if @quotation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quotation.errors.count, "error") %> prohibited this quotation from being saved:</h2>
+
+      <ul>
+      <% @quotation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :price_per_hour , class: "col-sm-5 control-label" %>
+    <div class="col-sm-2">
+      <%= f.number_field :price_per_hour, class: "form-control validate[required]", min: "0" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Estimation</th>
+            <th>Hours per day</th>
+            <th>Days estimated</th>
+            <th>Days to send</th>
+            <th>Hours estimated</th>
+            <th>Hours to send</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% index = 0 %>
+          <%= f.fields_for :quotation_estimations do |qe| %>
+            <% estimation = @estimations[index] %>
+            <tr>
+              <td><%= qe.check_box :selected %></td>
+              <td><%= estimation.technology.name %></td>
+              <td class="estimation_hours_per_day"><%= estimation.hours_per_day %></td>
+              <td><%= estimation.days %></td>
+              <td><%= qe.number_field :days_est, class: "form-control days_est validate[required]", min: "0", "readonly" => qe.object.quotation_id.nil? %></td>
+              <td><%= estimation.hours %></td>
+              <td><%= qe.number_field :hours_est, class: "form-control hours_est validate[required]", min: "0", "readonly" => qe.object.quotation_id.nil? %></td>
+              <%= qe.hidden_field :estimation_id, :value => estimation.id, class:"form-control" %>
+              <td><%= qe.text_field :price, class: "form-control price", "readonly" => true %></td>    
+            </tr>
+            <% index += 1 %>
+          <% end %>
+        </tbody>
+      </table>  
+    </div>
+  </div>  
+
+  <div class="form-group col-sm-8">
+    <%= f.label :total , class: "col-sm-4 text-left" %>
+    <div class="col-sm-6">
+      <%= f.number_field :total, class: "form-control", "readonly" => true %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="col-sm-12 text-right">
+        <%= f.submit "Save", class: "btn btn-primary", id: "save-btn" %> <%= link_to 'Cancel', prospect_quotations_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
+<script type="text/javascript">
+  
+  var calculate_days = function () {
+    var hours = $(this).val();
+    var days = $(this).closest("tr").find(".days_est");
+    var price_per_hour = $(this).closest("tr").find(".estimation_hours_per_day").html();
+    var number_days = hours/price_per_hour;
+    days.val(number_days);
+  }
+
+  $(".hours_est").bind("keyup change", calculate_days);
+
+  var calculate_hours = function () {
+    var days = $(this).val();
+    var hours = $(this).closest("tr").find(".hours_est");
+    var price_per_hour = $(this).closest("tr").find(".estimation_hours_per_day").html();
+    var number_hours = days*price_per_hour;
+    hours.val(number_hours);
+  }
+
+  $(".days_est").bind("keyup change", calculate_hours);
+
+  var calculate_price_hours = function () {
+    var hours = $(this).val();
+    var price = $(this).closest("tr").find(".price");
+    var price_per_hour = $("#quotation_price_per_hour").val();
+    price.val(hours*price_per_hour);
+
+    // calculate total
+    var total = 0;
+    $(".price").each(function () {
+      total = parseInt($(this).val()) + total; 
+    })
+    $("#quotation_total").val(total);
+  }
+
+  $(".hours_est").bind("keyup change", calculate_price_hours);
+
+  var calculate_price_days = function () {
+    var days = $(this).val();
+    var hours_per_day = $(this).closest("tr").find(".estimation_hours_per_day").html();
+    var hours = days * hours_per_day;
+    var price = $(this).closest("tr").find(".price");
+    var price_per_hour = $("#quotation_price_per_hour").val();
+    price.val(hours*price_per_hour);
+
+    // calculate total
+    var total = 0;
+    $(".price").each(function () {
+      total = parseInt($(this).val()) + total; 
+    })
+    $("#quotation_total").val(total);
+  }
+
+  $(".days_est").bind("keyup change", calculate_price_days);
+
+  $("#quotation_price_per_hour").bind("keyup change", function () {
+    $(".hours_est").each(calculate_price_hours);
+  });
+
+  $("input[type=checkbox]").change(function() {
+    var hours_est = $(this).closest("tr").find(".hours_est");
+    var days_est = $(this).closest("tr").find(".days_est");
+    if(this.checked) {
+      hours_est.prop("readonly",false);
+      days_est.prop("readonly",false);
+    }
+    else{
+      hours_est.prop("readonly",true);
+      hours_est.val(0).trigger("change");
+      days_est.prop("readonly",true);
+      days_est.val(0);
+    }
+  });
+</script>

@@ -1,0 +1,29 @@
+
+<script type="text/javascript">
+    $('.datetimepicker').datetimepicker();
+</script>
+
+
+<%= simple_form_for @event, url: @url, method: @method, remote: true do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description, as: :text, input_html: { rows: 4, cols: 30 } %>
+  <%= f.input :start,  :as => :datetime_picker  %>
+  <%= f.input :finish, :as => :datetime_picker  %>
+  <%= f.input :all_day, as: :boolean, label: 'All Day' %>
+  <div class="modal-footer">
+    <span class="submit-right">
+      <%= f.button :submit, 'Submit' %>
+    </span>
+    <% unless @event.new_record? %>  
+    <div style="text-align: left;">
+      <span id="hidden-delete" style="display:none;">
+      <%= link_to collaborator_schedule_path(@collaborator, @event) , method: :delete ,remote: true, data: { confirm: 'Are you sure?' }, id: 'destroy' do  %>
+         <button class="btn btn-ln btn-danger" name="closePreviewBtn">Delete <span class="glyphicon glyphicon-trash"></span></button>
+      <% end %>
+    </span>
+  </div>                  
+  <% end %>   
+  </div>
+<% end %>
+
+

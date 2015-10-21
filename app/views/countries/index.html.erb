@@ -1,0 +1,15 @@
+
+
+<h1>Countries</h1>
+
+<% if @countries.count > 0 %>
+  <%= render 'table', countries: @countries %>
+<% else %>
+  <p>No Countries</p>
+<% end %>
+
+
+
+
+<%= link_to 'New Country', new_country_path, class: "btn btn-primary align-right"  %>
+    

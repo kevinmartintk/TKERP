@@ -1,0 +1,12 @@
+<h1>
+  Contacts
+  <%= link_to 'New Contact', new_contact_path, class: "btn btn-primary align-right"  %>
+</h1>
+
+<div class="well">
+  <%= render 'search' %>
+</div>
+
+<div id="contacts-table" >
+	<%= render 'table', contacts: @contacts %>
+</div>

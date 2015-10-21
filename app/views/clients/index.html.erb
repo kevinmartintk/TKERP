@@ -1,0 +1,14 @@
+<h1>
+  Clients
+  <%= link_to 'New Client', new_client_path, class: "btn btn-primary align-right"  %>
+</h1>
+
+<div class="well">
+  <%= render 'search' %>
+</div>
+
+<div id="table-clients">
+  <%= render 'clients_table', clients: @clients %>
+</div>
+
+<%= will_paginate @clients %>

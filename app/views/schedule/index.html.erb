@@ -1,0 +1,20 @@
+<div class="row">
+	<div class="col-md-10 col-md-offset-1">
+		<div class="align-right" id="create-event">
+			<%= link_to new_collaborator_schedule_path, remote: true do %>
+				<button type="button" class="btn btn-primary btn-lg">Create Event</button>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<div class="row" id="event-caledar">
+	<div class="col-md-10 col-md-offset-1" id="calendar" data-schedule-path="<%= collaborator_schedule_index_path(@collaborator) %>"></div>
+</div>
+
+<div class="row">
+	<div class="modal fade" id="event-modal" tabindex="1" aria-labelledby="myModalLabel" aria-hidden="true">
+		modal
+	</div>
+</div>
+

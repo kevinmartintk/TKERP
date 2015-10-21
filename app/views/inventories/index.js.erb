@@ -1,0 +1,1 @@
+$('#inventories-table').html('<%= escape_javascript(render(:partial => "table", locals: {inventories: @inventories})).html_safe %>');

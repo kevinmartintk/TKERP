@@ -1,0 +1,31 @@
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Address</th>
+        <th>Country</th>
+        <th>Legal Identification</th>
+        <th>Corporate Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% clients.each do |client| %>
+        <tr>
+          <td><%= client.name %></td>
+          <td><%= client.address %></td>
+          <td><%= client.country.name %></td>
+          <td><%= client.legal_id %></td>
+          <td><%= client.corporate_name %></td>
+          <td>
+            <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_client_path(client), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
+            <% if client.contacts.empty? %>
+              <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, [client], method: :delete ,data: { toggle: "tooltip", confirm: "Are you sure?" }, title: "Delete", class: "btn btn-default btn-sm" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

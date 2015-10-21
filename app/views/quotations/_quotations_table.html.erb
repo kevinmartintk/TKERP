@@ -1,0 +1,28 @@
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Price per hour</th>
+        <th>Days to send</th>
+        <th>Hours to send</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @quotations.each do |quotation| %>
+        <tr>
+          <td><%= quotation.price_per_hour %></td>
+          <td><%= quotation.quotation_estimations.total_days %></td>
+          <td><%= quotation.quotation_estimations.total_hours %></td>
+          <td><%= quotation.total %></td>
+          <td>
+            <%= link_to '<span class="glyphicon glyphicon-search"></span>'.html_safe, prospect_quotation_path(id:quotation.id), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Show" %>
+            <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_prospect_quotation_path(id:quotation.id), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
+            <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, prospect_quotation_path(id:quotation.id), method: :delete ,data: { toggle: "tooltip", confirm: "Are you sure?" }, title: "Delete", class: "btn btn-default btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

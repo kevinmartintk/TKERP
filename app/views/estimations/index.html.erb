@@ -1,0 +1,18 @@
+<h1>
+  Estimations
+  <%= link_to 'New Estimation', new_prospect_estimation_path, class: "btn btn-primary align-right" %>
+</h1>
+
+<div class="row prospect-header well">
+  <div class="col-md-4">
+    <b>Prospect: </b> <%= @prospect.name %>
+  </div>
+  <div class="col-md-4">
+    <b>Client: </b> <%= @prospect.client.name %>
+  </div>
+  <div class="col-md-4">
+    <b>Type: </b> <%= ProspectType.find(@prospect.prospect_type).name %>
+  </div>
+</div>
+
+<%= render 'estimation_table', estimations: @estimations %>

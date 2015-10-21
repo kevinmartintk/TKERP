@@ -1,0 +1,45 @@
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>DNI</th>
+        <th>Mail</th>
+        <th>Team</th>
+        <th>Birthday</th>
+        <th>Starting Day</th>
+        <th>Skype</th>
+        <th>Mobile Phone</th>
+        <th>Emergency Number</th> 
+        <th>Contact Person</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @collaborators.each do |collaborator| %>
+        <tr>
+          <td><%= collaborator.name %></td>
+          <td><%= collaborator.last_name %></td>
+          <td><%= collaborator.dni %></td>
+          <td><%= collaborator.mail %></td>
+          <td><%= collaborator.team_name %></td>
+          <td><%= collaborator.birthday %></td>
+          <td><%= collaborator.start_day %></td>
+          <td><%= collaborator.skype %></td>
+          <td><%= collaborator.mobile %></td>
+          <td><%= collaborator.contact %></td>
+          <td><%= collaborator.em_number %></td>
+          <td>
+            <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_collaborator_path(collaborator), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
+            
+            <%= link_to '<span class="glyphicon glyphicon-calendar"></span>'.html_safe, collaborator_schedule_index_path(collaborator), data: {"toggle" => "tooltip"}, title: "Schedule", class: "btn btn-default btn-sm"%>
+
+            <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, [collaborator], method: :delete ,data: { toggle: "tooltip", confirm: "Are you sure?" }, title: "Delete", class: "btn btn-default btn-sm" %>
+
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
