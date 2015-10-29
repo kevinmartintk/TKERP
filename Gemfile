@@ -9,8 +9,11 @@ gem 'bootstrap-sass', '~> 3.1.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 
-# Use mysql as the database for Active Record
-gem 'mysql2', '0.3.17'
+# Use postgresql as the database for Active Record
+gem 'pg', '~> 0.18'
+
+# PgSearch builds Active Record named scopes that take advantage of PostgreSQL's full text search
+gem 'pg_search', '~> 1.0.5'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '5.0.2'
@@ -75,10 +78,6 @@ gem 'jquery-ui-rails', '~> 5.0.0'
 
 #a gem to validate countries
 gem 'country-select', '~> 1.1.1'
-
-# Gem for sunspot solr for Search
-gem 'sunspot_rails', '~> 2.1.1'
-gem 'sunspot_solr', '~> 2.1.1'
 
 gem 'momentjs-rails', '~> 2.9',  :github => 'derekprior/momentjs-rails'
 #Gem for datetimepicker

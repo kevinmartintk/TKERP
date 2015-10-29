@@ -6,16 +6,7 @@ class ProspectsController < ApplicationController
   # GET /prospects
   # GET /prospects.json
   def index
-    search = Prospect.search do
-      fulltext params[:name]
-      fulltext params[:client_name] do
-        fields(:client_name)
-      end
-      with :country_id, params[:country_id] if params[:country_id].present?
-      with :prospect_type, params[:prospect_type] if params[:prospect_type].present?
-      with :status, params[:status] if params[:status].present?
-    end
-    @prospects = search.results
+    @prospects = Prospect.search_with(params[:name], params[:client_name], params[:status], params[:prospect_type], params[:country_id])
   end
 
   # GET /prospects/1

@@ -5,21 +5,7 @@ class InventoriesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    search = Inventory.search do |s|
-      if params[:code_or_name].present?
-        s.any_of do |a|
-          a.with :code, params[:code_or_name]
-          a.with :name, params[:code_or_name]
-        end
-      end
-      s.with :inventory_type_id, params[:inventory_type_id] if params[:inventory_type_id].present?
-      s.with :team, params[:team] if params[:team].present?
-      s.fulltext params[:description] do
-        fields(:description)
-      end
-      s.with(:reg_date).equal_to(params[:reg_date].to_date) if params[:reg_date].present?
-    end
-    @inventories = search.results
+    @inventories = Inventory.search_with(params[:name], params[:description], params[:reg_date], params[:inventory_type_id], params[:team])
   end
 
   def show

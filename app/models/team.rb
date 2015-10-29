@@ -1,5 +1,5 @@
 class Team
-
+  
   attr_accessor :id, :name
 
   RUBY_MOBILE_TEAM_ID = 1
