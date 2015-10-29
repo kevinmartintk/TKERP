@@ -1,4 +1,5 @@
 class Contact < ActiveRecord::Base
+  include PgSearch
   acts_as_paranoid
 
   belongs_to	:client
@@ -15,10 +16,30 @@ class Contact < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders]
 
-  searchable do
-    text :name
-    text :client_name do |contact|
-      contact.client_name
-    end
+  pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
+  pg_search_scope :seek_client_name,  associated_against: {
+                           client: [:name]},
+                         using: { tsearch: { prefix: true  } }
+
+  def self.search_with name, company
+    search_name(name).
+    search_client_name(company)
   end
+
+  def self.search_name name
+    if name.present?
+      seek_name(name)
+    else
+      order("created_at DESC")
+    end       
+  end
+
+  def self.search_client_name company
+    if company.present?
+      seek_client_name(company)
+    else
+      order("created_at DESC")
+    end    
+  end
+  
 end

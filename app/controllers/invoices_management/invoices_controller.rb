@@ -12,22 +12,7 @@ module InvoicesManagement
     autocomplete :client, :name
 
     def index
-      hq = @headquarter
-      search = Invoice.search do
-        fulltext params[:client]
-        with :headquarter_id, hq.id
-        with :invoice_number, params[:invoice_number] if params[:invoice_number].present?
-        with :client_legal_id, params[:legal_id] if params[:legal_id].present?
-        with :status, params[:status] if params[:status].present?
-        if params[:start_date].present?
-          with(:created_at).greater_than_or_equal_to(params[:start_date].to_date)
-        elsif params[:end_date].present?
-          with(:created_at).less_than_or_equal_to(params[:end_date].to_date)
-        elsif params[:start_date].present? and params[:end_date].present?
-          with(:created_at).between(params[:start_date].to_date..params[:end_date].to_date)
-        end
-      end
-      @invoices = search.results
+      @invoices = @headquarter.invoices.search_with(params[:client], params[:legal_id], params[:invoice_number], params[:from_date], params[:to_date], params[:status])
       @total_invoices_soles = "#{Currency.get_symbol_sol} #{Invoice.total_soles(@invoices)}"
       @total_invoices_dollar = "#{Currency.get_symbol_dolar} #{Invoice.total_dolar(@invoices)}"
     end

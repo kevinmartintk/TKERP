@@ -7,12 +7,7 @@ class ClientsController < ApplicationController
   # GET /places
   # GET /places.json
   def index
-    search = Client.search do
-      fulltext params[:name]
-      with :legal_id, params[:legal_id] if params[:legal_id].present?
-      paginate
-    end
-    @clients = search.results
+    @clients = Client.search_with(params[:name], params[:legal_id])
   end
 
   # GET /places/1
