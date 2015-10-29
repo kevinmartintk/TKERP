@@ -1,5 +1,6 @@
 class Invoice < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
+  include PgSearch
 
   belongs_to :client
   belongs_to :headquarter
@@ -23,21 +24,73 @@ class Invoice < ActiveRecord::Base
 
   delegate :name, :legal_id, :to => :client, :prefix => true
 
+  pg_search_scope :seek_ruc, against: [:ruc], using: { tsearch: { prefix: true  } }
+  pg_search_scope :seek_invoice_number, against: [:invoice_number], using: { tsearch: { prefix: true  } }
+  pg_search_scope :seek_client_name,  associated_against: {
+                           client: [:name]},
+                         using: { tsearch: { prefix: true  } }
+  pg_search_scope :seek_client_ruc,  associated_against: {
+                           client: [:legal_id]},
+                         using: { tsearch: { prefix: true  } }                       
+
 	# extend FriendlyId
 	# friendly_id :name, use: [:slugged, :finders]
-  searchable do
-    text :client_name do |invoice|
-      invoice.client_name
+
+  def self.search_with company, ruc, invoice_number, from_date, to_date, status
+    to_date(to_date).
+    from_date(from_date).
+    search_invoice_number(invoice_number).
+    search_client_name(company).
+    search_client_ruc(ruc).
+    include_status(status)
+  end
+
+  def self.search_invoice_number invoice_number
+    if invoice_number.present?
+      seek_invoice_number(invoice_number)
+    else
+      order("created_at DESC")
+    end     
+  end
+
+  def self.from_date from_date
+    if from_date.present?
+      where("created_at > ?", from_date)
+    else
+      order("created_at DESC")
+    end      
+  end
+
+  def self.to_date to_date
+     if to_date.present?
+      where("created_at < ?", to_date)
+    else
+      order("created_at DESC")
     end
-    string :client_legal_id do |invoice|
-      invoice.client_legal_id
+  end
+
+  def self.search_client_name company
+    if company.present?
+      seek_client_name(company)
+    else
+      order("created_at DESC")
+    end    
+  end
+
+  def self.search_client_ruc ruc
+    if ruc.present?
+      seek_client_ruc(ruc)
+    else
+      order("created_at DESC")
     end
-    integer :headquarter_id do |invoice|
-    	invoice.headquarter.id
+  end
+
+  def self.include_status status
+    if status.present?
+      where(status: status)
+    else
+      order("created_at DESC")
     end
-    date :created_at
-    string :invoice_number
-    integer :status
   end
 
   def self.total_amount invoices, currency_id

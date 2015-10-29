@@ -9,19 +9,17 @@
   </head>
   <body>
 
-    <% if user_signed_in? %>
+
       <div id="wrapper">
-    <% else %>
-      <div id="wrapper" style="padding-left: 0px">
-    <% end %>
+
         <%= render partial: "navbar" %>
         <div id="page-wrapper">
-          <% if user_signed_in? %>
+
             <ol class="breadcrumb">
               <%= render_breadcrumbs :tag => :li, :separator => "" %>
             </ol>
             <%= render "messages" %>
-          <% end %>
+
           <div class="container-fluid">
             <%= yield %>
           </div>

@@ -2,13 +2,12 @@
   <table class="table table-hover table-striped">
     <thead>
       <tr>
-        <!-- <th>Nro</th> -->
+        <th>Nro</th>
         <th>Company</th>
         <th>Nro Legal ID</th>
         <th>Address</th>
         <th>Amount</th>
         <th>Date</th>
-        <th>Description</th>
         <th>Status</th>
         <th></th>
         <th>Actions</th>
@@ -17,13 +16,12 @@
     <tbody>
       <% invoices.each do |invoice| %>
         <tr>
-          <!-- <td><%= invoice.invoice_number %></td> -->
+          <td><%= invoice.invoice_number %></td>
           <td><%= invoice.client.name %></td>
           <td><%= invoice.client.legal_id %></td>
           <td><%= invoice.client.address %></td>        
           <td id="amount-cell"><%= invoice.amount_decimal %></td>
           <td><%= invoice.created_at.to_date %></td>
-          <td><%= invoice.description %></td>
           <td><%= Status.find(invoice.status).name %></td>
           <td></td>
           <td>  

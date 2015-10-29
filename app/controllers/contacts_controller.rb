@@ -8,12 +8,7 @@ class ContactsController < ApplicationController
   # GET /places
   # GET /places.json
   def index
-    @contacts = Contact.all
-    search = Contact.search do
-      fulltext params[:name], :fields => :name
-      fulltext params[:client_name], :fields => :client_name
-    end
-    @contacts = search.results
+    @contacts = Contact.search_with(params[:name], params[:client_name])
   end
 
   # GET /places/1

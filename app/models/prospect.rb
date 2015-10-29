@@ -1,4 +1,5 @@
 class Prospect < ActiveRecord::Base
+  include PgSearch
   belongs_to :client
   belongs_to :user
   has_many :estimations
@@ -16,16 +17,59 @@ class Prospect < ActiveRecord::Base
   extend FriendlyId
     friendly_id :name, use: [:slugged, :finders]
 
-    searchable do
-      text :name
-      text :client_name do |prospect|
-        prospect.client_name
-      end
-      integer :country_id do |prospect|
-        prospect.client_country_id
-      end
-      integer :prospect_type
-      integer :status
+  pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
+  pg_search_scope :seek_client_name,  associated_against: {
+                           client: [:name]},
+                         using: { tsearch: { prefix: true  } }
+  pg_search_scope :seek_client_country,  associated_against: {
+                           client: [:country_id] }
+
+  def self.search_with name, company, status, type, country_id
+    search_name(name).
+    search_client_name(company).
+    search_client_country(country_id).
+    include_status(status).
+    include_type(type)
+  end
+
+  def self.search_name name
+    if name.present?
+      seek_name(name)
+    else
+      order("created_at DESC")
+    end       
+  end
+
+  def self.search_client_name company
+    if company.present?
+      seek_client_name(company)
+    else
+      order("created_at DESC")
     end
+  end
+
+  def self.search_client_country country_id
+    if country_id.present?
+      seek_client_country(country_id)
+    else
+      order("created_at DESC")
+    end
+  end
+
+  def self.include_status status
+    if status.present?
+      where(status: status)
+    else
+      order("created_at DESC")
+    end
+  end
+
+  def self.include_type type
+    if type.present?
+      where(prospect_type: type)
+    else
+      order("created_at DESC")
+    end
+  end
 
 end

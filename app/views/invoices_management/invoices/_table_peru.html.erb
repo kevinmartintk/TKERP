@@ -6,17 +6,13 @@
         <th>Company</th>
         <th>RUC</th>
         <th>Address</th>
-        <th>Seals drawdown</th>
+        <th>Drawdown</th>
         <th>Date</th>
-        <th>Description</th>
         <th>Currency</th>
         <th>Amount</th>
         <th>Status</th>
         <th>IGV</th>
         <th>Total</th>
-        <th>Drawdown</th>
-        <th>Balance</th>
-        <th>Reference</th>
         <th></th>
         <th>Actions</th>
       </tr>
@@ -34,7 +30,6 @@
             <td>  No</td>
           <%end%>  
           <td><%= invoice.created_at.to_date %></td>
-          <td><%= invoice.description %></td>
           <%if @headquarter.is_peru? %>
             <td><%= Currency.find(invoice.currency).name %></td>
           <%end%>
@@ -42,18 +37,11 @@
           <td><%= Status.find(invoice.status).name %></td>
           <td><%= invoice.invoice_igv %></td>
           <td><%= invoice.invoice_total %></td>
-          <% if invoice.has_drawdown == true%>
-            <td><%= invoice.invoice_drawdown %> </td>
-          <%else%>
-            <td>---------------</td>
-          <%end%>
-          <td><%= invoice.invoice_balance %></td>
-          <td><%= invoice.extra %></td>
           <td></td>
           <td>  
             <%= link_to 'M', '', :data => { :toggle => "modal", :target => "#send_invoice_modal_#{invoice.id}" }, class: "btn btn-primary"%>
             <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_invoices_management_country_invoice_path(@headquarter.country, invoice), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
-            <%= link_to '<span class="glyphicon glyphicon-file"></span>'.html_safe, invoices_management_country_invoice_path(@headquarter.country, invoice, :format => "pdf"), :data => { :toggle => "tooltip" }, title: 'PDF', class: "btn btn-default btn-sm" %>
+            <%= link_to '<span class="glyphicon glyphicon-file"></span>'.html_safe, invoices_management_country_invoice_path(@headquarter.country, invoice, :format => "pdf"), :data => { :toggle => "tooltip" }, title: 'PDF', :target => "_blank", class: "btn btn-default btn-sm" %>
             <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, '', :data => { :toggle => "modal", :target => "#delete_invoice_modal_#{invoice.id}" }, title: 'Delete', class: "btn btn-default btn-sm" %>
           </td>
         </tr>

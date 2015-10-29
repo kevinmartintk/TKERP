@@ -5,17 +5,7 @@ class CollaboratorsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    search = Collaborator.search  do
-      fulltext params[:name]
-      fulltext params[:last_name]
-      if params[:birthday_month].present?
-         with :birthday_month, params[:birthday_month].to_i
-      end
-      if params[:start_date].present?
-        with(:start_date).equal_to(params[:start_date].to_date)
-      end
-    end
-    @collaborators = search.results
+    @collaborators = Collaborator.search_with(params[:name], params[:last_name], params[:birthday_month], params[:start_date])
   end
 
   def show
