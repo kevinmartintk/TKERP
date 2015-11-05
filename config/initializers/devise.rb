@@ -236,7 +236,7 @@ Devise.setup do |config|
 
 
   # Localhost
-  config.omniauth :google_oauth2, "315606354546-gdluap356d6rtnuqmh51r9rmvqekksh5.apps.googleusercontent.com", "6rroUKmNtgqTbXLl69Gl4qe7", {}
+  config.omniauth :google_oauth2, "315606354546-s3lq0bq3k4a8m5vec5o8lo4ovugvo1m7.apps.googleusercontent.com", "P_yXgHV_vkm4mghkfAeMe7Y-", {}
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
