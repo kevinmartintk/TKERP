@@ -33,6 +33,13 @@
   </div>
 
   <div class="form-group col-sm-12">
+    <%= f.label :hours_per_day , class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.text_field :hours_per_day, class: "form-control validate[required]" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
     <%= f.label :days , class: "col-sm-2 text-left" %>
     <div class="col-sm-6">
       <%= f.text_field :days, class: "form-control validate[required]" %>
@@ -46,17 +53,11 @@
     </div>
   </div>
   
-  <div class="form-group col-sm-12">
-    <%= f.label :hours_per_day , class: "col-sm-2 text-left" %>
-    <div class="col-sm-6">
-      <%= f.text_field :hours_per_day, class: "form-control validate[required]" %>
-    </div>
-  </div>
 
   <div class="form-group col-sm-12">
     <%= f.label :sent_at , class: "col-sm-2 text-left" %>
     <div class="col-sm-6">
-      <%= f.text_field :sent_at, class: "form-control datepicker validate[required]" %>
+      <%= f.text_field :sent_at, class: "form-control datepicker validate[required]", data: {"date-end-date": "0d"}%>
     </div>
   </div>
 
@@ -106,20 +107,18 @@
 
     $("#estimation_days").bind("keyup change", calculate_hours);
 
-    if($("#estimation_hours_per_day").val() == null || $("#estimation_hours_per_day").val() == "" ){
+    if(!$("#estimation_hours_per_day").val()){
         $("#estimation_days").attr('disabled', true);
         $("#estimation_hours").attr('disabled', true);
       }
 
     var validate_field = function () {
       if($("#estimation_hours_per_day").val() == null || $("#estimation_hours_per_day").val() == "" ){
-        $("#estimation_days").attr('disabled', true);
         $("#estimation_hours").attr('disabled', true);
         $("#estimation_days").val("")
         $("#estimation_hours").val("")
       }
       else{
-        $("#estimation_days").attr('disabled', false);
         $("#estimation_hours").attr('disabled', false);
       }
     }
