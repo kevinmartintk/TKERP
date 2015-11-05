@@ -42,7 +42,7 @@
   <div class="form-group col-sm-12">
     <%= f.label :days , class: "col-sm-2 text-left" %>
     <div class="col-sm-6">
-      <%= f.text_field :days, class: "form-control validate[required]" %>
+      <%= f.text_field :days, class: "form-control validate[required]", readonly: true %>
     </div>
   </div>
 
@@ -108,7 +108,6 @@
     $("#estimation_days").bind("keyup change", calculate_hours);
 
     if(!$("#estimation_hours_per_day").val()){
-        $("#estimation_days").attr('disabled', true);
         $("#estimation_hours").attr('disabled', true);
       }
 
