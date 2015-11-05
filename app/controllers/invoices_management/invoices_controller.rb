@@ -59,9 +59,7 @@ module InvoicesManagement
         else
           render :new
         end
-      rescue Exception => e
-        p '+++++++++++++++++++++++++++'
-        p e
+      rescue
         render :new
       end
     end
