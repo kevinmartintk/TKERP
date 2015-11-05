@@ -1,5 +1,7 @@
 <h1>
   Invoice - <%= @headquarter.country.get_abrev %>
+  <% I18n.locale = :es %>
+  <%= I18n.t("november") %>
   <%= link_to 'New Invoice', new_invoices_management_country_invoice_path(@headquarter.country), class: "btn btn-primary align-right"  %>
 </h1>
 

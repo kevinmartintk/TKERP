@@ -1,6 +1,4 @@
 <h1 class="page-header">Invoice - <%= @invoice.headquarter.country.get_abrev %> <small>New</small></h1>
-
-
 <% if @headquarter.is_peru? %>
   <%= render partial: "form", invoice: @invoice %>
 <% else %>
