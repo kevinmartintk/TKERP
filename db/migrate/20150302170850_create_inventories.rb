@@ -19,6 +19,5 @@ class CreateInventories < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index :inventories, :inventory_type
-    add_index :collaborators, :deleted_at
   end
 end

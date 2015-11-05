@@ -67,28 +67,7 @@
   </div>
 </div>
 
-<button class="btn btn-default" id="hidebtn" >Hide Menu Bar</button>
-
 <script type="text/javascript">
-  
-  var hide_menu = function () {
-    var nav_bar = $('.nav.navbar-nav.side-nav');
-    var display_css = nav_bar.css('display');
-    var wrapper = $('#wrapper');
-    if (display_css == "block"){
-      nav_bar.css("display", "none");
-      wrapper.css('padding-left',0);
-      $(this).text("Show Menu Bar");
-    }
-    else{
-      nav_bar.css("display", "block");
-      wrapper.css('padding-left',180);
-      $(this).text("Hide Menu Bar");
-    }
-  }
-
-  $("#hidebtn").on("click", hide_menu);
-
   var resize_labels = (function () {
     var position_amount = $('#amount-cell').position();
     position_left_soles = (position_amount.left - 16).toString()+"px"
