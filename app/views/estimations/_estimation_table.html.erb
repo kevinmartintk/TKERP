@@ -5,6 +5,8 @@
         <th>Technology </th>
         <th>Estimation</th>
         <th>Nº Developers</th> 
+        <th>Nº Designers</th> 
+        <th>Nº Accounts</th> 
         <th>Sent at</th>
         <th>Actions</th>
       </tr>
@@ -15,6 +17,8 @@
           <td><%= Technology.find(estimation.technology_id).name %></td>
           <td><%= EstimationType.find(estimation.estimation_type).name %></td>
           <td><%= estimation.developers%></td>
+          <td><%= estimation.designers%></td>
+          <td><%= estimation.accounts%></td>
           <td><%= estimation.sent_at%></td>
           <td>
             <%= link_to '<span class="glyphicon glyphicon-search"></span>'.html_safe, prospect_estimation_path(id: estimation.id), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Show" %>

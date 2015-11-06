@@ -2,7 +2,6 @@
   <% if @quotation.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@quotation.errors.count, "error") %> prohibited this quotation from being saved:</h2>
-
       <ul>
       <% @quotation.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -12,10 +11,12 @@
   <% end %>
 
   <div class="form-group col-sm-12">
-    <%= f.label :price_per_hour , class: "col-sm-5 control-label" %>
-    <div class="col-sm-2">
-      <%= f.number_field :price_per_hour, class: "form-control validate[required]", id: 'quotation_price_per_hour', min: "0" %>
-    </div>
+    <% ["developer", "designer", "account"].each do |entity| %>
+      <%= f.label "#{entity}_price_per_hour" , class: "col-sm-2 control-label" %>
+      <div class="col-sm-2">
+        <%= f.number_field "#{entity}_price_per_hour", class: "form-control validate[required]", id: "quotation_#{entity}_price_per_hour", min: "0", step: "0.1" %>
+      </div>
+    <% end %>
   </div>
 
   <div class="form-group col-sm-12">
@@ -41,26 +42,35 @@
             <tr>
               <td><%= qe.check_box :selected %></td>
               <td><%= estimation.technology.name %></td>
-              <td class='developers'><%= estimation.developers %></td>
-              <td class="estimation_hours_per_day"><%= estimation.hours_per_day %></td>
-              <td><%= estimation.days %></td>
-              <td><%= qe.number_field :days_est, class: "form-control days_est validate[required]", min: "0", "readonly" => (qe.object.quotation_id.nil? or (!qe.object.quotation_id.nil? and !qe.object.selected)) %></td>
-              <td><%= estimation.hours %></td>
-              <td><%= qe.number_field :hours_est, class: "form-control hours_est validate[required]", min: "0", "readonly" => (qe.object.quotation_id.nil? or (!qe.object.quotation_id.nil? and !qe.object.selected)) %></td>
-              <%= qe.hidden_field :estimation_id, :value => estimation.id, class:"form-control" %>
-              <td><%= qe.text_field :price, class: "form-control price", "readonly" => true %></td>    
+              <% 7.times do %>
+                <td></td>
+              <% end %>
             </tr>
+            <% ["developer", "designer", "account"].each do |entity| %>
+              <tr>
+                <td></td><td></td>
+                <td class='developers'><%= estimation.send("#{entity}s") %></td>
+                <td class="estimation_hours_per_day"><%= estimation.developer_hours_per_day %></td>
+                <td><%= estimation.send("#{entity}_days") unless entity == "account" %></td>
+                <td><%= qe.number_field "#{entity}_days_est", class: "form-control #{entity}_days_est validate[required]", min: "0", step: "0.1", "readonly" => false unless entity == "account" %></td>
+                <td><%= estimation.developer_hours %></td>
+                <td><%= qe.number_field "#{entity}_hours_est", class: "form-control #{entity}_hours_est validate[required]", min: "0", step: "0.1", "readonly" => false %></td>
+                <%= qe.hidden_field :estimation_id, :value => estimation.id, class:"form-control" %>
+                <td><%= qe.text_field "#{entity}_price", class: "form-control sub #{entity}_price", "readonly" => true %></td>    
+              </tr>
+            <% end %>
             <% index += 1 %>
           <% end %>
         </tbody>
       </table>  
     </div>
-  </div>  
+  </div>
+
 
   <div class="form-group col-sm-8">
     <%= f.label :total , class: "col-sm-4 text-left" %>
     <div class="col-sm-6">
-      <%= f.number_field :total, class: "form-control", "readonly" => true %>
+      <%= f.number_field :total, class: "form-control", "readonly" => true, step: "0.1"%>
     </div>
   </div>
 
@@ -75,78 +85,95 @@
 <% end %>
 
 <script type="text/javascript">
+
+  var array = ["developer", "designer", "account"]
+  var total = 0;
+
+  array.forEach(function(entry){
+
+    var calculate_days = function () {
+      var hours = $(this).val();
+      var days = $(this).closest("tr").find("." + entry + "_days_est");
+      var price_per_hour = $(this).closest("tr").find(".estimation_hours_per_day").html();
+      var number_days = hours/price_per_hour;
+      days.val(number_days);
+    }
+
+    $("." + entry + "_hours_est").bind("keyup change", calculate_days);
+
+    var calculate_hours = function () {
+      var days = $(this).val();
+      var hours = $(this).closest("tr").find("." + entry + "_hours_est");
+      var price_per_hour = $(this).closest("tr").find(".estimation_hours_per_day").html();
+      var number_hours = days*price_per_hour;
+      hours.val(number_hours);
+    }
+
+    $("." + entry + "_days_est").bind("keyup change", calculate_hours);
+
+    var calculate_price_hours = function () {
+      var hours = $(this).val();
+      var price = $(this).closest("tr").find("." + entry + "_price");
+      var price_per_hour = $("#quotation_" + entry + "_price_per_hour").val();
+      price.val(hours*price_per_hour);
+
+      total = 0;
+      // calculate total
+      $("." + entry + "_price").each(function () {
+        total = parseInt($(this).val()) + total; 
+      })
+      $("#quotation_total").val(total);
+    }
+
+    $("." + entry + "_hours_est").bind("keyup change", calculate_price_hours);
+
+    var calculate_price_days = function () {
+      var days = $(this).val();
+      var hours_per_day = $(this).closest("tr").find(".estimation_hours_per_day").html();
+      var developers = $(this).closest("tr").find(".developers").html();
+      console.log(developers)
+      var hours = days * hours_per_day;
+      var price = $(this).closest("tr").find("." + entry + "_price");
+      var price_per_hour = $("#quotation_" + entry + "_price_per_hour").val();
+      price.val(hours*price_per_hour*developers);
+
+      // calculate total
+      $("." + entry + "_price").each(function () {
+        total = parseInt($(this).val()) + total; 
+      })
+      $("#quotation_total").val(total);
+    }
+
+    $("." + entry + "_days_est").bind("keyup change", calculate_price_days);
+
+    $("#quotation_price_per_hour").bind("keyup change", function () {
+      $("." + entry + "_hours_est").each(calculate_price_hours);
+    });
+
+    $("input[type=checkbox]").change(function() {
+      var hours_est = $(this).closest("tr").find("." + entry + "_hours_est");
+      var days_est = $(this).closest("tr").find("." + entry + "_days_est");
+      if(this.checked) {
+        hours_est.prop("readonly",false);
+        days_est.prop("readonly",false);
+      }
+      else{
+        hours_est.prop("readonly",true);
+        hours_est.val(0).trigger("change");
+        days_est.prop("readonly",true);
+        days_est.val(0);
+      }
+    });
+  })
   
-  var calculate_days = function () {
-    var hours = $(this).val();
-    var days = $(this).closest("tr").find(".days_est");
-    var price_per_hour = $(this).closest("tr").find(".estimation_hours_per_day").html();
-    var number_days = hours/price_per_hour;
-    days.val(number_days);
-  }
-
-  $(".hours_est").bind("keyup change", calculate_days);
-
-  var calculate_hours = function () {
-    var days = $(this).val();
-    var hours = $(this).closest("tr").find(".hours_est");
-    var price_per_hour = $(this).closest("tr").find(".estimation_hours_per_day").html();
-    var number_hours = days*price_per_hour;
-    hours.val(number_hours);
-  }
-
-  $(".days_est").bind("keyup change", calculate_hours);
-
-  var calculate_price_hours = function () {
-    var hours = $(this).val();
-    var price = $(this).closest("tr").find(".price");
-    var price_per_hour = $("#quotation_price_per_hour").val();
-    price.val(hours*price_per_hour);
-
-    // calculate total
-    var total = 0;
-    $(".price").each(function () {
-      total = parseInt($(this).val()) + total; 
-    })
-    $("#quotation_total").val(total);
-  }
-
-  $(".hours_est").bind("keyup change", calculate_price_hours);
-
-  var calculate_price_days = function () {
-    var days = $(this).val();
-    var hours_per_day = $(this).closest("tr").find(".estimation_hours_per_day").html();
-    var developers = $(this).closest("tr").find(".developers").html();
-    var hours = days * hours_per_day;
-    var price = $(this).closest("tr").find(".price");
-    var price_per_hour = $("#quotation_price_per_hour").val();
-    price.val(hours*price_per_hour*developers);
-
-    // calculate total
-    var total = 0;
-    $(".price").each(function () {
-      total = parseInt($(this).val()) + total; 
-    })
-    $("#quotation_total").val(total);
-  }
-
-  $(".days_est").bind("keyup change", calculate_price_days);
-
-  $("#quotation_price_per_hour").bind("keyup change", function () {
-    $(".hours_est").each(calculate_price_hours);
+  $("input[type=number]").bind("keyup change", function(){
+    total = 0
+      $(".sub").each(function(){
+        total = parseInt($(this).val()) + total;
+        console.log(total)
+      })
+      $("#quotation_total").val(total);
   });
 
-  $("input[type=checkbox]").change(function() {
-    var hours_est = $(this).closest("tr").find(".hours_est");
-    var days_est = $(this).closest("tr").find(".days_est");
-    if(this.checked) {
-      hours_est.prop("readonly",false);
-      days_est.prop("readonly",false);
-    }
-    else{
-      hours_est.prop("readonly",true);
-      hours_est.val(0).trigger("change");
-      days_est.prop("readonly",true);
-      days_est.val(0);
-    }
-  });
+
 </script>
