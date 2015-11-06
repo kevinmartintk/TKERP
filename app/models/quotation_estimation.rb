@@ -20,10 +20,6 @@ class QuotationEstimation < ActiveRecord::Base
     self.sum(:designer_hours_est)
   end
 
-  def self.account_total_days
-    self.sum(:account_days_est)
-  end
-
   def self.account_total_hours
     self.sum(:account_hours_est)
   end
