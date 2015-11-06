@@ -14,7 +14,7 @@
   <div class="form-group col-sm-12">
     <%= f.label :price_per_hour , class: "col-sm-5 control-label" %>
     <div class="col-sm-2">
-      <%= f.number_field :price_per_hour, class: "form-control validate[required]", id: 'quotation_price_per_hour', min: "0" %>
+      <%= f.number_field :price_per_hour, class: "form-control validate[required]", id: 'quotation_price_per_hour', min: "0", step: "0.1" %>
     </div>
   </div>
 
@@ -42,13 +42,13 @@
               <td><%= qe.check_box :selected %></td>
               <td><%= estimation.technology.name %></td>
               <td class='developers'><%= estimation.developers %></td>
-              <td class="estimation_hours_per_day"><%= estimation.hours_per_day %></td>
-              <td><%= estimation.days %></td>
-              <td><%= qe.number_field :days_est, class: "form-control days_est validate[required]", min: "0", "readonly" => (qe.object.quotation_id.nil? or (!qe.object.quotation_id.nil? and !qe.object.selected)) %></td>
-              <td><%= estimation.hours %></td>
-              <td><%= qe.number_field :hours_est, class: "form-control hours_est validate[required]", min: "0", "readonly" => (qe.object.quotation_id.nil? or (!qe.object.quotation_id.nil? and !qe.object.selected)) %></td>
+              <td class="estimation_hours_per_day"><%= estimation.developer_hours_per_day %></td>
+              <td><%= estimation.developer_days %></td>
+              <td><%= qe.number_field :developer_days_est, class: "form-control days_est validate[required]", min: "0", step: "0.1", "readonly" => (qe.object.quotation_id.nil? or (!qe.object.quotation_id.nil? and !qe.object.selected)) %></td>
+              <td><%= estimation.developer_hours %></td>
+              <td><%= qe.number_field :developer_hours_est, class: "form-control hours_est validate[required]", min: "0", step: "0.1", "readonly" => (qe.object.quotation_id.nil? or (!qe.object.quotation_id.nil? and !qe.object.selected)) %></td>
               <%= qe.hidden_field :estimation_id, :value => estimation.id, class:"form-control" %>
-              <td><%= qe.text_field :price, class: "form-control price", "readonly" => true %></td>    
+              <td><%= qe.text_field :developer_price, class: "form-control price", "readonly" => true %></td>    
             </tr>
             <% index += 1 %>
           <% end %>
@@ -60,7 +60,7 @@
   <div class="form-group col-sm-8">
     <%= f.label :total , class: "col-sm-4 text-left" %>
     <div class="col-sm-6">
-      <%= f.number_field :total, class: "form-control", "readonly" => true %>
+      <%= f.number_field :total, class: "form-control", "readonly" => true, step: "0.1"%>
     </div>
   </div>
 
@@ -116,6 +116,7 @@
     var days = $(this).val();
     var hours_per_day = $(this).closest("tr").find(".estimation_hours_per_day").html();
     var developers = $(this).closest("tr").find(".developers").html();
+    console.log(developers)
     var hours = days * hours_per_day;
     var price = $(this).closest("tr").find(".price");
     var price_per_hour = $("#quotation_price_per_hour").val();

@@ -5,11 +5,11 @@ class QuotationEstimation < ActiveRecord::Base
   belongs_to :estimation
 
   def self.total_days
-    self.sum(:days_est)
+    self.sum(:developer_days_est)
   end
 
   def self.total_hours
-    self.sum(:hours_est)
+    self.sum(:developer_hours_est)
   end
 
 end
