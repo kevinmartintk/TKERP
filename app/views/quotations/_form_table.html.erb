@@ -46,26 +46,25 @@
                 <td></td>
               <% end %>
             </tr>
-            <% ["developer", "designer", "account"].each do |entity| %>
-              <tr>
-                <td></td><td></td>
-                <td class='developers'><%= estimation.send("#{entity}s") %></td>
-                <td class="estimation_hours_per_day"><%= estimation.developer_hours_per_day %></td>
-                <td><%= estimation.send("#{entity}_days") unless entity == "account" %></td>
-                <td><%= qe.number_field "#{entity}_days_est", class: "form-control #{entity}_days_est validate[required]", min: "0", step: "0.1", "readonly" => false unless entity == "account" %></td>
-                <td><%= estimation.developer_hours %></td>
-                <td><%= qe.number_field "#{entity}_hours_est", class: "form-control #{entity}_hours_est validate[required]", min: "0", step: "0.1", "readonly" => false %></td>
-                <%= qe.hidden_field :estimation_id, :value => estimation.id, class:"form-control" %>
-                <td><%= qe.text_field "#{entity}_price", class: "form-control sub #{entity}_price", "readonly" => true %></td>    
-              </tr>
-            <% end %>
+              <% ["developer", "designer", "account"].each do |entity| %>
+                <tr>
+                  <td></td><td></td>
+                  <td class='developers'><%= estimation.send("#{entity}s") %></td>
+                  <td class="estimation_hours_per_day"><%= estimation.developer_hours_per_day %></td>
+                  <td><%= estimation.send("#{entity}_days") unless entity == "account" %></td>
+                  <td><%= qe.number_field "#{entity}_days_est", class: "form-control #{entity}_days_est validate[required]", min: "0", step: "0.1", "readonly" => false unless entity == "account" %></td>
+                  <td><%= estimation.developer_hours %></td>
+                  <td><%= qe.number_field "#{entity}_hours_est", class: "form-control #{entity}_hours_est validate[required]", min: "0", step: "0.1", "readonly" => false %></td>
+                  <%= qe.hidden_field :estimation_id, :value => estimation.id, class:"form-control" %>
+                  <td><%= qe.text_field "#{entity}_price", class: "form-control sub #{entity}_price", "readonly" => true %></td>    
+                </tr>
+              <% end %>
             <% index += 1 %>
           <% end %>
         </tbody>
-      </table>  
+      </table>
     </div>
   </div>
-
 
   <div class="form-group col-sm-8">
     <%= f.label :total , class: "col-sm-4 text-left" %>
@@ -151,8 +150,8 @@
     });
 
     $("input[type=checkbox]").change(function() {
-      var hours_est = $(this).closest("tr").find("." + entry + "_hours_est");
-      var days_est = $(this).closest("tr").find("." + entry + "_days_est");
+      var hours_est = $(this).closest("tr").find("#2_asd ." + entry + "_hours_est");
+      var days_est = $(this).closest("tr").find("#2_asd ." + entry + "_days_est");
       if(this.checked) {
         hours_est.prop("readonly",false);
         days_est.prop("readonly",false);
@@ -170,7 +169,6 @@
     total = 0
       $(".sub").each(function(){
         total = parseInt($(this).val()) + total;
-        console.log(total)
       })
       $("#quotation_total").val(total);
   });
