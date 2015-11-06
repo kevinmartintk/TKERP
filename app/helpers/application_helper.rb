@@ -7,29 +7,15 @@ module ApplicationHelper
   	Status.all
   end
 
-	def disabled_info form, except_id
-		"<script type='text/javascript'>
-			$().ready(function() {
-				$('##{form} :input[type=checkbox]').attr('disabled', true);
-				$('##{form} input[type=text], textarea').attr('disabled', true);
-				$('##{form} select').each(function(){
-					if ($(this).attr('id') != $('##{except_id}').attr('id')){
-						$(this).attr('disabled', true);
-					}else{
-						$(this).attr('disabled', false);
-					}
-				})
-			});
-    </script>".html_safe
-	end
-
   def disabled_info form
     "<script type='text/javascript'>
       $().ready(function() {
-        $('##{form} :input').attr('disabled', true);
-        $('##{form} :input[type=hidden]').attr('disabled', true);
-
-        $('#save-btn').hide();
+        $('##{form} :input[type=text]').attr('disabled', true);
+        $('##{form} :input[type=file]').attr('disabled', true);
+        $('##{form} :input[type=submit]').hide();
+        $('##{form} select').not('#invoice_status').attr('disabled', true);
+        $('##{form} textarea').attr('disabled', true);
+        $('##{form} a').attr('hidden', true);
         $('#remove-contact').hide();
         $('#add-contact').hide();
       });</script>".html_safe

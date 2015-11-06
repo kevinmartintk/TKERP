@@ -25,6 +25,7 @@
           <tr>
             <th></th>
             <th>Estimation</th>
+            <th>Developers</th>
             <th>Hours per day</th>
             <th>Days estimated</th>
             <th>Days to send</th>
@@ -40,6 +41,7 @@
             <tr>
               <td><%= qe.check_box :selected %></td>
               <td><%= estimation.technology.name %></td>
+              <td><%= estimation.developers %></td>
               <td class="estimation_hours_per_day"><%= estimation.hours_per_day %></td>
               <td><%= estimation.days %></td>
               <td><%= qe.number_field :days_est, class: "form-control days_est validate[required]", min: "0", "readonly" => qe.object.quotation_id.nil? %></td>
