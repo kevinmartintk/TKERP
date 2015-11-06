@@ -23,6 +23,6 @@ test:
 production:
   <<: *default
   database: tkerp
-  database: <%= ENV["DATABASE_NAME"] %>
-  password: <%= ENV["DATABASE_PASSWORD"] %>
+  username: tektonerp # <%= ENV["DATABASE_NAME"] %>
+  password: 93k7ddk27ddj27d3 # <%= ENV["DATABASE_PASSWORD"] %>
   host: localhost
