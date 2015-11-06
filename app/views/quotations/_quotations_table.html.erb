@@ -12,9 +12,15 @@
     <tbody>
       <% @quotations.each do |quotation| %>
         <tr>
-          <td><%= quotation.price_per_hour %></td>
-          <td><%= quotation.quotation_estimations.total_days %></td>
-          <td><%= quotation.quotation_estimations.total_hours %></td>
+          <td><%= quotation.developer_price_per_hour %></td>
+          <td><%= quotation.designer_price_per_hour %></td>
+          <td><%= quotation.account_price_per_hour %></td>
+          <td><%= quotation.quotation_estimations.developer_total_days %></td>
+          <td><%= quotation.quotation_estimations.developer_total_hours %></td>
+          <td><%= quotation.quotation_estimations.designer_total_days %></td>
+          <td><%= quotation.quotation_estimations.designer_total_hours %></td>
+          <td><%= quotation.quotation_estimations.account_total_days %></td>
+          <td><%= quotation.quotation_estimations.account_total_hours %></td>
           <td><%= quotation.total %></td>
           <td>
             <%= link_to '<span class="glyphicon glyphicon-search"></span>'.html_safe, prospect_quotation_path(id:quotation.id), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Show" %>
