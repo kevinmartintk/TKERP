@@ -103,12 +103,11 @@
         </div>
       </div>
   </div>
-  
 
   <div class="form-group col-sm-12">
     <%= f.label :sent_at , class: "col-sm-2 text-left" %>
     <div class="col-sm-6">
-      <%= f.text_field :sent_at, class: "form-control datepicker validate[required]", data: {"date-end-date": "0d"}%>
+      <%= f.text_field :sent_at, class: "form-control datepicker validate[required]", data: {"date-end-date" => "0d"}%>
     </div>
   </div>
 

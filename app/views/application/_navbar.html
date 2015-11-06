@@ -12,11 +12,10 @@
       
   <p> </p>
   </div>
-  <% if user_signed_in? %>
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i><%= current_user.full_name %><b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Hardcoded User <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li>
             <%= link_to edit_user_registration_path do %>
@@ -34,7 +33,19 @@
     </ul>
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
-      <ul class="nav navbar-nav side-nav">
+      <ul id="mini-menu" class="nav navbar-nav side-nav">
+        <li>
+          <button type="button" id="show-navbar" class="btn btn-primary position-button" aria-label="Left Align">
+            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+          </button>
+        </li>
+      </ul>
+      <ul id="principal-menu" class="nav navbar-nav side-nav">
+        <li>
+          <button type="button" id="hide-navbar" class="btn btn-primary position-button-p" aria-label="Left Align">
+            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+          </button>
+        </li>
         <li>
           <%= link_to clients_path do %>
               <i class="fa fa-fw fa-building"></i>
@@ -46,38 +57,58 @@
               <i class="fa fa-fw fa-money"></i>
               Invoices
           <% end %>
-        </li>
-      
+        </li>      
         <li>
           <%= link_to contacts_path do %>
               <i class="fa fa-fw fa-users"></i>
               Contacts
           <% end %>
-        </li>
-        
+        </li>        
          <li>
           <%= link_to prospects_path do %>
               <i class="fa fa-fw fa-sitemap"></i>
               Prospects
           <% end %>
         </li>
-
         <li>
           <%= link_to collaborators_path do %>
               <i class="fa fa-fw fa-sitemap"></i>
               Collaborators
           <% end %>
         </li>
-
         <li>
           <%= link_to inventories_path do %>
               <i class="fa fa-fw fa-laptop"></i>
               Inventories
           <% end %>
         </li>
-
       </ul>
     </div>
     <!-- /.navbar-collapse -->
-  <% end %>
 </nav>
+
+<script type="text/javascript">
+
+  var hide_menu = function () {
+    var nav_bar = $('#principal-menu');
+    var mini_navbar = $('#mini-menu');
+    var wrapper = $('#wrapper');
+    nav_bar.hide()
+    wrapper.css('padding-left',50);
+    mini_navbar.show()
+  }
+
+ $("#hide-navbar").on("click", hide_menu);
+
+ var show_menu = function () {
+    var nav_bar = $('#principal-menu');
+    var mini_navbar = $('#mini-menu');
+    var wrapper = $('#wrapper');
+    mini_navbar.hide()
+    wrapper.css('padding-left',180);
+    nav_bar.show()
+  }
+
+ $("#show-navbar").on("click", show_menu);
+
+</script>
