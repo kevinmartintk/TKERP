@@ -2,11 +2,14 @@
   <table class="table table-hover table-striped">
     <thead>
       <tr>
-        <th>Price per hour</th>
-        <th>Days to send</th>
-        <th>Hours to send</th>
-        <th>Total</th>
-        <th>Actions</th>
+        <th>Developer price per hour</th>
+        <th>Designer price per hour</th>
+        <th>Account price per hour</th>
+        <th>Developer total days</th>
+        <th>Designer total days</th>
+        <th>Developer total hours</th>
+        <th>Designer total hours</th>
+        <th>Account total hours</th>
       </tr>
     </thead>
     <tbody>
@@ -16,8 +19,8 @@
           <td><%= quotation.designer_price_per_hour %></td>
           <td><%= quotation.account_price_per_hour %></td>
           <td><%= quotation.quotation_estimations.developer_total_days %></td>
-          <td><%= quotation.quotation_estimations.developer_total_hours %></td>
           <td><%= quotation.quotation_estimations.designer_total_days %></td>
+          <td><%= quotation.quotation_estimations.developer_total_hours %></td>
           <td><%= quotation.quotation_estimations.designer_total_hours %></td>
           <td><%= quotation.quotation_estimations.account_total_hours %></td>
           <td><%= quotation.total %></td>
