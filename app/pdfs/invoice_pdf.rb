@@ -78,13 +78,15 @@ class InvoicePDF < Prawn::Document
   end
 
   def footer_content
-    bounding_box([0, 350], :width => 180, :height => 100) do
-      text "---------------------------------------", size: 10, align: :center
-      text "Cuenta de Detracciones", size: 10, style: :bold, align: :center
-      text "00-068-109124", size: 10, align: :center
-      text "Banco de la Nación", size: 10, align: :center
-      text "TEKTON LABS SAC", size: 10, style: :bold, align: :center
-      text "---------------------------------------", size: 10, align: :center
+    if @invoice.has_drawdown?
+      bounding_box([0, 350], :width => 180, :height => 100) do
+        text "---------------------------------------", size: 10, align: :center
+        text "Cuenta de Detracciones", size: 10, style: :bold, align: :center
+        text "00-068-109124", size: 10, align: :center
+        text "Banco de la Nación", size: 10, align: :center
+        text "TEKTON LABS SAC", size: 10, style: :bold, align: :center
+        text "---------------------------------------", size: 10, align: :center
+      end
     end
 
     bounding_box([320, 350], :width => 180, :height => 80) do

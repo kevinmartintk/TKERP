@@ -2,6 +2,7 @@ class Collaborator < ActiveRecord::Base
   include PgSearch
   acts_as_paranoid
   has_many :events
+  has_many :prospects
 
   pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_last_name, against: [:last_name], using: { tsearch: { prefix: true  } }

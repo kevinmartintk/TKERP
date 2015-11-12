@@ -119,7 +119,6 @@
       if (value != 1) {
         $('#form_invoice :input[type=text]').attr('disabled', true);
         $('#form_invoice :input[type=file]').attr('disabled', true);
-        $('#form_invoice :input[type=submit]').hide();
         $('#form_invoice select').not('#invoice_status').attr('disabled', true);
         $('#form_invoice textarea').attr('disabled', true);
         $('#form_invoice a').attr('hidden', true);
@@ -129,7 +128,6 @@
       {
         $('#form_invoice :input[type=text]').attr('disabled', false);
         $('#form_invoice :input[type=file]').attr('disabled', false);
-        $('#form_invoice :input[type=submit]').show();
         $('#form_invoice select').not('#invoice_status').attr('disabled', false);
         $('#form_invoice textarea').attr('disabled', false);
         $('#form_invoice a').attr('hidden', false);
