@@ -3,7 +3,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-3 col-md-6">
-      <div class="panel green">
+      <div class="panel yellow">
         <%= link_to clients_path do %>
           <div class="panel-heading">
             <div class="row">
@@ -68,8 +68,32 @@
         <% end %>
       </div>
     </div>
+
     <div class="col-lg-3 col-md-6">
-      <div class="panel yellow">
+      <div class="panel blue">
+        <%= link_to prospects_path do %>
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="fa fa-list-alt fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge"><%= Prospect.count %></div>
+                <div>Prospects</div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <span class="pull-left">View Details</span>
+            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+      <div class="panel red">
         <%= link_to collaborators_path do %>
           <div class="panel-heading">
             <div class="row">
