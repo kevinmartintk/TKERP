@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   validates :email, :first_name, :last_name, presence: true
 
-  has_many :prospects
+  # has_many :prospects
 
   extend FriendlyId
   friendly_id :first_name, use: [:slugged, :finders]

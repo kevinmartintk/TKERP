@@ -1,7 +1,7 @@
 class Prospect < ActiveRecord::Base
   include PgSearch
   belongs_to :client
-  belongs_to :user
+  belongs_to :account, class_name: "Collaborator"
   has_many :estimations
   has_many :quotations
   has_many :prospect_contacts

@@ -12,7 +12,6 @@ module ApplicationHelper
       $().ready(function() {
         $('##{form} :input[type=text]').attr('disabled', true);
         $('##{form} :input[type=file]').attr('disabled', true);
-        $('##{form} :input[type=submit]').hide();
         $('##{form} select').not('#invoice_status').attr('disabled', true);
         $('##{form} textarea').attr('disabled', true);
         $('##{form} a').attr('hidden', true);
