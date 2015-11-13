@@ -37,7 +37,7 @@ gem 'jbuilder', '2.2.6'
 gem 'devise','3.4.1'
 
 # Strategy to authenticate with Google via OAuth2 in OmniAuth.
-gem "omniauth-google-oauth2", '0.2.6'
+gem "omniauth-google-oauth2", '0.2.10'
 
 # Destroy on an Active Record object that it didn't actually destroy
 gem "paranoia", "~> 2.0"
