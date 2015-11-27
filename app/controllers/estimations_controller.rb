@@ -81,7 +81,7 @@ class EstimationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def estimation_params
-      params.require(:estimation).permit(:technology_id, :estimation_type, :developers, :developer_days, :developer_hours, :developer_hours_per_day, :designers, :design_days, :design_hours, :design_hours_per_day, :accounts, :account_hours,:sent_at)
+      params.require(:estimation).permit(:technology_id, :estimation_type, :developers, :developer_days, :developer_hours, :developer_hours_per_day, :designers, :designer_days, :designer_hours, :designer_hours_per_day, :accounts, :account_hours,:sent_at)
 
     end
 end

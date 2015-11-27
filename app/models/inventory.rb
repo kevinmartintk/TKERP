@@ -1,7 +1,8 @@
 class Inventory < ActiveRecord::Base
   include PgSearch
   belongs_to :inventory_type
-
+  belongs_to :collaborator
+  
   acts_as_paranoid
 
   has_attached_file :image, styles: { medium: "x180"}

@@ -103,7 +103,7 @@ module InvoicesManagement
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def invoice_params
-        params.require(:invoice).permit(:client_id, :description, :currency, :amount, :status, :has_drawdown, :document, :purchase_order, :extra, :contact, :message,:invoice_number, invoice_contacts_attributes: [:contact_id, :_destroy])
+        params.require(:invoice).permit(:client_id, :description, :currency, :amount, :status, :has_drawdown, :document, :purchase_order, :extra, :contact, :message, :invoice_number, :payment_type, :expiration_date, invoice_contacts_attributes: [:contact_id, :_destroy])
       end
 
   end
