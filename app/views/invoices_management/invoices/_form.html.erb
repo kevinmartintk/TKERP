@@ -158,6 +158,22 @@
     </div>
   <%end%>
 
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= f.label :payment_type, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6 text-left">
+        <%= f.select :payment_type, options_for_select(payment_types, @invoice.payment_type), {prompt: '- Select a payment type -'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6 <%= 'hide' if @invoice.status != 2 %>" id='expiration_date'>
+      <%= f.label :expiration_date, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.text_field :expiration_date, class: "datepicker form-control", data: {"date-end-date" => "0d"} %>
+      </div>
+    </div>
+  </div>
+
   <div class="form-group">
     <div class="col-md-10 col-sm-10 col-xs-12">
       <div class="col-sm-12 text-right">
@@ -169,19 +185,22 @@
 
 <script type="text/javascript">
   $('#invoice_status').change(function() {
-    var value = $('select option:selected').val()
+    var value = $('#invoice_status option:selected').val()
     var action = "<%= params[:action] %>"
     if (action == 'edit'){
       if (value != 1) {
-        $('#form_invoice :input[type=text]').attr('disabled', true);
+        $('#form_invoice :input[type=text]').not('#invoice_expiration_date').attr('disabled', true);
         $('#form_invoice :input[type=file]').attr('disabled', true);
         $('#form_invoice select').not('#invoice_status').attr('disabled', true);
         $('#form_invoice textarea').attr('disabled', true);
         $('#form_invoice a').attr('hidden', true);
         $('#remove-contact').hide();
         $('#add-contact').hide();
-      } else
-      {
+      } 
+      if (value == 2){
+        $('#expiration_date').removeClass('hide')
+      } else {
+        $('#expiration_date').addClass('hide')
         $('#form_invoice :input[type=text]').attr('disabled', false);
         $('#form_invoice :input[type=file]').attr('disabled', false);
         $('#form_invoice select').not('#invoice_status').attr('disabled', false);
@@ -191,6 +210,12 @@
         $('#add-contact').show();
       }
     }
+  });
+
+  $('#invoice_expiration_date').datepicker({
+    format: "yyyy-mm-dd",
+    autoclose: true,
+    todayHighlight: true
   });
 
 

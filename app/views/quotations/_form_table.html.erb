@@ -57,10 +57,10 @@
                 <tr style='background-color: white'>
                   <td></td>
                   <td class='developers'><%= estimation.send("#{entity}s") %></td>
-                  <td class="estimation_hours_per_day"><%= estimation.developer_hours_per_day %></td>
+                  <td class="estimation_hours_per_day"><%= estimation.send("#{entity}_hours_per_day") unless entity == "account"%></td>
                   <td><%= estimation.send("#{entity}_days") unless entity == "account" %></td>
                   <td><%= qe.number_field "#{entity}_days_est", class: "form-control #{entity}_days_est validate[required]", min: "0", step: "0.1", "readonly" => false unless entity == "account" %></td>
-                  <td><%= estimation.developer_hours %></td>
+                  <td><%= estimation.send("#{entity}_hours") %></td>
                   <td><%= qe.number_field "#{entity}_hours_est", class: "form-control #{entity}_hours_est validate[required]", min: "0", step: "0.1", "readonly" => false %></td>
                   <%= qe.hidden_field :estimation_id, :value => estimation.id, class:"form-control" %>
                   <td><%= qe.text_field "#{entity}_price", class: "form-control sub #{entity}_price", "readonly" => true %></td>    
@@ -91,6 +91,10 @@
 <% end %>
 
 <script type="text/javascript">
+
+  $(document).ready(function(){
+    $(".sub").val('0')
+  })
 
   var array = ["developer", "designer", "account"]
   var total = 0;
@@ -137,7 +141,6 @@
       var days = $(this).val();
       var hours_per_day = $(this).closest("tr").find(".estimation_hours_per_day").html();
       var developers = $(this).closest("tr").find(".developers").html();
-      console.log(developers)
       var hours = days * hours_per_day;
       var price = $(this).closest("tr").find("." + entry + "_price");
       var price_per_hour = $("#quotation_" + entry + "_price_per_hour").val();

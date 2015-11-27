@@ -7,10 +7,14 @@ module ApplicationHelper
   	Status.all
   end
 
+  def payment_types
+    [['Transference',1], ['Check',2]]
+  end
+
   def disabled_info form
     "<script type='text/javascript'>
       $().ready(function() {
-        $('##{form} :input[type=text]').attr('disabled', true);
+        $('##{form} :input[type=text]').not('#invoice_expiration_date').attr('disabled', true);
         $('##{form} :input[type=file]').attr('disabled', true);
         $('##{form} select').not('#invoice_status').attr('disabled', true);
         $('##{form} textarea').attr('disabled', true);
