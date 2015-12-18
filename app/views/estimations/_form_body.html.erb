@@ -1,0 +1,110 @@
+<% if @estimation.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@estimation.errors.count, "error") %> prohibited this estimation from being saved:</h2>
+
+    <ul>
+    <% @estimation.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="form-group col-sm-12">
+  <%= form.label :technology_id, class: "col-sm-2 text-left" %>
+  <div class="col-sm-6">
+    <%= form.collection_select :technology_id, Technology.all,:id,:name, {prompt: 'Select a Technology'}, class:"form-control validate[required]" %>
+  </div>
+</div>
+
+<div class="form-group col-sm-12">
+  <%= form.label :estimation_type, class: "col-sm-2 text-left" %>
+  <div class="col-sm-6">
+    <%= form.collection_select :estimation_type, estimation_types_array,:id,:name, {prompt: 'Select a Type'}, class:"form-control validate[required]" %>
+  </div>
+</div>
+
+<div class="form-group col-sm-12">
+  <%= form.label :sent_at , class: "col-sm-2 text-left" %>
+  <div class="col-sm-6">
+    <%= form.text_field :sent_at, class: "form-control datepicker validate[required]", data: {"date-end-date" => "0d"}%>
+  </div>
+</div>
+
+<div class="developers">
+  <h3>Group developers</h3>
+    <div class="form-group col-sm-12">
+      <%= form.label :developers , class: "col-sm-2 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :developers, class: "form-control validate[required]" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12">
+      <%= form.label :hours_per_day , class: "col-sm-2 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :developer_hours_per_day, class: "form-control validate[required]" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12">
+      <%= form.label :days , class: "col-sm-2 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :developer_days, class: "form-control validate[required]", readonly: true %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-12">
+      <%= form.label :hours , class: "col-sm-2 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :developer_hours, class: "form-control validate[required]" %>
+      </div>
+    </div>
+</div>
+
+<div class="designers">
+  <h3>Group designers</h3>
+  <div class="form-group col-sm-12">
+    <%= form.label :designers , class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= form.text_field :designers, class: "form-control validate[required]" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= form.label :hours_per_day , class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= form.text_field :designer_hours_per_day, class: "form-control validate[required]" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= form.label :days , class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= form.text_field :designer_days, class: "form-control validate[required]", readonly: true %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= form.label :hours , class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= form.text_field :designer_hours, class: "form-control validate[required]" %>
+    </div>
+  </div>
+</div>
+
+<div class="accounts">
+  <h3>Group accounts</h3>
+  <div class="form-group col-sm-12">
+    <%= form.label :accounts , class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= form.text_field :accounts, class: "form-control validate[required]" %>
+    </div>
+  </div>
+  <div class="form-group col-sm-12">
+    <%= form.label :hours , class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= form.text_field :account_hours, class: "form-control validate[required]" %>
+    </div>
+  </div>
+</div>

@@ -46,13 +46,12 @@ module InvoicesManagement
 
     def create
       begin
-        invoice_detail = Invoice.new(invoice_params)
-        invoice_detail.headquarter = @headquarter
-        invoice_detail.currency = 2 if @headquarter.country.id != 173
+        @invoice = Invoice.new(invoice_params)
+        @invoice.headquarter = @headquarter
+        @invoice.currency = 2 if @headquarter.country.id != 173
 
-        if invoice_detail.save
-          attachment = invoice_detail.generate_pdf
-          @invoice = invoice_detail
+        if @invoice.save
+          attachment = @invoice.generate_pdf
           @invoice.invoice_pdf = @invoice.generate_pdf_file(attachment)
 
           redirect_to invoices_management_country_invoices_path(@headquarter.country), notice: 'Invoice was successfully created.'
