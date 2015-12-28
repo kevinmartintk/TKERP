@@ -16,6 +16,22 @@
         <%= text_field_tag :legal_id, nil, class: "form-control" %>
       </div>
     </div>
+    <div class="col-sm-5">
+      <div class="col-sm-4">
+        <%= label_tag :type, "Type", class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= select_tag :type, options_for_select("Regular" => false, "Partner" => true), class: "form-control", prompt: "-select type-" %>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="col-sm-4">
+        <%= label_tag :partner_id, "Partner", class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= select_tag :partner_id, options_from_collection_for_select(Client.partner, :id, :name), class: "form-control", prompt: "-select type-" %>
+      </div>
+    </div>
     <div class="col-sm-2">
       <div class="col-sm-12">
           <input class="btn btn-default pull-right" type="submit" value="Search">

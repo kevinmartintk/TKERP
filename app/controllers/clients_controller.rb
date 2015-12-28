@@ -7,7 +7,7 @@ class ClientsController < ApplicationController
   # GET /places
   # GET /places.json
   def index
-    @clients = Client.search_with(params[:name], params[:legal_id])
+    @clients = Client.search_with(params[:name], params[:legal_id], params[:type], params[:partner_id])
   end
 
   # GET /places/1
@@ -74,7 +74,7 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      params.require(:client).permit(:name,:address,:country_id,:legal_id, :corporate_name)
+      params.require(:client).permit(:name,:address,:country_id,:legal_id, :corporate_name, :partner_id)
     end
 end
 
