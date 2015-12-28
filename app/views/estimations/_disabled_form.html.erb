@@ -1,0 +1,11 @@
+<%= form_for([@prospect,@estimation], html: {id: "form_estimation", role: "form", class: "form-horizontal validate"}) do |f| %>
+  <%= render 'form_body', form: f %>
+  <div class="form-group">
+    <div class="col-md-8 col-sm-8 col-xs-12">
+      <div class="col-sm-12 text-right">
+        <%= link_to 'Back', prospect_estimations_path, class: "btn btn-default" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= disabled_info 'form_estimation'%>
