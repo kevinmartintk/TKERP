@@ -25,5 +25,6 @@
 //= require bootstrap-datetimepicker
 //= require events
 //= require pickers
+//= require quotations
 //= require turbolinks
 //= require_tree ./application
