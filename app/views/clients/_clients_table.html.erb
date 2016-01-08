@@ -3,6 +3,7 @@
     <thead>
       <tr>
         <th>Client</th>
+        <th>Partner</th>
         <th>Address</th>
         <th>Country</th>
         <th>Legal Identification</th>
@@ -15,6 +16,7 @@
       <% clients.each do |client| %>
         <tr>
           <td><%= client.name %></td>
+          <td><%= client.partner_name %></td>
           <td><%= client.address %></td>
           <td><%= client.country.name %></td>
           <td><%= client.legal_id %></td>
