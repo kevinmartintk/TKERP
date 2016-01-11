@@ -4,7 +4,7 @@ $ ->
       type: 'GET'
       dataType: 'script'
       data: {
-        team_id: $("#inventory_team option:selected").val() || "nil"
+        team_id: $("#inventory_team option:selected").val()
       }
       error: (jqXHR, textStatus, errorThrown) ->
         console.log("AJAX Error: #{textStatus}")

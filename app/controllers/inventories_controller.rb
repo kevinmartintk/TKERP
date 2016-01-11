@@ -55,7 +55,7 @@ class InventoriesController < ApplicationController
   end
 
   def update_collaborators
-    @collaborators = Collaborator.team(team_params)
+    @collaborators = Collaborator.team(params[:team_id])
     respond_to do |format|
       format.js
     end
@@ -70,10 +70,6 @@ class InventoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_params
       params.require(:inventory).permit(:collaborator_id, :name, :brand, :team, :inventory_type_id, :edition, :writer, :reg_date,:editorial, :model, :description, :copies, :serie, :image)
-    end
-
-    def team_params
-      params.require(:team_id)
     end
 end
 
