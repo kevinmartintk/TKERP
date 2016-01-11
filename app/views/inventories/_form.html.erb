@@ -17,9 +17,15 @@
 
   <div class="form-group col-sm-12">
     <div class="form-group col-sm-6">
+      <%= f.label :team, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.collection_select :team, teams_array,:id,:name, {prompt: 'Select a Team'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
       <%= f.label :collaborator_id, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= f.collection_select :collaborator_id, Collaborator.all,:id,:name, {prompt: 'Select a Collaborator'}, class: "form-control validate[required]" %>
+        <%= f.collection_select :collaborator_id, Collaborator.all,:id,:name, {prompt: 'Select a Collaborator'}, class: "form-control validate[required]", disabled: true %>
       </div>
     </div>
   </div>
@@ -87,12 +93,6 @@
       </div>
     </div>
 
-    <div class="form-group col-sm-6">
-      <%= f.label :team, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.collection_select :team, teams_array,:id,:name, {prompt: 'Select a Team'}, class: "form-control validate[required]" %>
-      </div>
-    </div>
   </div>
 
   <div class="form-group col-sm-12 book" style="display:none">

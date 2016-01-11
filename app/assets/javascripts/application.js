@@ -28,3 +28,4 @@
 //= require quotations
 //= require turbolinks
 //= require_tree ./application
+//= require inventory

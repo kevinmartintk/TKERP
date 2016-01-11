@@ -8,6 +8,8 @@ class Collaborator < ActiveRecord::Base
   pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_last_name, against: [:last_name], using: { tsearch: { prefix: true  } }
 
+  scope :team, -> (team_id) { where(team: team_id)}
+
   def self.get_accounts
     where(:team => Team::ACCOUNTS_ID)
   end

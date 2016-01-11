@@ -16,7 +16,9 @@ Rails.application.routes.draw do
       resources :estimations
       resources :quotations
   end
-  resources :inventories
+  resources :inventories do
+    get :update_collaborators, on: :collection
+  end
   resources :collaborators do
     resources :schedule#, only: [:index, :edit, :create, :update, :destroy]
   end
@@ -25,9 +27,4 @@ Rails.application.routes.draw do
   resources :contacts do
     get :autocomplete_client_name, :on => :collection
   end
-
-
- 
-
-
 end
