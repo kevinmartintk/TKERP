@@ -4,6 +4,8 @@
       <tr>
           <th>Name</th>
           <th>Client</th>
+          <th>Client Type</th>
+          <th>Partner</th>
           <th>Prospect Type</th>
           <th>Team</th>
           <th>Status</th>
@@ -18,7 +20,9 @@
       <% @prospects.each do |prospect| %>
         <tr>
           <td><%= prospect.name %></td>
-          <td><%= prospect.client.name %></td>
+          <td><%= prospect.client_name %></td>
+          <td><%= prospect.client_type %></td>
+          <td><%= prospect.partner_name %></td>
           <td><%= ProspectType.find(prospect.prospect_type).name if !prospect.prospect_type.nil? %></td>
           <td><%= Team.find(prospect.team).name if !prospect.team.nil? %></td>
           <td><%= ProspectStatus.find(prospect.status).name if !prospect.status.nil? %></td>

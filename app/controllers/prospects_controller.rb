@@ -6,7 +6,7 @@ class ProspectsController < ApplicationController
   # GET /prospects
   # GET /prospects.json
   def index
-    @prospects = Prospect.search_with(params[:name], params[:client_name], params[:status], params[:prospect_type], params[:country_id])
+    @prospects = Prospect.search_with(params[:name], params[:client_name], params[:status], params[:prospect_type], params[:country_id], params[:client_type], params[:partner_id])
   end
 
   # GET /prospects/1

@@ -18,8 +18,8 @@ class Client < ActiveRecord::Base
   pg_search_scope :seek_legal_id, against: [:legal_id], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_partner_id, against: [:partner_id], using: { tsearch: { prefix: true  } }
 
-  scope :partner, -> { select("DISTINCT clients.*").joins("JOIN clients partners_clients ON clients.id = partners_clients.partner_id AND partners_clients.deleted_at IS NULL") }
-  scope :regular, -> { select("DISTINCT clients.*").joins("JOIN clients partners_clients ON clients.id != partners_clients.partner_id AND partners_clients.deleted_at IS NULL") }
+  scope :partner, -> { where(id: partner_id_list) }
+  scope :regular, -> { where.not(id: partner_id_list) }
   scope :all_except, ->(client) { where.not(id: client) }
 
   extend FriendlyId
@@ -33,10 +33,14 @@ class Client < ActiveRecord::Base
     country_id.eql?(173)
   end
 
+  def partner_name
+    partner.nil? ? "" : partner.name
+  end
+
   def self.search_with name, legal_id, type, partner_id
+    include_type(type).
     search_name(name).
     search_legal_id(legal_id).
-    search_type(type).
     search_partner(partner_id)
   end
 
@@ -56,9 +60,9 @@ class Client < ActiveRecord::Base
     end       
   end
 
-  def self.search_type type
+  def self.include_type type
     if type.present?
-      (type == "true") ? partner : regular
+      self.send(type)
     else
       order("created_at DESC")
     end
@@ -71,5 +75,9 @@ class Client < ActiveRecord::Base
       order("created_at DESC")
     end
   end
-  
+
+  def self.partner_id_list
+    Client.uniq.where("partner_id IS NOT NULL").pluck(:partner_id)
+  end
+
 end
