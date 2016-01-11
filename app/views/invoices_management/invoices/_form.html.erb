@@ -169,7 +169,7 @@
     <div class="form-group col-sm-6 <%= 'hide' if @invoice.status != 2 %>" id='expiration_date'>
       <%= f.label :expiration_date, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= f.text_field :expiration_date, class: "datepicker form-control validate[required, date]", data: {"date-end-date" => "0d"} %>
+        <%= f.text_field :expiration_date, class: "datepicker form-control validate[required, date]", data: {"date-start-date" => "0d"} %>
       </div>
     </div>
   </div>
