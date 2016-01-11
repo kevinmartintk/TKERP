@@ -29,7 +29,8 @@ function quotation(){
       var hours = $(this).val();
       var price = $(this).closest("tr").find("." + entry + "_price");
       var price_per_hour = $("#quotation_" + entry + "_price_per_hour").val();
-      price.val(hours*price_per_hour);
+      var developers = $(this).closest("tr").find(".developers").html();
+      price.val(hours*price_per_hour*developers);
 
       total = 0;
       // calculate total
@@ -59,8 +60,8 @@ function quotation(){
 
     $("." + entry + "_days_est").bind("keyup change", calculate_price_days);
 
-    $("#quotation_price_per_hour").bind("keyup change", function () {
-      $("." + entry + "_hours_est").each(calculate_price_hours);
+    $("#quotation_" + entry + "_price_per_hour").bind("keyup change", function () {
+      $("." + entry + "_days_est").each(calculate_price_days);
     });
 
     $("input[type=checkbox]").change(function() {
@@ -77,14 +78,13 @@ function quotation(){
         days_est.val(0);
       }
     });
-})
+  })
 
-$("input[type=number]").bind("keyup change", function(){
-  total = 0
+  $("input[type=number]").bind("keyup change", function(){
+    total = 0
     $(".sub").each(function(){
       total = parseInt($(this).val()) + total;
     })
     $("#quotation_total").val(total);
-});
-
+  });
 }
