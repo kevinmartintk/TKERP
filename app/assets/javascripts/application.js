@@ -27,3 +27,4 @@
 //= require pickers
 //= require turbolinks
 //= require_tree ./application
+//= require inventory

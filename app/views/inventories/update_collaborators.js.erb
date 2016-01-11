@@ -1,0 +1,5 @@
+<% if params[:team_id] != "nil" %>
+  $("#inventory_collaborator_id").removeAttr("disabled").empty().append("<%= escape_javascript( render 'collaborators/collaborators_dropdown', collaborators: @collaborators )  %>")
+<% else %>
+  $("#inventory_collaborator_id").attr("disabled","disabled").empty().append("<%= escape_javascript( render 'collaborators/collaborators_dropdown', collaborators: @collaborators )  %>")
+<% end %>

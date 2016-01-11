@@ -54,6 +54,13 @@ class InventoriesController < ApplicationController
     end
   end
 
+  def update_collaborators
+    @collaborators = Collaborator.team(team_params)
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_inventory
@@ -63,6 +70,10 @@ class InventoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_params
       params.require(:inventory).permit(:collaborator_id, :name, :brand, :team, :inventory_type_id, :edition, :writer, :reg_date,:editorial, :model, :description, :copies, :serie, :image)
+    end
+
+    def team_params
+      params.require(:team_id)
     end
 end
 
