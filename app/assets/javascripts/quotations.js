@@ -61,7 +61,7 @@ function quotation(){
     $("." + entry + "_days_est").bind("keyup change", calculate_price_days);
 
     $("#quotation_" + entry + "_price_per_hour").bind("keyup change", function () {
-      $("." + entry + "_days_est").each(calculate_price_days);
+      $("." + entry + "_hours_est").each(calculate_price_hours);
     });
 
     $("input[type=checkbox]").change(function() {
