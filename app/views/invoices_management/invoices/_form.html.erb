@@ -1,11 +1,11 @@
 <%=  nested_form_for([:invoices_management, @headquarter.country, @invoice], html: {id: "form_invoice", role: "form", class: "form-horizontal validate", data: {action: params[:action]}, multipart: true}) do |f|  %>
   <% if @invoice.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+    <div id="error_explanation" class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
       <ul>
-      <% @invoice.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @invoice.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -181,7 +181,7 @@
           <%= f.text_area :reason, class: "form-control custom-textarea validate[required]" %>
         </div>
       </div>
-  <div>
+  </div>
 
   <div class="form-group">
     <div class="col-md-10 col-sm-10 col-xs-12">
