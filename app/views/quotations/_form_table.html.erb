@@ -52,9 +52,10 @@
               <% end %>
             </tr>
               <% ["developer", "designer", "account"].each do |entity| %>
-                <tr style='background-color: #f5f5f5'>
-                  <td><b><%= entity.capitalize.pluralize %></b></td></tr>
-                <tr style='background-color: white'>
+                <tr class=<%= "hide" unless estimation.has entity.pluralize %> style='background-color: #f5f5f5'>
+                  <td><b><%= entity.capitalize.pluralize %></b></td>
+                </tr>
+                <tr class=<%= "hide" unless estimation.has entity.pluralize %> style='background-color: white'>
                   <td></td>
                   <td class='developers'><%= estimation.send("#{entity}s") %></td>
                   <td class="estimation_hours_per_day"><%= estimation.send("#{entity}_hours_per_day") unless entity == "account"%></td>

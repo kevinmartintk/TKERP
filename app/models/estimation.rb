@@ -13,4 +13,9 @@ class Estimation < ActiveRecord::Base
     self.errors.add(:base, "The fundamental laws of nature prevent time travel")
    end
   end
+
+  def has group
+    ( send(group).nil? or send(group) <= 0 ) ? false : true
+  end
+
 end
