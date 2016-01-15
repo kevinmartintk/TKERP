@@ -13,4 +13,13 @@ class Estimation < ActiveRecord::Base
     self.errors.add(:base, "The fundamental laws of nature prevent time travel")
    end
   end
+
+  def has_developers?
+    (developers.nil? or developers <= 0) ? false : true
+  end
+
+  def has_designers?
+    (designers.nil? or designers <= 0) ? false : true
+  end
+
 end

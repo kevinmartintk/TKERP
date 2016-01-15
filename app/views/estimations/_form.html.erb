@@ -34,7 +34,7 @@
           days.val(number_days);
         }
       }
-
+      calculate_days
       $("#estimation_" + entry + "_hours").bind("keyup change", calculate_days);
 
       var calculate_hours = function () {
@@ -48,7 +48,7 @@
           hours.val(number_days);
         }
       }
-
+      calculate_hours
       $("#estimation_" + entry + "_days").bind("keyup change", calculate_hours);
 
       if(!$("#estimation_" + entry + "_hours_per_day").val()){
@@ -65,7 +65,7 @@
           $("#estimation_" + entry + "_hours").attr('disabled', false);
         }
       }
-
+      validate_field
       $("#estimation_" + entry + "_hours_per_day").bind("keyup change", validate_field);
 
       
