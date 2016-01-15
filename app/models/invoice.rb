@@ -18,7 +18,9 @@ class Invoice < ActiveRecord::Base
 
   acts_as_paranoid
 
-  validates :client,:description, :currency, :amount, :status,:invoice_contacts, presence: true
+  validates :client,:description, :currency, :amount, :status, presence: true
+  validates :invoice_contacts, presence: { message: "are required. Please add at least one." }
+  validates :reason, presence: true, if: :is_canceled?
 
   accepts_nested_attributes_for :invoice_contacts, :allow_destroy => true
 
@@ -116,6 +118,10 @@ class Invoice < ActiveRecord::Base
 
   def is_to_be_issued?
     status == Status::TO_ISSUE_ID
+  end
+
+  def is_canceled?
+    status == Status::CANCELED_ID
   end
 
   def invoice_igv
