@@ -28,7 +28,6 @@
             <%= link_to nil, '', :data => { :toggle => "modal", :target => "#send_invoice_modal_#{invoice.id}" }, class: "btn btn-primary glyphicon glyphicon-envelope"%>
             <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_invoices_management_country_invoice_path(@headquarter.country, invoice), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
             <%= link_to '<span class="glyphicon glyphicon-file"></span>'.html_safe, invoices_management_country_invoice_path(@headquarter.country, invoice, :format => "pdf"), :data => { :toggle => "tooltip" }, title: 'PDF', class: "btn btn-default btn-sm" %>
-            <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, '', :data => { :toggle => "modal", :target => "#delete_invoice_modal_#{invoice.id}" }, title: 'Delete', class: "btn btn-default btn-sm" %>
           </td>
         </tr>
         <%= render 'send_mail_modal', invoice: invoice %>
