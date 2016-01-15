@@ -34,12 +34,12 @@
 <div class="form-group col-sm-12">
   <%= form.label :groups , class: "col-sm-2 text-left" %>
   <div class="col-sm-6">
-    <label class="col-sm-6"> <%= check_box_tag "developers", "1", @estimation.has_developers? %> Developers </label>
-    <label class="col-sm-6"> <%= check_box_tag "designers", "1", @estimation.has_designers? %> Designers </label>
+    <label class="col-sm-6"> <%= check_box_tag :developers, "1", @estimation.has(:developers) %> Developers </label>
+    <label class="col-sm-6"> <%= check_box_tag :designers, "1", @estimation.has(:designers) %> Designers </label>
   </div>
 </div>
 
-<div class="developers <%= "hide" unless @estimation.has_developers? %>">
+<div class="developers <%= "hide" unless @estimation.has :developers %>">
   <h3>Group developers</h3>
     <div class="form-group col-sm-12">
       <%= form.label :developers , class: "col-sm-2 text-left" %>
@@ -70,7 +70,7 @@
     </div>
 </div>
 
-<div class="designers <%= "hide" unless @estimation.has_designers? %>">
+<div class="designers <%= "hide" unless @estimation.has :designers %>">
   <h3>Group designers</h3>
   <div class="form-group col-sm-12">
     <%= form.label :designers , class: "col-sm-2 text-left" %>

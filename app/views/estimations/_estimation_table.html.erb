@@ -16,8 +16,8 @@
         <tr>
           <td><%= Technology.find(estimation.technology_id).name %></td>
           <td><%= EstimationType.find(estimation.estimation_type).name %></td>
-          <td><%= estimation.developers%></td>
-          <td><%= estimation.designers%></td>
+          <td><%= estimation.developers || 0 %></td>
+          <td><%= estimation.designers || 0 %></td>
           <td><%= estimation.accounts%></td>
           <td><%= estimation.sent_at%></td>
           <td>

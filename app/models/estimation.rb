@@ -14,12 +14,8 @@ class Estimation < ActiveRecord::Base
    end
   end
 
-  def has_developers?
-    (developers.nil? or developers <= 0) ? false : true
-  end
-
-  def has_designers?
-    (designers.nil? or designers <= 0) ? false : true
+  def has group
+    ( send(group).nil? or send(group) <= 0 ) ? false : true
   end
 
 end
