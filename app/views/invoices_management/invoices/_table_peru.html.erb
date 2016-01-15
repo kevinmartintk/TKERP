@@ -8,6 +8,7 @@
         <th>Address</th>
         <th>Drawdown</th>
         <th>Date</th>
+        <th>Expiration Date</th>
         <th>Currency</th>
         <th>Amount</th>
         <th>Status</th>
@@ -30,6 +31,7 @@
             <td>  No</td>
           <%end%>  
           <td><%= invoice.created_at.to_date %></td>
+          <td><%= invoice.expiration_date.to_date unless invoice.expiration_date.blank? %></td>
           <%if @headquarter.is_peru? %>
             <td><%= Currency.find(invoice.currency).name %></td>
           <%end%>
