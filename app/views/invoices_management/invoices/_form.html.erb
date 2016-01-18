@@ -68,14 +68,12 @@
   </div>
 
   <div class="form-group col-sm-12">
-    <% if @headquarter.is_peru? and @invoice.new_record? %> 
-      <div class="form-group col-sm-6">
-        <%= f.label :currency, class: "col-sm-4 text-left" %>
-        <div class="col-sm-6 text-left">
-          <%= f.collection_select :currency, currencies_array, :id, :name,  {prompt: '- Select a currency -'}, class: "form-control validate[required]" %>
-        </div>
+    <div class="form-group col-sm-6">
+      <%= f.label :currency, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6 text-left">
+        <%= f.collection_select :currency, currencies_array, :id, :name,  {prompt: '- Select a currency -'}, class: "form-control validate[required] to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
       </div>
-    <%end%>
+    </div>
 
     <div class="form-group col-sm-6">
       <%= f.label :amount, class: "col-sm-4 text-left" %>
@@ -117,16 +115,15 @@
 
     <div class="form-group col-sm-12">
       <div class="form-group col-sm-6 to-issue-show">
-      <%= f.label :invoice_copy, class: "col-sm-4 text-left" %>
-        <div class="col-sm-6">
-          <%= f.file_field :document, class: "form-control to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6 to-issue-show">
         <%= f.label :purchase_order, class: "col-sm-4 text-left" %>
         <div class="col-sm-6">
           <%= f.file_field :purchase_order, class: "form-control to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
+        </div>
+      </div>
+      <div class="form-group col-sm-6 to-issue-hide issued-show paid-show partial-payment-show canceled-show">
+      <%= f.label :invoice_copy, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= f.file_field :document, class: "form-control to-issue-disable issued-show paid-disable canceled-disable partial-payment-disable" %>
         </div>
       </div>
     </div>
@@ -159,14 +156,13 @@
   <%end%>
 
   <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6 to-issue-hide issued-hide paid-show partial-payment-show canceled-hide">
-      <%= f.label :payment_type, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6 text-left">
-        <%= f.select :payment_type, options_for_select(payment_types, @invoice.payment_type), { prompt: '- Select a payment type -' }, class: "payment form-control validate[required]" %>
+    <div class="form-group col-sm-6 to-issue-hide issued-show paid-show partial-payment-show canceled-show <%= "hide" if params[:action] == "new" %>" id='billing_date'>
+      <%= f.label :billing_date, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.text_field :billing_date, class: "datepicker form-control validate[required, date] to-issue-disable issued-show paid-disable partial-payment-disable canceled-disable", data: {"date-start-date" => "0d"} %>
       </div>
     </div>
-
-    <div class="form-group col-sm-6 to-issue-hide issued-show paid-show partial-payment-show canceled-show hide" id='expiration_date'>
+    <div class="form-group col-sm-6 to-issue-hide issued-show paid-show partial-payment-show canceled-show <%= "hide" if params[:action] == "new" %>" id='expiration_date'>
       <%= f.label :expiration_date, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
         <%= f.text_field :expiration_date, class: "datepicker form-control validate[required, date] to-issue-disable issued-show paid-disable partial-payment-disable canceled-disable", data: {"date-start-date" => "0d"} %>
@@ -174,8 +170,14 @@
     </div>
   </div>
 
-  <div class="form-group col-sm-12 to-issue-hide issued-hide paid-hide partial-payment-hide canceled-show hide" id="cancel_reason">
-    <div class="form-group col-sm-6">
+  <div class="form-group col-sm-12 to-issue-hide issued-hide paid-hide partial-payment-hide canceled-show <%= "hide" if params[:action] == "new" %>" id="cancel_reason">
+    <div class="form-group col-sm-6 to-issue-show issued-show paid-show partial-payment-show canceled-hide">
+      <%= f.label :payment_type, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6 text-left">
+        <%= f.select :payment_type, options_for_select(payment_types, @invoice.payment_type), { prompt: '- Select a payment type -' }, class: "payment form-control validate[required] to-issue-show issued-show paid-show partial-payment-show canceled-disable" %>
+      </div>
+    </div>
+    <div class="form-group col-sm-6 <%= "hide" if params[:action] == "new" %>">
         <%= f.label :reason, class: "col-sm-4 text-left" %>
         <div class="col-sm-6">
           <%= f.text_area :reason, class: "form-control custom-textarea validate[required]" %>
@@ -194,7 +196,7 @@
 
 <script type="text/javascript">
 
-  $('#invoice_expiration_date').datepicker({
+  $('#invoice_expiration_date, #invoice_billing_date').datepicker({
     format: "yyyy-mm-dd",
     autoclose: true,
     todayHighlight: true

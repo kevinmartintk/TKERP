@@ -5,30 +5,28 @@ class Currency
   DOLLAR_ID = 2
 
   def initialize(id, name, symbol)
-  	@id = id
-  	@name = name
-  	@symbol = symbol
+    @id = id
+    @name = name
+    @symbol = symbol
   end
 
   def self.all
-  	[soles, dollar]
+    [soles, dollar]
   end
 
   def self.soles
-  	new(SOLES_ID, "Nuevos Soles", "S/.")
+    new(SOLES_ID, "Soles", "S/.")
   end
 
   def self.dollar
-  	new(DOLLAR_ID, "Dollar", "$")
+    new(DOLLAR_ID, "Dollar", "$")
   end
 
   def self.find id_tmp
     case id_tmp
-	  	when SOLES_ID
-	  		soles
-	  	when DOLLAR_ID
-	  		dollar
-	  	end  	
+      when SOLES_ID then soles
+      when DOLLAR_ID then dollar
+    end
   end
 
   def self.get_symbol currency_id
