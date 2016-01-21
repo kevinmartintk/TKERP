@@ -10,6 +10,7 @@
         <th>Description</th>
         <th>Team</th>
         <th>Register Day</th>
+        <th>Updated at</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -24,6 +25,7 @@
           <td><%= inventory.description %></td>
           <td><%= Team.find(inventory.team).name %></td>
           <td><%= inventory.reg_date %></td>
+          <td><%= inventory.updated_at.to_date %></td>
           <td>
             <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_inventory_path(inventory), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
             <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, [inventory], method: :delete ,data: { toggle: "tooltip", confirm: "Are you sure?" }, title: "Delete", class: "btn btn-default btn-sm" %>

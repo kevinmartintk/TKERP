@@ -1,14 +1,20 @@
 InventoryType.create([
 	{
-		name: "Book",
+		name: "Book"
 	},
 	{
-		name: "Appliance",
+		name: "Appliance"
 	},
 	{
-		name: "Computation",
+		name: "Computation"
 	},
 	{
 		name: "Furniture"
+	},
+	{
+		name: "Computer"
+	},
+	{
+		name: "Device"
 	}
 ])

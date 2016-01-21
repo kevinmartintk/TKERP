@@ -14,6 +14,10 @@ class Collaborator < ActiveRecord::Base
     where(:team => Team::ACCOUNTS_ID)
   end
 
+  def full_name
+    name + " " + last_name
+  end
+
   def team_name
     Team.find(team).nil? ? "-" : Team.find(team).name
   end

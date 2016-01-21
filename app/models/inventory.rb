@@ -2,6 +2,7 @@ class Inventory < ActiveRecord::Base
   include PgSearch
   belongs_to :inventory_type
   belongs_to :collaborator
+  belongs_to :operating_system
   
   acts_as_paranoid
 

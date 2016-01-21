@@ -3,13 +3,13 @@ ready = ->
   $('#invoice_status').change update_status
 
 update_status = ->
-  value = $('#invoice_status option:selected').text().replace(/\s+/g, '-').toLowerCase()
+  value = default_format $('#invoice_status option:selected').text()
   action = $('#form_invoice').data("action")
   switch action 
     when "edit", "update"
-      $("." + value + "-show").show().attr('disabled', false);
-      $("." + value + "-disable").attr('disabled', true);
-      $("." + value + "-hide").hide()
+      show(value)
+      disable(value)
+      hide(value)
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

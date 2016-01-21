@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   end
   resources :inventories do
     get :update_collaborators, on: :collection
+    get :update_collaborators, on: :member
+    get :update_operating_systems, on: :collection
+    get :update_operating_systems, on: :member
   end
   resources :collaborators do
     resources :schedule#, only: [:index, :edit, :create, :update, :destroy]

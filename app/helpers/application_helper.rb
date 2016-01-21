@@ -24,17 +24,6 @@ module ApplicationHelper
       });</script>".html_safe
   end
 
-	def disabled_img file, img_id
-		"<script type='text/javascript'>
-      var img = document.getElementById('img_id');
-      if (reader.onload = function(file)){
-        img.style.visibility = 'hidden';}
-      else{
-      	img.style.visibility = 'visible';}
-      }
-    </script>".html_safe
-	end
-
 	def paginate_ajax_js
 		"<script>
 			$(document).ready(function() {
