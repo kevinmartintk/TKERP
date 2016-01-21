@@ -10,3 +10,5 @@
 @default_format = (string) ->
   string.replace(/\s+/g, '-').toLowerCase()
 
+@current_scope = (controller_name) ->
+  $("#wrapper").data("controller").search(controller_name) >= 0

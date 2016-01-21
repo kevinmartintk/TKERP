@@ -10,18 +10,18 @@
     </div>
     <div class="col-sm-4">
       <div class="col-sm-4">
-        <%= label_tag :from_date, 'From Date', class: "control-tag" %>
+        <%= label_tag :from_expiration_date, 'From Date', class: "control-tag" %>
       </div>
       <div class="col-sm-8">
-        <%= text_field_tag :from_date, nil, class: 'datepicker form-control' %>
+        <%= text_field_tag :from_expiration_date, nil, class: 'datepicker form-control' %>
       </div>
     </div>
     <div class="col-sm-4">
       <div class="col-sm-4">
-        <%= label_tag :to_date, 'To Date', class: "control-tag control-tag" %>
+        <%= label_tag :to_expiration_date, 'To Date', class: "control-tag control-tag" %>
       </div>
       <div class="col-sm-8">
-        <%= text_field_tag :to_date, nil, class: 'datepicker form-control' %>
+        <%= text_field_tag :to_expiration_date, nil, class: 'datepicker form-control' %>
       </div>
     </div>
   </div>
@@ -50,6 +50,24 @@
       </div>
       <div class="col-sm-8">
         <%= select_tag :status, options_from_collection_for_select(status_array, "id", "name"), prompt: "- Select a status -", class: 'form-control ' %>
+      </div>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :from_billing_date, 'From Date', class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :from_billing_date, nil, class: 'datepicker form-control' %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="col-sm-4">
+        <%= label_tag :to_billing_date, 'To Date', class: "control-tag control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :to_billing_date, nil, class: 'datepicker form-control' %>
       </div>
     </div>
   </div>

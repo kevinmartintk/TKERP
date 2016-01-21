@@ -38,9 +38,11 @@ class Invoice < ActiveRecord::Base
 	# extend FriendlyId
 	# friendly_id :name, use: [:slugged, :finders]
 
-  def self.search_with company, ruc, invoice_number, from_date, to_date, status
-    to_date(to_date).
-    from_date(from_date).
+  def self.search_with company, ruc, invoice_number, from_expiration_date, to_expiration_date, from_billing_date, to_billing_date, status
+    from_date(from_expiration_date).
+    to_date(to_expiration_date).
+    from_date(from_billing_date).
+    to_date(to_billing_date).
     search_invoice_number(invoice_number).
     search_client_name(company).
     search_client_ruc(ruc).
@@ -57,7 +59,7 @@ class Invoice < ActiveRecord::Base
 
   def self.from_date from_date
     if from_date.present?
-      where("created_at > ?", from_date)
+      where("created_at >= ?", from_date)
     else
       order("created_at DESC")
     end      
@@ -65,7 +67,7 @@ class Invoice < ActiveRecord::Base
 
   def self.to_date to_date
      if to_date.present?
-      where("created_at < ?", to_date)
+      where("created_at <= ?", to_date)
     else
       order("created_at DESC")
     end

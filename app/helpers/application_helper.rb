@@ -24,6 +24,14 @@ module ApplicationHelper
       });</script>".html_safe
   end
 
+  def date_format date
+    date.strftime "%m/%d/%Y" if date.present?
+  end
+
+  def human_boolean boolean
+    boolean ? 'Yes' : 'No'
+  end
+
 	def paginate_ajax_js
 		"<script>
 			$(document).ready(function() {

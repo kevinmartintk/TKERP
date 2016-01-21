@@ -7,10 +7,10 @@
         <th>RUC</th>
         <th>Address</th>
         <th>Drawdown</th>
-        <th>Date</th>
         <th>Expiration Date</th>
+        <th>Billing Date</th>
         <th>Currency</th>
-        <th>Amount</th>
+        <th id="amount-cell">Amount</th>
         <th>Status</th>
         <th>IGV</th>
         <th>Total</th>
@@ -24,18 +24,12 @@
           <td><%= invoice.invoice_number %></td>
           <td><%= invoice.client.name %></td>
           <td><%= invoice.client.legal_id %></td>
-          <td><%= invoice.client.address %></td>      
-          <%if invoice.has_drawdown %>
-            <td>Yes</td>
-          <%else%>
-            <td>  No</td>
-          <%end%>  
-          <td><%= invoice.created_at.to_date %></td>
-          <td><%= invoice.expiration_date.to_date unless invoice.expiration_date.blank? %></td>
-          <%if @headquarter.is_peru? %>
-            <td><%= Currency.find(invoice.currency).name %></td>
-          <%end%>
-          <td id="amount-cell"><%= invoice.amount_decimal %></td>
+          <td><%= invoice.client.address %></td>
+          <td><%= human_boolean invoice.has_drawdown? %></td>
+          <td><%= date_format invoice.expiration_date %></td>
+          <td><%= date_format invoice.billing_date %></td>
+          <td><%= Currency.find(invoice.currency).name %></td>
+          <td><%= invoice.amount_decimal %></td>
           <td><%= Status.find(invoice.status).name %></td>
           <td><%= invoice.invoice_igv %></td>
           <td><%= invoice.invoice_total %></td>
@@ -44,7 +38,7 @@
             <%= link_to nil, '', :data => { :toggle => "modal", :target => "#send_invoice_modal_#{invoice.id}" }, class: "btn btn-primary glyphicon glyphicon-envelope"%>
             <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_invoices_management_country_invoice_path(@headquarter.country, invoice), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
             <%= link_to '<span class="glyphicon glyphicon-file"></span>'.html_safe, invoices_management_country_invoice_path(@headquarter.country, invoice, :format => "pdf"), :data => { :toggle => "tooltip" }, title: 'PDF', :target => "_blank", class: "btn btn-default btn-sm" %>
-            <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, '', :data => { :toggle => "modal", :target => "#delete_invoice_modal_#{invoice.id}" }, title: 'Delete', class: "btn btn-default btn-sm" %>
+            <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, '', :data => {params: params, :toggle => "modal", :target => "#delete_invoice_modal_#{invoice.id}" }, title: 'Delete', class: "btn btn-default btn-sm" %>
           </td>
         </tr>
         <%= render 'send_mail_modal', invoice: invoice %>
@@ -68,26 +62,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  var resize_labels = (function () {
-    var position_amount = $('#amount-cell').position();
-    position_left_soles = (position_amount.left - 16).toString()+"px"
-    position_left_dollar = (position_amount.left - 5).toString()+"px"
-    $('.soles-detail').css({
-      position: 'absolute',
-      'left': position_left_soles,
-    });
-
-    $('.dollar-detail').css({
-      position: 'absolute',
-      'left': position_left_dollar,
-    });
-  });
-
-  $("#hidebtn").on("click", resize_labels);
-  $(window).resize(resize_labels);
-  $(document).ready(resize_labels);
-  $(".table-responsive").bind("scroll", resize_labels);
-
-</script>

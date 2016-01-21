@@ -1,6 +1,6 @@
 module InvoicesManagement
   class InvoicesController < ApplicationController
-    before_action :set_headquarter, only: [:index, :new, :create,:show, :edit, :update, :destroy]
+    before_action :set_headquarter, only: [:index, :new, :create, :show, :edit, :update, :destroy]
     before_action :set_invoice, only: [:show, :edit, :update, :destroy,:send_mail]
     add_breadcrumb "Countries", :invoices_management_countries_path
     add_breadcrumb "Invoices", :invoices_management_country_invoices_path
@@ -12,7 +12,7 @@ module InvoicesManagement
     autocomplete :client, :name
 
     def index
-      @invoices = @headquarter.invoices.search_with(params[:client], params[:legal_id], params[:invoice_number], params[:from_date], params[:to_date], params[:status])
+      @invoices = @headquarter.invoices.search_with(params[:client], params[:legal_id], params[:invoice_number], params[:from_expiration_date], params[:to_expiration_date], params[:from_billing_date], params[:to_billing_date],params[:status])
       @total_invoices_soles = "#{Currency.get_symbol_sol} #{Invoice.total_soles(@invoices)}"
       @total_invoices_dollar = "#{Currency.get_symbol_dolar} #{Invoice.total_dolar(@invoices)}"
     end
