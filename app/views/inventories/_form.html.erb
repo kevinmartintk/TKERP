@@ -25,7 +25,7 @@
     <div class="form-group col-sm-6">
       <%= f.label :collaborator_id, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= f.collection_select :collaborator_id, Collaborator.all,:id,:name, {prompt: 'Select a Collaborator'}, class: "form-control validate[required]", disabled: true %>
+        <%= f.collection_select :collaborator_id, [] , :id, :full_name, { prompt: '- Select a Collaborator -'}, class: "form-control", data: {value: @inventory.collaborator_id}%>
       </div>
     </div>
   </div>
@@ -58,9 +58,9 @@
       <%= f.label :image, class: "col-sm-4 text-left" %>
       <div class="col-sm-8">
         <%= f.file_field :image, class: "pictureInput" %>
-        <%if !@inventory.new_record? %>
+        <% unless @inventory.new_record? %>
           <%= f.label :new_image, id: "endTimeLabel", class: "hidden"%>
-        <%end%>
+        <% end %>
         <div id="target">
         </div>
       </div>
@@ -89,59 +89,21 @@
     <div class="form-group col-sm-6">
       <%= f.label :type, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= f.collection_select :inventory_type_id, InventoryType.all,:id,:name, {prompt: 'Select a Type'}, class: "form-control validate[required]", id: "inventory_type_id" %>
+        <%= f.collection_select :inventory_type_id, InventoryType.all, :id,:name, {prompt: 'Select a Type'}, class: "form-control validate[required]", id: "inventory_type_id" %>
       </div>
     </div>
-
-  </div>
-
-  <div class="form-group col-sm-12 book" style="display:none">
-    <div class="form-group col-sm-6">
-      <%= f.label :writer, class: "col-sm-4 text-left" %>
+    <div class="form-group col-sm-6 book-hide appliance-hide computation-hide furniture-hide device-show computer-show select-a-type-hide">
+      <%= f.label :operating_system_id, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= f.text_field :writer, class: "form-control", id: "inventory_writer" %>
-      </div>
-    </div>
-
-    <div class="form-group col-sm-6">
-      <%= f.label :edition, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :edition, class: "form-control", id: "inventory_edition" %>
+        <%= f.collection_select :operating_system_id, [], :id,:name, {prompt: '- Select a Operating System -'}, class: "form-control", id: "operating_system_id", data: {value: @inventory.operating_system_id} %>
       </div>
     </div>
   </div>
 
-  <div class="form-group col-sm-12 book" style="display:none">
-    <div class="form-group col-sm-6">
-      <%= f.label :editorial, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :editorial, class: "form-control", id: "inventory_editorial" %>
-      </div>
-    </div>
-
-    <div class="form-group col-sm-6">
-      <%= f.label :number_of_copies, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :copies, class: "form-control", id: "number_of_copies" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group col-sm-12 electric_appliance" style="display:none">
-    <div class="form-group col-sm-6">
-      <%= f.label :model, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :model, class: "form-control", id: "inventory_model" %>
-      </div>
-    </div>
-
-    <div class="form-group col-sm-6">
-      <%= f.label :number_of_serie, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :serie, class: "form-control", id: "number_of_serie" %>
-      </div>
-    </div>
-  </div>    
+  <%= render "book_fields", form: f %>
+  <%= render "electronic_fields", form: f %>
+  <%= render "computer_fields", form: f %>
+  <%= render "device_fields", form: f %>
 
   <div class="form-group">
     <div class="col-md-10 col-sm-10 col-xs-12">
@@ -151,94 +113,3 @@
     </div>
   </div>
 <% end %>
-
-<script type="text/javascript">  
-  $(document).ready(function () {
-    $('.datepicker').datepicker({
-      format: "yyyy-mm-dd",
-      autoclose: true,
-      todayHighlight: true,
-      endDate: new Date()
-    });      
-  });    
-  $(document).ready(function(){
-    var book= document.getElementsByClassName('book');
-    var elect_appl = document.getElementsByClassName('electric_appliance');
-
-        function hide_elects_field(){
-           for (i = 0; i < elect_appl.length; i++) {
-               elect_appl[i].style.display='none';    
-            }
-         }
-        function show_elects_field(){
-            for (i = 0; i < elect_appl.length; i++) {
-               elect_appl[i].style.display = 'block';
-            } 
-         }
-        function show_books_field(){
-            for (i = 0; i < book.length; i++) {
-               book[i].style.display = 'block';
-            } 
-         }
-        function hide_books_field(){
-            for (i = 0; i < book.length; i++) {
-                book[i].style.display = 'none';
-            }
-         }  
-
-       var val=$("#inventory_type_id").val();
-
-        switch(parseInt(val)) {
-          case 1:
-            hide_elects_field()
-            show_books_field()
-          break;
-          case 2:
-            show_elects_field()
-            hide_books_field()
-          break;
-          default:
-            hide_books_field()
-            hide_elects_field() 
-          break;        
-      } 
-
-      $('#inventory_type_id').on('change', function(){
-        val = $(this).val();
-     
-      switch(parseInt(val)) {
-          case 1:
-            hide_elects_field()
-            show_books_field()
-          break;
-          case 2:
-            show_elects_field()
-            hide_books_field()
-          break;
-          default:
-            hide_books_field()
-            hide_elects_field() 
-          break;        
-      }    
-      });
-    });      
-
-  $(function() {
-    $('.pictureInput').on('change', function(event) {
-      var files = event.target.files;
-      var image = files[0]
-      var reader = new FileReader();
-      reader.onload = function(file) {
-        var img = new Image();
-        console.log(file);
-        img.src = file.target.result;
-        $('#target').html(img);
-        img.style.height = '180px';
-      img.style.width = 'auto';
-      }
-      reader.readAsDataURL(image);
-      console.log(files);
-      document.getElementById("endTimeLabel").className = '';
-    });
-  });
-</script>

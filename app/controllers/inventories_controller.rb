@@ -61,6 +61,18 @@ class InventoriesController < ApplicationController
     end
   end
 
+  def update_operating_systems
+    scope = case params[:type]
+      when "Device" then "mobile"
+      when "Computer" then "desktop"
+      else "all"
+    end
+    @operating_systems = OperatingSystem.send(scope)
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_inventory
@@ -69,7 +81,6 @@ class InventoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_params
-      params.require(:inventory).permit(:collaborator_id, :name, :brand, :team, :inventory_type_id, :edition, :writer, :reg_date,:editorial, :model, :description, :copies, :serie, :image)
+      params.require(:inventory).permit(:collaborator_id, :name, :brand, :team, :inventory_type_id, :edition, :writer, :reg_date, :editorial, :model, :description, :copies, :serie, :image, :operating_system_id, :storage, :hdd, :cpu, :ram)
     end
 end
-

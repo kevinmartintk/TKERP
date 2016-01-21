@@ -1,0 +1,8 @@
+<option value="">
+  <%= prompt %>
+</option>
+<% collection.each do |element| %>
+  <option value="<%= element.id %>">
+    <%= element.full_name %>
+  </option>
+<% end %>
