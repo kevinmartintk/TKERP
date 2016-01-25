@@ -10,3 +10,5 @@
 @default_format = (string) ->
   string.replace(/\s+/g, '-').toLowerCase()
 
+@current_scope = (data, value) ->
+  $("#wrapper").data(data).search(value) >= 0

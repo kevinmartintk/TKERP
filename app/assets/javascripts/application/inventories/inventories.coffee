@@ -1,12 +1,13 @@
 ready = ->
-  ajax_collaborator_dropdown()
-  ajax_operating_system_dropdown()
-  datepicker()
-  pictureInput()
-  update_type()
-  $('#inventory_type_id').change update_type
-  $("#inventory_team").change ajax_collaborator_dropdown
-  $("#inventory_type_id").change ajax_operating_system_dropdown
+  if current_scope "controller", "inventories"
+    ajax_collaborator_dropdown()
+    ajax_operating_system_dropdown()
+    datepicker()
+    pictureInput()
+    update_type()
+    $('#inventory_type_id').change update_type
+    $("#inventory_team").change ajax_collaborator_dropdown
+    $("#inventory_type_id").change ajax_operating_system_dropdown
 
 datepicker = ->
   $('.datepicker').datepicker

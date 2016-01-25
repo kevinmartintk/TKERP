@@ -9,7 +9,7 @@
   </head>
   <body>
     <% if user_signed_in? %>
-      <div id="wrapper">
+      <div id="wrapper" data-action="<%= params[:action]%>" data-controller="<%= params[:controller]%>">
     <% else %>
       <div id="wrapper" style="padding-left: 0px">
     <% end %>

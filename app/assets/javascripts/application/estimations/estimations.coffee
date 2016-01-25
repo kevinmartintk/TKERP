@@ -1,5 +1,6 @@
 ready = ->
-  $('input[type=checkbox]').change update
+  if current_scope "controller", "estimations"
+    $('input[type=checkbox]').change update
 
 update = ->
   $("." + this.name + " input").val("")
