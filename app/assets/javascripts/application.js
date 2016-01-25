@@ -15,6 +15,7 @@
 //= require jquery_nested_form
 //= require jquery_ujs
 //= require jquery-ui
+//= require jquery.bettertabs.min
 
 //= require_tree ./plugins
 

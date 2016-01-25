@@ -107,6 +107,9 @@ gem 'prawnto', '~> 0.1.1'
 # Prawn::Table provides tables for the Prawn PDF toolkit
 gem 'prawn-table', '~> 0.2.1'
 
+# Bettertabs for Rails provides splitting content into several tabs, but doing it well, clean, DRY, accessible, usable, testable and fast 
+gem 'bettertabs'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '3.5.1'
