@@ -1,37 +1,33 @@
 class ContactsController < ApplicationController
-  autocomplete :client, :name
   add_breadcrumb "Contacts", :contacts_path
-  before_action :set_contact, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_contact_and_person, only: [:show, :edit, :update]
+  before_action :set_contact, only: [:destroy]
+
   respond_to :html
+
   load_and_authorize_resource
 
-  # GET /places
-  # GET /places.json
   def index
     @contacts = Contact.search_with(params[:name], params[:client_name])
   end
 
-  # GET /places/1
-  # GET /places/1.json
   def show
   end
 
-  # GET /places/new
   def new
     add_breadcrumb "New Contact", :new_contact_path
-    @contact = Contact.new
-
+    @person = Person.new
+    @person.build_contact
   end
 
-  # GET /places/1/edit
   def edit
     add_breadcrumb "Editing Contact", :edit_contact_path
   end
 
-  # POST /places
-  # POST /places.json
   def create
-    @contact = Contact.new(contact_params)
+    @person = Person.create(person_params)
+    @contact = @person.build_contact(contact_params)
 
     respond_to do |format|
       if @contact.save
@@ -44,9 +40,10 @@ class ContactsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /places/1
-  # PATCH/PUT /places/1.json
   def update
+    @person.update_attributes(person_params)
+    @contact.assign_attributes(contact_params)
+
     respond_to do |format|
       if @contact.update(contact_params)
         format.html { redirect_to contacts_path, notice: 'Contact was successfully updated.' }
@@ -58,8 +55,6 @@ class ContactsController < ApplicationController
     end
   end
 
-  # DELETE /places/1
-  # DELETE /places/1.json
   def destroy
     @contact.destroy
     respond_to do |format|
@@ -69,13 +64,20 @@ class ContactsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_contact
       @contact = Contact.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    def set_contact_and_person
+      set_contact
+      @person = @contact.person
+    end
+
+    def person_params
+      params.require(:person).permit(:id, :first_name, :last_name, :email, :phone, :extension, :mobile, :birthday, :position_id)
+    end
+
     def contact_params
-      params.require(:contact).permit(:name,:email,:phone,:mobile,:birthday,:client_id, :extension, :position)
+      params[:person].require(:contact_attributes).permit(:client_id)
     end
 end

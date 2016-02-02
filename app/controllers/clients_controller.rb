@@ -27,8 +27,8 @@ class ClientsController < ApplicationController
   end
 
   def create
-    entity = Entity.create(entity_params)
-    @client = entity.build_client(client_params)
+    @entity = Entity.create(entity_params)
+    @client = @entity.build_client(client_params)
 
     respond_to do |format|
       if @client.save

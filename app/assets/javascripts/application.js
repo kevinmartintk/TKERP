@@ -16,6 +16,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery.bettertabs.min
+//= require typeahead.bundle.min
 
 //= require_tree ./plugins
 

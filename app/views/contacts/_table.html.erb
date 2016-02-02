@@ -19,7 +19,7 @@
           <td><%= contact.phone %></td>
           <td><%= contact.mobile %></td>
           <td><%= contact.birthday %></td>
-          <td><%= contact.client.name %></td>
+          <td><%= contact.client_name %></td>
           <td>
             <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_contact_path(contact), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
             <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, [contact], method: :delete ,data: { toggle: "tooltip", confirm: "Are you sure?" }, title: "Delete", class: "btn btn-default btn-sm" %>
