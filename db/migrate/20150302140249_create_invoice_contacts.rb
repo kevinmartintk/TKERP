@@ -1,11 +1,11 @@
 class CreateInvoiceContacts < ActiveRecord::Migration
   def change
     create_table :invoice_contacts do |t|
-    	t.integer :invoice_id
-    	t.integer :contact_id
-    	t.datetime :deleted_at
+      t.references :invoice
+      t.references :contact
 
-      t.timestamps
+      t.datetime :deleted_at
+      t.timestamps null: false
     end
     add_index :invoice_contacts, :deleted_at
   end
