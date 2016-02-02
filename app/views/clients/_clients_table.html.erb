@@ -9,6 +9,7 @@
         <th>Legal Identification</th>
         <th>Corporate Name</th>
         <th>Type</th>
+        <th>Category</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -22,6 +23,7 @@
           <td><%= client.legal_id %></td>
           <td><%= client.corporate_name %></td>
           <td><%= client.type %></td>
+          <td><%= client.entity_type.humanize %></td>
           <td>
             <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_client_path(client), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
             <% if client.contacts.empty? %>

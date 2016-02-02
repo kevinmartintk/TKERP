@@ -1,5 +1,5 @@
 class Country < ActiveRecord::Base
-  has_many :clients
+  has_many :entities
   has_many :headquarters
 
   extend FriendlyId

@@ -1,4 +1,4 @@
-<%= form_for @client, :html => { class: "form-horizontal validate" } do |f| %>
+<%= nested_form_for @entity, url: path, method: method, :html => { class: "form-horizontal validate" } do |f| %>
   <% if @client.errors.any? %>
     <div id="error_explanation">
       <div class="alert alert-danger alert-dismissable">
@@ -16,15 +16,37 @@
   <% end %>
 
   <div class="form-group col-sm-12">
-    <%= f.label :client, class: "col-sm-2 text-left" %>
+    <%= f.label :name, class: "col-sm-2 text-left" %>
     <div class="col-sm-6">
       <%= f.text_field :name, class: "form-control validate[required]" %>
     </div>
   </div>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :corporate_name, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.text_field :corporate_name, class: "form-control" %>
+    </div>
+  </div>
+
   <div class="form-group col-sm-12">
     <%= f.label :address, class: "col-sm-2 text-left" %>
     <div class="col-sm-6">
       <%= f.text_field :address, class: "form-control validate[required]" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :phone, class: "col-sm-2 text-left" %>
+    <div class="col-sm-6">
+      <%= f.text_field :phone, class: "form-control validate[custom[customPhone]]" %>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <%= f.label :legal_identification, class: "col-sm-2 text-left", id: "legal_id_label" %>
+    <div class="col-sm-6">
+      <%= f.text_field :legal_id, class: "form-control" %>
     </div>
   </div>
   
@@ -36,25 +58,20 @@
   </div>
 
   <div class="form-group col-sm-12">
-    <%= f.label :legal_identification, class: "col-sm-2 text-left", id: "legal_id_label" %>
+    <%= f.label :category, class: "col-sm-2 text-left" %>
     <div class="col-sm-6">
-      <%= f.text_field :legal_id, class: "form-control" %>
+      <%= f.select :type, entity_types, {include_blank: '- Select a category -'}, class: "form-control validate[required]" %>
     </div>
   </div>
 
-  <div class="form-group col-sm-12">
-    <%= f.label :corporate_name, class: "col-sm-2 text-left", id: "legal_id_label" %>
-    <div class="col-sm-6">
-      <%= f.text_field :corporate_name, class: "form-control" %>
+  <%= f.fields_for :client do |c| %>
+    <div class="form-group col-sm-12">
+      <%= c.label :partner_id, class: "col-sm-2 text-left", id: "partner_id_label" %>
+      <div class="col-sm-6">
+        <%= c.collection_select :partner_id, Client.all_except(@client), :id, :name, {prompt: "- Choose a partner -"}, class: "form-control" %>
+      </div>
     </div>
-  </div>
-
-  <div class="form-group col-sm-12">
-    <%= f.label :partner_id, class: "col-sm-2 text-left", id: "partner_id_label" %>
-    <div class="col-sm-6">
-      <%= f.collection_select :partner_id, Client.all_except(@client), :id, :name, {prompt: "- Choose a partner -"}, class: "form-control" %>
-    </div>
-  </div>
+  <% end %>
 
   <div class="form-group">
     <div class="col-md-8 col-sm-8 col-xs-12">

@@ -2,7 +2,7 @@ class Client < ActiveRecord::Base
   include PgSearch
   acts_as_paranoid
 
-  belongs_to :country
+  belongs_to :entity
   belongs_to :partner, class_name: "Client", foreign_key: "partner_id"
 
   has_many :clients, class_name: "Client", foreign_key: "partner_id"
@@ -10,12 +10,17 @@ class Client < ActiveRecord::Base
   has_many :prospects
   has_many :invoices, :dependent => :restrict_with_error
 
-  validates :name, :country, :address, presence: true
-  validates :legal_id, presence: true, if: :is_peruvian?
-  validates :legal_id , length: {is: 11}, uniqueness:true, if: :is_peruvian?
+  delegate :name, :corporate_name, :address, :phone, :legal_id, :country, :type, to: :entity
+  delegate :type, to: :entity, prefix: true
 
-  pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
-  pg_search_scope :seek_legal_id, against: [:legal_id], using: { tsearch: { prefix: true  } }
+  extend FriendlyId
+  friendly_id :slug_candidates, use: [:slugged, :finders]
+
+  # pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
+  # pg_search_scope :seek_legal_id, against: [:legal_id], using: { tsearch: { prefix: true  } }
+
+  pg_search_scope :seek_name, associated_against: {entity: [:name]}, using: {tsearch: {prefix: true}}
+  pg_search_scope :seek_legal_id, associated_against: {entity: [:legal_id]}, using: {tsearch: {prefix: true}}
   pg_search_scope :seek_partner_id, against: [:partner_id], using: { tsearch: { prefix: true  } }
 
   scope :partner, -> { where(id: partner_id_list) }
@@ -27,10 +32,6 @@ class Client < ActiveRecord::Base
 
   def type
     (clients.empty?) ? "Regular" : "Partner"
-  end
-
-  def is_peruvian?
-    country_id.eql?(173)
   end
 
   def partner_name
@@ -78,6 +79,13 @@ class Client < ActiveRecord::Base
 
   def self.partner_id_list
     Client.uniq.where("partner_id IS NOT NULL").pluck(:partner_id)
+  end
+
+  def slug_candidates
+    [
+      entity.name,
+      [entity.name, entity.legal_id]
+    ]
   end
 
 end
