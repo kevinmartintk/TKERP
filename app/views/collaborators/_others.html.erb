@@ -1,0 +1,69 @@
+  <div class="form-group col-sm-6">
+      <%= form.label :mail_tk, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :mail, class: "form-control validate[required]" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6">
+      <%= form.label :blood_type, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        radiobutton
+      </div>
+    </div>
+
+  
+    <div class="form-group col-sm-6">
+      <%= form.label :emergency_number, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :em_number, class: "form-control" %>
+      </div>
+    </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= form.label :contact_person, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :contact, class: "form-control validate[required]" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6">
+      <%= form.label :relationship, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.collection_select :relationship, Relationship.all,:id,:name, {prompt: 'Select a Relationship'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= form.label :currency, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.collection_select :currency, Currency.all,:id,:name, {prompt: 'Select a Currency'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6">
+      <%= form.label :salary, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :salary, class: "form-control validate[required, custom[money]]" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= form.label :starting_day, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :start_day, class: "datepicker form-control validate[required]" %>
+      </div>
+    </div>
+
+    <div class="form-group col-sm-6">
+      <%= form.label :team, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.collection_select :team, teams_array,:id,:name, {prompt: 'Select a Team'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+  </div>

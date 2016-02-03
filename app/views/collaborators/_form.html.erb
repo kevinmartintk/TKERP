@@ -15,133 +15,15 @@
     </div>
   <% end %>
 
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= f.label :first_name, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :name, class: "form-control validate[required]" %>
-      </div>
-    </div>
-
-    <div class="form-group col-sm-6">
-      <%= f.label :last_name, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :last_name, class: "form-control validate[required]" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= f.label :dni, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :dni, class: "form-control validate[required, custom[validDNI]]" %>
-      </div>
-    </div>
-    
-    <div class="form-group col-sm-6">
-      <%= f.label :birthday, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :birthday, class: "datepicker form-control validate[required]" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= f.label :mail_tk, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :mail, class: "form-control validate[required]" %>
-      </div>
-    </div>
-
-    <div class="form-group col-sm-6">
-      <%= f.label :mobile_phone, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :mobile, class: "form-control validate[required, custom[customMobile]]" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= f.label :skype, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :skype, class: "form-control" %>
-      </div>
-    </div>
-
-    <div class="form-group col-sm-6">
-      <%= f.label :emergency_number, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :em_number, class: "form-control" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= f.label :contact_person, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :contact, class: "form-control validate[required]" %>
-      </div>
-    </div>
-
-    <div class="form-group col-sm-6">
-      <%= f.label :relationship, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.collection_select :relationship, Relationship.all,:id,:name, {prompt: 'Select a Relationship'}, class: "form-control validate[required]" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= f.label :currency, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.collection_select :currency, Currency.all,:id,:name, {prompt: 'Select a Currency'}, class: "form-control validate[required]" %>
-      </div>
-    </div>
-
-    <div class="form-group col-sm-6">
-      <%= f.label :salary, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :salary, class: "form-control validate[required, custom[money]]" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-8">
-      <%= f.label :address, class: "col-sm-3 text-left" %>
-      <div class="col-sm-9">
-        <%= f.text_field :address, class: "form-control" %>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= f.label :starting_day, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.text_field :start_day, class: "datepicker form-control validate[required]" %>
-      </div>
-    </div>
-
-    <div class="form-group col-sm-6">
-      <%= f.label :team, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= f.collection_select :team, teams_array,:id,:name, {prompt: 'Select a Team'}, class: "form-control validate[required]" %>
-      </div>
-    </div>
-  </div>
-
-  <!--div class="form-group col-sm-12">
-    <%= f.label :schedule_ink, class: "col-sm-1 control-label" %>
-    <div class="col-sm-4">
-      <%= f.text_field :calendar, class: "form-control" %>
-    </div>
-  </div-->
+  <%= bettertabs :mytabs do |tab| %>
+    <%= tab.static :general_information, locals: {form: f } %>
+    <%= tab.static :others, locals: {form: f } %>
+    <%#= tab.static :academic_information %>
+    <%#= tab.static :family_data %>
+    <%#= tab.static :health_and_emergency_data %>
+    <%#= tab.static :labor_data %>
+    <%#= tab.static :salary_information %>
+  <% end %>
 
   <div class="form-group">
     <div class="col-md-10 col-sm-10 col-xs-12">

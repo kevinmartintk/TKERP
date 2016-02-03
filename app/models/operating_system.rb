@@ -1,5 +1,10 @@
 class OperatingSystem < ActiveRecord::Base
-  enum category: [:desktop, :mobile, :wearable, :tv]
+  self.inheritance_column = nil
+
+  enum type: [:desktop, :mobile, :wearable, :tv]
+
   alias_attribute :full_name, :name
-  has_one :inventories
+
+  has_many :inventories
+
 end

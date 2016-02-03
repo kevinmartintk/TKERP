@@ -1,15 +1,5 @@
 <%=  nested_form_for([:invoices_management, @headquarter.country, @invoice], html: {id: "form_invoice", role: "form", class: "form-horizontal validate", data: {action: params[:action]}, multipart: true}) do |f|  %>
-  <% if @invoice.errors.any? %>
-    <div id="error_explanation" class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      <ul>
-        <% @invoice.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  <%= render "helpers/flash_errors", object: @invoice %>
   <div class="form-group col-sm-12">
     <div class="form-group col-sm-6">
       <%= f.label :client_id, class: "col-sm-4 text-left" %>

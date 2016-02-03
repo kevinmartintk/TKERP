@@ -1,6 +1,10 @@
 class Collaborator < ActiveRecord::Base
   include PgSearch
   acts_as_paranoid
+
+  belongs_to :person
+  belongs_to :team
+
   has_many :events
   has_many :prospects
   has_many :inventories

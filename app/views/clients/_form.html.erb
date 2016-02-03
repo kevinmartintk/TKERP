@@ -60,7 +60,7 @@
   <div class="form-group col-sm-12">
     <%= f.label :category, class: "col-sm-2 text-left" %>
     <div class="col-sm-6">
-      <%= f.select :type, entity_types, {include_blank: '- Select a category -'}, class: "form-control validate[required]" %>
+      <%= f.select :type, class_enum_for_select("Entity", "type"), {prompt: '- Select a category -'}, class: "form-control validate[required]" %>
     </div>
   </div>
 

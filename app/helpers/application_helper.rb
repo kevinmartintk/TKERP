@@ -4,8 +4,8 @@ module ApplicationHelper
     [['Transference',1], ['Check',2]]
   end
 
-  def entity_types
-    Entity.types.keys.map {|k| [k.humanize, k]}
+  def class_enum_for_select class_name, enum_name
+    class_name.constantize.send(enum_name.pluralize).keys.map {|k| [k.humanize, k]}
   end
 
   def disabled_info form

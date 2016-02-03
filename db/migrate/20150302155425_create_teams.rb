@@ -1,8 +1,8 @@
 class CreateTeams < ActiveRecord::Migration
   def change
     create_table :teams do |t|
-      t.string :name
-      t.references :leader, foreign_key: false
+      t.string :name, null: false
+      t.references :leader, references: :collaborators, foreign_key: false
       t.references :parent, references: :teams
       t.date :start
       t.date :end

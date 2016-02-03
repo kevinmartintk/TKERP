@@ -19,12 +19,12 @@
         <tr>
           <td><%= inventory.code_inventory %></td>
           <td><%= inventory.name %></td>
-          <td><%= inventory.collaborator.name %></td>
+          <td><%= inventory.collaborator_name %></td>
           <td><%= inventory.brand %></td>
-          <td><%= inventory.inventory_type.name %></td>
+          <td><%= inventory.type %></td>
           <td><%= inventory.description %></td>
-          <td><%= Team.find(inventory.team).name %></td>
-          <td><%= inventory.reg_date %></td>
+          <td><%= inventory.team_name %></td>
+          <td><%= inventory.register_date %></td>
           <td><%= inventory.updated_at.to_date %></td>
           <td>
             <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_inventory_path(inventory), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>

@@ -19,7 +19,7 @@ class Prospect < ActiveRecord::Base
   delegate :partner_name, :to => :client
 
   extend FriendlyId
-    friendly_id :name, use: [:slugged, :finders]
+  friendly_id :name, use: [:slugged, :finders]
 
   pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_client_name,  associated_against: {

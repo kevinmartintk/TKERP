@@ -14,7 +14,7 @@
         <%= label_tag :inventory_type_id, "Type", class: "control-tag" %>
       </div>
       <div class="col-sm-8">
-        <%= select_tag :inventory_type_id, options_from_collection_for_select(InventoryType.all, "id", "name"), prompt: "- Select a type -", class: 'form-control' %>
+        <%= select_tag :inventory_type_id, options_for_select(class_enum_for_select "Inventory", "type"), prompt: "- Select a type -", class: 'form-control' %>
       </div>
     </div>
     <div class="col-sm-4">

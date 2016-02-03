@@ -1,11 +1,10 @@
 <% if @estimation.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@estimation.errors.count, "error") %> prohibited this estimation from being saved:</h2>
-
     <ul>
-    <% @estimation.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
+      <% @estimation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
     </ul>
   </div>
 <% end %>
