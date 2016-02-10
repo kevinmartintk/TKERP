@@ -1,2 +1,2 @@
 <h1 class="page-header">Collaborator <small>New</small></h1>
-<%= render 'form'%>
+<%= render 'form', collaborator: @collaborator, method: :post, path: collaborators_path%>

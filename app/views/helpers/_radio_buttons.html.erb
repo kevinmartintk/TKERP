@@ -1,0 +1,8 @@
+<ul class="radio-button">
+  <% model_name.constantize.send(enum.pluralize).keys.each do |name| %>
+    <li>
+      <%= form.radio_button enum.to_sym, name %>
+      <%= form.label enum.to_sym, name.humanize, value: name %>
+    </li>
+  <% end %>
+</ul>

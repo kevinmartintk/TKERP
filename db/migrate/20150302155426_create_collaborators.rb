@@ -10,11 +10,12 @@ class CreateCollaborators < ActiveRecord::Migration
       t.string :code
       t.date :first_day
       t.references :boss, references: :collaborators
+      t.references :reference, references: :collaborators
       t.string :work_mail
       t.integer :type, null: false, default: 0
       t.integer :status, null: false, default: 0
 
-      # bank info
+      # salary info
       t.float :salary
 
       # health info
@@ -24,6 +25,8 @@ class CreateCollaborators < ActiveRecord::Migration
       t.attachment :before_employment_test
       t.attachment :around_employment_test
       t.attachment :after_employment_test
+      t.integer :insurance, null: false, default: 0
+      t.string :insurance_type
 
       t.string :slug
       t.datetime :deleted_at

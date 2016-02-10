@@ -1,0 +1,57 @@
+<h2 class="page-header">Internal Information</h2>
+<%= form.fields_for :collaborator do |c| %>
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= c.label :code, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= c.text_field :code, class: "form-control validate[required]" %>
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <%= c.label :first_day, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= c.text_field :first_day, class: "form-control datepicker" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= c.label :team, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= c.collection_select :team_id, Team.all, :id,:name, {prompt: '- Select a Team -'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <%= form.label :position, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.collection_select :position_id, Position.all, :id,:name, {prompt: '- Select a Position -'}, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= c.label :internal_mail, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= c.text_field :work_mail, class: "form-control validate[required]" %>
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <%= c.label :type, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= c.select :type, class_enum_for_select("Collaborator","type"), {prompt: '- Select a Type -'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= c.label :status, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= c.select :status, class_enum_for_select("Collaborator","status"), {prompt: '- Select a Type -'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+  </div>
+
+<% end %>

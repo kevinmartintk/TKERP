@@ -1,46 +1,27 @@
-<%= form_for @collaborator, :html => { class: "form-horizontal validate" } do |f| %>
-  <% if @collaborator.errors.any? %>
-    <div id="error_explanation">
-      <div class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-      &times;
-        </button>
-        <h2><%= pluralize(@collaborator.errors.count, "error") %> prohibited this collaborator from being saved:</h2>
-        <ul>
-          <% @collaborator.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
+<%= nested_form_for @person, url: path, method: method, :html => { class: "form-horizontal validate" } do |f| %>
+  <%= render "helpers/flash_errors", object: @person %>
+  <%= render "helpers/flash_errors", object: @collaborator %>
+
+  <ul class="nav nav-tabs" role="tablist">
+    <% collaborator_tabs.each do |tab| %>
+      <li role="presentation">
+        <a href="#<%=tab.dasherize%>" aria-controls="<%=tab.dasherize%>" role="tab" data-toggle="tab"><%= tab.humanize %></a></li>
+    <% end %>
+  </ul>
+
+  <div class="tab-content">
+    <% collaborator_tabs.each do |tab| %>
+      <div role="tabpanel" class="tab-pane" id="<%=tab.dasherize%>">
+        <%= render "collaborators/tabs/#{tab}", form: f %>
       </div>
-    </div>
-  <% end %>
-
-  <%= bettertabs :mytabs do |tab| %>
-    <%= tab.static :general_information, locals: {form: f } %>
-    <%= tab.static :others, locals: {form: f } %>
-    <%#= tab.static :academic_information %>
-    <%#= tab.static :family_data %>
-    <%#= tab.static :health_and_emergency_data %>
-    <%#= tab.static :labor_data %>
-    <%#= tab.static :salary_information %>
-  <% end %>
-
-  <div class="form-group">
-    <div class="col-md-10 col-sm-10 col-xs-12">
-      <div class="col-sm-12 text-right">
-        <%= f.submit "Save" , class: "btn btn-primary"%> <%= link_to 'Cancel', collaborators_path, class: "btn btn-default" %>
+    <% end %>
+    <div class="form-group">
+      <div class="col-md-10 col-sm-10 col-xs-12">
+        <div class="col-sm-12 text-right">
+          <%= f.submit "Save" , class: "btn btn-primary"%> <%= link_to 'Cancel', collaborators_path, class: "btn btn-default" %>
+        </div>
       </div>
     </div>
   </div>
-<% end %>
 
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('.datepicker').datepicker({
-      format: "yyyy-mm-dd",
-      autoclose: true,
-      todayHighlight: true,
-      endDate: new Date()
-    });
-  });             
-</script>
+<% end %>

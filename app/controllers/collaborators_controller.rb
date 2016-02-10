@@ -1,7 +1,11 @@
 class CollaboratorsController < ApplicationController
-  before_action :set_collaborator, only: [:show, :edit, :update, :destroy]
   add_breadcrumb "Collaborators", :collaborators_path
+
+  before_action :set_collaborator_and_person, only: [:show, :edit, :update]
+  before_action :set_collaborator, only: [:destroy]
+
   respond_to :html
+
   load_and_authorize_resource
 
   def index
@@ -13,8 +17,35 @@ class CollaboratorsController < ApplicationController
 
   def new
     add_breadcrumb "New Collaborator", :new_collaborator_path
-    @collaborator = Collaborator.new
-    #@schedule = @collaborator.schedules.build
+
+    #general #internal #health
+      @person = Person.new
+      collaborator = @person.build_collaborator
+
+    #familiar
+      spouse_relationship = collaborator.build_spouse_relationship
+      spouse_relationship.build_person
+      children_relationship = collaborator.children_relationships.build
+      children_relationship.build_person
+
+    #academic
+      study = collaborator.studies.build
+      study.build_entity
+
+    #laboral
+      job_experience = collaborator.job_experiences.build
+      job_experience.build_entity
+      job_experience.build_reference
+
+    #payment
+      collaborator.build_collaborator_salary_bank
+      collaborator.build_collaborator_cts_bank
+      collaborator.build_collaborator_pension_entity
+
+    #emergency
+      emergency_relationship = collaborator.build_emergency_relationship
+      emergency_relationship.build_person
+
   end
 
   def edit
@@ -22,48 +53,49 @@ class CollaboratorsController < ApplicationController
   end
 
   def create
-    begin
-      @collaborator = Collaborator.new(collaborator_params)
-      if @collaborator.save
-        redirect_to collaborators_path, notice: 'Collaborator was successfully created.'
-      else
-        render :new
-      end
-    rescue
+    @person = Person.create(person_params)
+    @collaborator = Collaborator.new(collaborator_params)
+
+    if @collaborator.save
+      redirect_to collaborators_path, notice: 'Collaborator was successfully created.'
+    else
       render :new
     end
   end
 
   def update
-    begin
-      if @collaborator.update(collaborator_params)
-        redirect_to collaborators_path, notice: 'Collaborator was successfully updated.'
-      else
-        render :edit
-      end
-    rescue
+    @person.update_attributes(person_params)
+    @collaborator.assign_attributes(collaborator_params)
+
+    if @collaborator.update(collaborator_params)
+      redirect_to collaborators_path, notice: 'Collaborator was successfully updated.'
+    else
       render :edit
     end
   end
 
   def destroy
-    begin
-      if @collaborator.destroy
-        redirect_to collaborators_path, notice: 'Collaborator was successfully destroyed.'
-      end
-    rescue
+    if @collaborator.destroy
+      redirect_to collaborators_path, notice: 'Collaborator was successfully destroyed.'
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_collaborator
       @collaborator = Collaborator.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def collaborator_params
-      params.require(:collaborator).permit(:name, :last_name, :dni, :calendar, :birthday, :mail, :currency, :relationship, :mobile, :skype, :em_number, :contact, :address, :start_day, :salary, :team)
+    def set_collaborator_and_person
+      set_collaborator
+      @person = @contact.person
     end
 
+    def person_params
+      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype)
+    end
+
+    def collaborator_params
+      params[:collaborator].permit()
+    end
 end

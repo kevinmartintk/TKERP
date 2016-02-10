@@ -2,7 +2,7 @@ class CreateEntities < ActiveRecord::Migration
   def change
     create_table :entities do |t|
       t.string :name
-      t.string :corporate_name, null: false
+      t.string :corporate_name
       t.string :address
       t.string :phone
       t.string :legal_id, foreign_key: false

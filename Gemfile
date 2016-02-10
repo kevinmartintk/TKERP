@@ -93,7 +93,7 @@ gem 'seedbank', '~> 0.3.0'
 gem 'will_paginate', '~> 3.0.7'
 
 # Gem to conveniently handle multiple models in a single form with Rails 3 and jQuery or Prototype.
-gem 'nested_form', '~> 0.3.2'
+gem 'nested_form', '0.3.1'
 
 # Simple, Heroku-friendly Rails app configuration using ENV and a single YAML file
 gem 'figaro', '~> 1.1.0'
@@ -106,9 +106,6 @@ gem 'prawnto', '~> 0.1.1'
 
 # Prawn::Table provides tables for the Prawn PDF toolkit
 gem 'prawn-table', '~> 0.2.1'
-
-# Bettertabs for Rails provides splitting content into several tabs, but doing it well, clean, DRY, accessible, usable, testable and fast 
-gem 'bettertabs'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

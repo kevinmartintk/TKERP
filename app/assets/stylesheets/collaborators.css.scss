@@ -1,0 +1,13 @@
+ul.radio-button {
+  padding-left: 0;
+  li {
+    .in-line {
+      flex-grow: 1;
+      display: inline;
+    }
+    list-style: none;
+    label {
+      font-weight: 100;
+    }
+  }
+}

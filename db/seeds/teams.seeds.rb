@@ -8,5 +8,6 @@ Team.create([
   { :name => 'Account'},
   { :name => 'Designer'},
   { :name => 'Human Resources'},
-  { :name => 'Admin'}
+  { :name => 'Admin'},
+  { :name => 'Sales'}
 ])

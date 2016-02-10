@@ -1,0 +1,18 @@
+<h2 class="page-header">Laboral Information</h2>
+<%= form.fields_for :collaborator do |c| %> 
+  <%= c.fields_for :job_experiences do |je| %>
+    <h3 class="page-header">Company Information</h3>
+    <%= je.fields_for :entity do |e|%>
+      <%= render "collaborators/forms/entity", form: e %>
+    <% end %>
+    <%= je.link_to_add "Add job experience entity", :entity %>
+    <h3 class="page-header">Labour Information</h3>
+    <%= render "collaborators/forms/job_experience", form: je %>
+    <h3 class="page-header">Reference Information</h3>
+    <%= je.fields_for :reference  do |r| %>
+      <%= render "collaborators/forms/reference", form: r %>
+    <% end %>
+    <%= je.link_to_add "Add job experience reference", :reference %>
+  <% end %>
+  <%= c.link_to_add "Add job experience", :job_experiences %>
+<% end %>

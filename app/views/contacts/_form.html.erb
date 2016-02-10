@@ -67,8 +67,8 @@
       <div class="form-group col-sm-6">
         <%= c.label :client_id, class: "col-sm-4 text-left" %>
         <div class="col-sm-8">
-          <input id="search_typeahead" class="form-control typeahead" type="text">
-          <%= c.hidden_field :client_id, id: "clients-typeahead", class: "form-control" %>
+          <input class="search_typeahead form-control typeahead" type="text">
+          <%= c.hidden_field :client_id, class: "clients-typeahead-id" %>
         </div>
       </div>
     <% end %>
@@ -83,35 +83,3 @@
   </div>
 
 <% end %>
-
-<script type="text/javascript">
-
-  $(document).ready(function () {
-    $('.datepicker').datepicker({
-      format: "yyyy-mm-dd",
-      autoclose: true,
-      endDate: new Date()
-    });
-  });
-
-  var clientsSource = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    remote: {
-      url: '/datasets/clients?query=%QUERY',
-      wildcard: '%QUERY'
-    }
-  });
-
-  $('#search_typeahead').typeahead(null, {
-    limit: 1000,
-    name: 'clients',
-    display: 'name',
-    source: clientsSource
-  });
-
-  $('#search_typeahead').bind('typeahead:selected', function(obj, datum, name) {
-    $("#clients-typeahead").val(datum.id)
-  });
-
-</script>
