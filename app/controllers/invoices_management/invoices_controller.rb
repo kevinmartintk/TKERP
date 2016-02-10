@@ -13,8 +13,8 @@ module InvoicesManagement
 
     def index
       @invoices = @headquarter.invoices.search_with(params[:client], params[:legal_id], params[:invoice_number], params[:from_date], params[:to_date], params[:status])
-      @total_invoices_soles = "#{Currency.get_symbol_sol} #{Invoice.total_soles(@invoices)}"
-      @total_invoices_dollar = "#{Currency.get_symbol_dolar} #{Invoice.total_dolar(@invoices)}"
+      @total_invoices_soles = "#{Currency.currency_symbol('Sol')} #{Invoice.total_soles(@invoices)}"
+      @total_invoices_dollar = "#{Currency.currency_symbol('Dolar')} #{Invoice.total_dolar(@invoices)}"
     end
 
     def send_mail

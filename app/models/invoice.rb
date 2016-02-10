@@ -37,6 +37,7 @@ class Invoice < ActiveRecord::Base
 
 	# extend FriendlyId
 	# friendly_id :name, use: [:slugged, :finders]
+  enum status: [:to_issue_id, :issue_id, :paid_id, :canceled_id, :partial_payment_id]
 
   def self.search_with company, ruc, invoice_number, from_date, to_date, status
     to_date(to_date).
@@ -101,11 +102,11 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.total_soles invoices
-    self.total_amount(invoices, Currency::SOLES_ID)
+    self.total_amount(invoices, Currency.currency_symbol('Sol'))
   end
 
   def self.total_dolar invoices
-    self.total_amount(invoices, Currency::DOLLAR_ID)
+    self.total_amount(invoices, Currency.currency_symbol('Dolar'))
   end
 
   def amount_decimal
