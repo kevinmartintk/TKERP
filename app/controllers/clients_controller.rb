@@ -27,16 +27,15 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @entity = Entity.create(entity_params)
-    @client = @entity.build_client(client_params)
+    @entity = Entity.new(entity_params)
 
     respond_to do |format|
-      if @client.save
+      if @entity.save
         format.html { redirect_to clients_path, notice: 'Client was successfully created.' }
-        format.json { render :show, status: :created, location: @client }
+        format.json { render :show, status: :created, location: @entity }
       else
         format.html { render :new }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+        format.json { render json: @entity.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -75,10 +74,7 @@ class ClientsController < ApplicationController
     end
 
     def entity_params
-      params.require(:entity).permit(:name, :corporate_name, :address, :phone, :legal_id, :country_id, :type)
+      params.require(:entity).permit(:name, :corporate_name, :address, :phone, :legal_id, :country_id, :type, client_attributes: [:partner_id])
     end
 
-    def client_params
-      params[:entity].require(:client_attributes).permit(:partner_id)
-    end
 end

@@ -18,7 +18,7 @@ class Entity < ActiveRecord::Base
 
   delegate :name, to: :country, prefix: true
 
-  validates :legal_id, presence: true, length: {is: 11}#, uniqueness: true, if: :is_peruvian?
+  validates :legal_id, presence: true, length: {is: 11}
   validates :name, :address, :country, :phone, presence: true
   validates_format_of :phone, :with => /\A(([ \)])[0-9]{1,3}([ \)]))?([\(][0-9]{1,3}[\)])?([0-9 \.\-]{1,9})\Z/
 

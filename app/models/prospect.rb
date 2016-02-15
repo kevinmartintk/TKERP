@@ -3,7 +3,7 @@ class Prospect < ActiveRecord::Base
   acts_as_paranoid
 
   belongs_to :client
-  belongs_to :account, class_name: "Collaborator"
+  # belongs_to :account, class_name: "Collaborator"
   belongs_to :team
 
   has_many :estimations
@@ -18,7 +18,7 @@ class Prospect < ActiveRecord::Base
 
   validates :client, :prospect_contacts, presence: true
 
-  delegate :name, :type, :country_id, to: :client, prefix: true
+  delegate :name, :type, :country_id, to: :client, prefix: true, allow_nil: true
   delegate :partner_name, to: :client
   delegate :name, to: :team
 
