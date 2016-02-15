@@ -1,10 +1,12 @@
 <h2 class="page-header">Payment Information</h2>
 <%= form.fields_for :collaborator do |c| %>
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= c.label :salary, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= c.text_field :salary, class: "form-control" %>
+  <div class="over-row">
+    <div class="form-group col-sm-12">
+      <div class="form-group col-sm-6">
+        <%= c.label :salary, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= c.text_field :salary, class: "form-control" %>
+        </div>
       </div>
     </div>
   </div>
@@ -17,12 +19,14 @@
     <%= render "collaborators/forms/bank", form: ccb %>
   <% end %>
   <%= c.fields_for :collaborator_pension_entity do |cpe| %>
-    <h3 class="page-header">Pension System</h3>
-    <div class="form-group col-sm-12">
-      <div class="form-group col-sm-6">
-        <%= cpe.label :pension, class: "col-sm-4 text-left" %>
-        <div class="col-sm-6">
-          <%= cpe.collection_select :entity_id, Entity.pension, :id, :name, { prompt: '- Select a Pension -' }, class: "form-control" %>
+    <div class="over-row">
+      <h3 class="page-header">Pension System</h3>
+      <div class="form-group col-sm-12">
+        <div class="form-group col-sm-6">
+          <%= cpe.label :pension, class: "col-sm-4 text-left" %>
+          <div class="col-sm-6">
+            <%= cpe.collection_select :entity_id, Entity.pension, :id, :name, { prompt: '- Select a Pension -' }, class: "form-control" %>
+          </div>
         </div>
       </div>
     </div>

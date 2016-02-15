@@ -1,25 +1,32 @@
-<h2 class="page-header">Familiar Information</h2>
-<%= form.label :has_family_or_dependents? , class: "col-sm-4 text-left" %>
-  <div class="col-sm-6">
- <div class="form-group col-sm-12">
-   <label class="radio-inline"><%= radio_button_tag :has_family, "yes" %>Yes</label>
-    <label class="radio-inline"><%= radio_button_tag :has_family, "no" %>No</label>
+<div class="over-row">
+  <h2 class="page-header">Familiar Information</h2>
+
+  <div class="form-group col-sm-12">
+    <%= form.label :has_family_or_dependents? , class: "col-sm-4 text-left" %>
+    <div class="col-sm-6">
+     <label class="radio-inline"><%= radio_button_tag :has_family, "yes" %>Yes</label>
+      <label class="radio-inline"><%= radio_button_tag :has_family, "no" %>No</label>
+    </div>
   </div>
-</div>
-<div class="form-group col-sm-12">
-  <%= form.label :has_partner? , class: "col-sm-4 text-left" %>
-  <div class="col-sm-6">
-    <label class="radio-inline"><%= radio_button_tag :has_partner, "yes" %>Yes</label>
-    <label class="radio-inline"><%= radio_button_tag :has_partner, "no" %>No</label>
-  </div>  
-</div>
-<div class="form-group col-sm-12">
-  <%= form.label :has_children? , class: "col-sm-4 text-left" %>
-  <div class="col-sm-6">
-    <label class="radio-inline"><%= radio_button_tag :has_children, "yes" %>Yes</label>
-    <label class="radio-inline"><%= radio_button_tag :has_children, "no" %>No</label>
+
+  <div class="form-group col-sm-12">
+    <%= form.label :has_partner? , class: "col-sm-4 text-left" %>
+    <div class="col-sm-6">
+      <label class="radio-inline"><%= radio_button_tag :has_partner, "yes" %>Yes</label>
+      <label class="radio-inline"><%= radio_button_tag :has_partner, "no" %>No</label>
+    </div>  
   </div>
+
+  <div class="form-group col-sm-12">
+    <%= form.label :has_children? , class: "col-sm-4 text-left" %>
+    <div class="col-sm-6">
+      <label class="radio-inline"><%= radio_button_tag :has_children, "yes" %>Yes</label>
+      <label class="radio-inline"><%= radio_button_tag :has_children, "no" %>No</label>
+    </div>
+  </div>
+
 </div>
+
 <%= form.fields_for :collaborator do |c| %>
   <%= c.fields_for :spouse_relationship do |r| %>
     <h3 class="page-header">Spouse</h3>
@@ -28,6 +35,8 @@
     <% end %>
   <% end %>
 <% end %>
+
+
 <%= form.fields_for :collaborator do |c| %>
   <h3 class="page-header">Children</h3>
   <%= c.fields_for :children_relationships do |r| %>

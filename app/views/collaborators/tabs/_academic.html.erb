@@ -1,37 +1,41 @@
-<h2 class="page-header">Academic Information</h2>
-<%= form.fields_for :collaborator do |c| %>
-  <%= c.fields_for :studies do |s| %>
-    <%= render "collaborators/forms/study", form: s %>
-    <%= s.fields_for :entity do |e| %>
-      <div class="form-group col-sm-12">
-        <div class="form-group col-sm-6">
-          <%= e.label :study_center, class: "col-sm-4 text-left" %>
-          <div class="col-sm-6">
-            <%= e.text_field :name, class: "form-control validate[required]" %>
+<div class="over-row">  
+  <h2 class="page-header">Academic Information</h2>
+  <%= form.fields_for :collaborator do |c| %>
+    <%= c.fields_for :studies do |s| %>
+      <%= render "collaborators/forms/study", form: s %>
+      <div class="over-row">
+        <%= s.fields_for :entity do |e| %>
+          <div class="form-group col-sm-12">
+            <div class="form-group col-sm-6">
+              <%= e.label :study_center, class: "col-sm-4 text-left" %>
+              <div class="col-sm-6">
+                <%= e.text_field :name, class: "form-control validate[required]" %>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <%= e.label :category, class: "col-sm-4 text-left" %>
+              <div class="col-sm-6">
+                <%= e.select :type, class_enum_for_select("Entity", "type"), {prompt: '- Select a category -'}, class: "form-control validate[required]" %>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group col-sm-6">
-          <%= e.label :category, class: "col-sm-4 text-left" %>
-          <div class="col-sm-6">
-            <%= e.select :type, class_enum_for_select("Entity", "type"), {prompt: '- Select a category -'}, class: "form-control validate[required]" %>
+          <div class="form-group col-sm-12">
+            <div class="form-group col-sm-6">
+              <%= e.label :address, class: "col-sm-4 text-left" %>
+              <div class="col-sm-6">
+                <%= e.text_field :address, class: "form-control validate[required]" %>
+              </div>
+            </div>
+            <div class="form-group col-sm-6">
+              <%= e.label :country_id, class: "col-sm-4 text-left" %>
+              <div class="col-sm-6">
+                <%= e.collection_select :country_id, Country.all, :id, :name,  {prompt: '- Select a country -'}, class: "form-control validate[required]" %>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="form-group col-sm-12">
-        <div class="form-group col-sm-6">
-          <%= e.label :address, class: "col-sm-4 text-left" %>
-          <div class="col-sm-6">
-            <%= e.text_field :address, class: "form-control validate[required]" %>
-          </div>
-        </div>
-        <div class="form-group col-sm-6">
-          <%= e.label :country_id, class: "col-sm-4 text-left" %>
-          <div class="col-sm-6">
-            <%= e.collection_select :country_id, Country.all, :id, :name,  {prompt: '- Select a country -'}, class: "form-control validate[required]" %>
-          </div>
-        </div>
+        <% end %>
       </div>
     <% end %>
+    <%= c.link_to_add "Add a study", :studies %>
   <% end %>
-  <%= c.link_to_add "Add a study", :studies %>
-<% end %>
+</div>

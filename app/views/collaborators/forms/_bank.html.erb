@@ -1,14 +1,16 @@
-<div class="form-group col-sm-12">
-  <div class="form-group col-sm-6">
-    <%= form.label :bank, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.collection_select :entity_id, Entity.bank, :id, :name, { prompt: '- Select a Bank -' }, class: "form-control" %>
+<div class="over-row">
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= form.label :bank, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.collection_select :entity_id, Entity.bank, :id, :name, { prompt: '- Select a Bank -' }, class: "form-control" %>
+      </div>
     </div>
-  </div>
-  <div class="form-group col-sm-6">
-    <%= form.label :account_number, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.text_field :account_number, class: "form-control" %>
+    <div class="form-group col-sm-6">
+      <%= form.label :account_number, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :account_number, class: "form-control" %>
+      </div>
     </div>
   </div>
 </div>

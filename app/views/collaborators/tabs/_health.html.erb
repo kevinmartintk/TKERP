@@ -1,66 +1,66 @@
-<h2 class="page-header">Health Information</h2>
-<%= form.fields_for :collaborator do |c| %>
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= c.label :blood_type, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= c.select :blood_type, class_enum_translated_for_select("Collaborator","blood_type"), {prompt: '- Select a Blood Type -'}, class: "form-control validate[required]" %>
+<div class="over-row">
+  <h2 class="page-header">Health Information</h2>
+  <%= form.fields_for :collaborator do |c| %>
+    <div class="form-group col-sm-12">
+      <div class="form-group col-sm-6">
+        <%= c.label :blood_type, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= c.select :blood_type, class_enum_translated_for_select("Collaborator","blood_type"), {prompt: '- Select a Blood Type -'}, class: "form-control validate[required]" %>
+        </div>
+      </div>
+      <div class="form-group col-sm-6">
+        <%= c.label :allergies, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= c.text_area :allergies, class: "form-control validate[required]" %>
+        </div>
       </div>
     </div>
-    <div class="form-group col-sm-6">
-      <%= c.label :allergies, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= c.text_area :allergies, class: "form-control validate[required]" %>
-      </div>
-    </div>
-  </div>
 
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= c.label :disability, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= c.label :disability, "Yes", :value => "true"  %>
-        <%= c.radio_button :disability, true %>
-        <%= c.label :disability, "No", :value => "false" %>
-        <%= c.radio_button :disability, false, :checked => true %>
+    <div class="form-group col-sm-12">
+      <div class="form-group col-sm-6">
+        <%= c.label :disability, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= c.label :disability, "Yes", :value => "true"  %>
+          <%= c.radio_button :disability, true %>
+          <%= c.label :disability, "No", :value => "false" %>
+          <%= c.radio_button :disability, false, :checked => true %>
+        </div>
+      </div>
+      <div class="form-group col-sm-6">
+        <%= form.label :before_employment_test, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= form.file_field :before_employment_test, class: "form-control validate[required]" %>
+        </div>
       </div>
     </div>
-    <div class="form-group col-sm-6">
-      <%= form.label :before_employment_test, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= form.file_field :before_employment_test, class: "form-control validate[required]" %>
+    <div class="form-group col-sm-12">
+      <div class="form-group col-sm-6">
+        <%= form.label :around_employment_test, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= form.file_field :around_employment_test, class: "form-control validate[required]" %>
+        </div>
+      </div>
+      <div class="form-group col-sm-6">
+        <%= form.label :after_employment_test, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= form.file_field :after_employment_test, class: "form-control validate[required]" %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= form.label :around_employment_test, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= form.file_field :around_employment_test, class: "form-control validate[required]" %>
-      </div>
-    </div>
-    <div class="form-group col-sm-6">
-      <%= form.label :after_employment_test, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= form.file_field :after_employment_test, class: "form-control validate[required]" %>
-      </div>
-    </div>
-  </div>
 
-  <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= c.label :insurance, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= c.select :insurance, class_enum_for_select("Collaborator","insurance"), {prompt: '- Select an Insurance -'}, class: "form-control validate[required]" %>
+    <div class="form-group col-sm-12">
+      <div class="form-group col-sm-6">
+        <%= c.label :insurance, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= c.select :insurance, class_enum_for_select("Collaborator","insurance"), {prompt: '- Select an Insurance -'}, class: "form-control validate[required]" %>
+        </div>
+      </div>
+      <div class="form-group col-sm-6">
+        <%= c.label :insurance_type, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= c.select :insurance_type, [], {prompt: '- Select an Insurance Type -'}, class: "form-control validate[required]" %>
+        </div>
       </div>
     </div>
-    <div class="form-group col-sm-6">
-      <%= c.label :insurance_type, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6">
-        <%= c.select :insurance_type, [], {prompt: '- Select an Insurance Type -'}, class: "form-control validate[required]" %>
-      </div>
-    </div>
-  </div>
-
-
-<% end %>
+  <% end %>
+</div>

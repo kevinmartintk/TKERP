@@ -1,56 +1,58 @@
-<div class="form-group col-sm-12">
-  <div class="form-group col-sm-6">
-    <%= form.label :position_id, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.collection_select :position_id, Position.all, :id, :name, { prompt: '- Select a position -' }, class: "form-control validate[required]" %>
+<div class="over-row">
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= form.label :position_id, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.collection_select :position_id, Position.all, :id, :name, { prompt: '- Select a position -' }, class: "form-control validate[required]" %>
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <%= form.label :type, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.select :type, class_enum_for_select("JobExperience", "type"), {prompt: '- Select a type -'}, class: "form-control validate[required]" %>
+      </div>
     </div>
   </div>
-  <div class="form-group col-sm-6">
-    <%= form.label :type, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.select :type, class_enum_for_select("JobExperience", "type"), {prompt: '- Select a type -'}, class: "form-control validate[required]" %>
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= form.label :start, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :start, class: "datepicker form-control validate[required]" %>
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <%= form.label :end, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :end, class: "datepicker form-control validate[required]" %>
+      </div>
     </div>
   </div>
-</div>
-<div class="form-group col-sm-12">
-  <div class="form-group col-sm-6">
-    <%= form.label :start, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.text_field :start, class: "datepicker form-control validate[required]" %>
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= form.label :achievements, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_area :achievements, class: "form-control validate[required]" %>
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <%= form.label :functions, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_area :functions, class: "form-control validate[required]" %>
+      </div>
     </div>
   </div>
-  <div class="form-group col-sm-6">
-    <%= form.label :end, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.text_field :end, class: "datepicker form-control validate[required]" %>
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= form.label :certificate, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.file_field :certificate, class: "form-control validate[required]" %>
+      </div>
     </div>
-  </div>
-</div>
-<div class="form-group col-sm-12">
-  <div class="form-group col-sm-6">
-    <%= form.label :achievements, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.text_area :achievements, class: "form-control validate[required]" %>
-    </div>
-  </div>
-  <div class="form-group col-sm-6">
-    <%= form.label :functions, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.text_area :functions, class: "form-control validate[required]" %>
-    </div>
-  </div>
-</div>
-<div class="form-group col-sm-12">
-  <div class="form-group col-sm-6">
-    <%= form.label :certificate, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.file_field :certificate, class: "form-control validate[required]" %>
-    </div>
-  </div>
-  <div class="form-group col-sm-6">
-    <%= form.label :certificate, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.file_field :certificate, class: "form-control validate[required]" %>
+    <div class="form-group col-sm-6">
+      <%= form.label :certificate, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.file_field :certificate, class: "form-control validate[required]" %>
+      </div>
     </div>
   </div>
 </div>

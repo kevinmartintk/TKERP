@@ -1,29 +1,31 @@
-<div class="form-group col-sm-12">
-  <div class="form-group col-sm-6">
-    <%= form.label :type, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.select :type, class_enum_for_select("Study","type"), {prompt: '- Select a Type -'}, class: "form-control validate[required]" %>
+<div class="over-row">
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= form.label :type, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.select :type, class_enum_for_select("Study","type"), {prompt: '- Select a Type -'}, class: "form-control validate[required]" %>
+      </div>
+    </div>
+    <div class="form-group col-sm-6">
+      <%= form.label :degree, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.select :degree, class_enum_for_select("Study","degree"), {prompt: '- Select a Degree -'}, class: "form-control validate[required]" %>
+      </div>
     </div>
   </div>
-  <div class="form-group col-sm-6">
-    <%= form.label :degree, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.select :degree, class_enum_for_select("Study","degree"), {prompt: '- Select a Degree -'}, class: "form-control validate[required]" %>
-    </div>
-  </div>
-</div>
 
-<div class="form-group col-sm-12">
-  <div class="form-group col-sm-6">
-    <%= form.label :start, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.text_field :start, class: "datepicker form-control validate[required]" %>
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= form.label :start, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :start, class: "datepicker form-control validate[required]" %>
+      </div>
     </div>
-  </div>
-  <div class="form-group col-sm-6">
-    <%= form.label :end, class: "col-sm-4 text-left" %>
-    <div class="col-sm-6">
-      <%= form.text_field :end, class: "datepicker form-control validate[required]" %>
+    <div class="form-group col-sm-6">
+      <%= form.label :end, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= form.text_field :end, class: "datepicker form-control validate[required]" %>
+      </div>
     </div>
   </div>
 </div>

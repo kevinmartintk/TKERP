@@ -5,7 +5,7 @@
     <div class="form-group col-sm-6">
       <%= f.label :client_id, class: "col-sm-4 text-left" %>
       <div class="col-sm-6 autocomplete-field">
-        <input class="search_typeahead form-control typeahead" type="text" value=<%= @prospect.client_name %>>
+        <input class="search_typeahead form-control typeahead" type="text" value=<%= @prospect.client.nil? ? "" : @prospect.client_name %>>
         <%= f.hidden_field :client_id, class: "clients-typeahead-id" %>
       </div>
     </div>
