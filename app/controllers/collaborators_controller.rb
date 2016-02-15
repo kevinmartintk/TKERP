@@ -92,12 +92,10 @@ class CollaboratorsController < ApplicationController
     end
 
     def person_params
-      p "PERSON"
       params.require(:person).permit(:first_name, :last_name, :dni, :birthday, :email, :civil_status, :gender, :address, :skype, :phone, :mobile, :position_id, :has_family, :has_partner, :has_children)
     end
 
     def collaborator_params
-      p "COLLABORATOR"
       params.require(:person).permit(collaborator_attributes: [:code, :first_day, :team_id, :work_mail, :type, :status, :salary, :blood_type, :allergies, :disability, :insurance, :insurance_type, spouse_relationship: [spouse: [:first_name, :last_name, :dni, :birthday]], children_relationships_attributes: [:id, children: [:first_name, :last_name, :dni, :birthday]], studies_attributes: [:id, :type, :degree, :start, :end, entity: [:name, :type, :address, :country_id]], job_experiences_attributes: [:id, :position_id, :type, :start, :end, :achievements, :functions, entity_attributes:[:name, :address, :phone, :legal_id, :country_id, :type], reference_attributes: [:first_name, :last_name, :mobile, :email]], collaborator_salary_bank: [:entity_id, :account_number], collaborator_cts_bank: [:entity_id, :account_number], collaborator_pension_entity: [:entity_id], emergency_relationship: [emergency_contact: [:first_name, :last_name, :dni, :birthday]]])
     end
 end
