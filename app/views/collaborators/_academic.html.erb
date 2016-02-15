@@ -1,0 +1,11 @@
+<h2 class="page-header col-sm-12">Academic Information</h2>
+<%= form.fields_for :collaborator do |c| %>
+  <div id="studies-form" %>
+    <%= c.fields_for :studies do |s| %>
+      <%= render "study_fields", f: s %>
+    <% end %>
+    <div>
+      <%= link_to_add_association "Add a study", c, :studies, class: "pull-left" %>
+    </div>
+  </div>
+<% end %>

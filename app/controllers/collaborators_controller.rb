@@ -29,22 +29,22 @@ class CollaboratorsController < ApplicationController
       children_relationship.build_person
 
     #academic
-      study = collaborator.studies.build
-      study.build_entity
+      # study = collaborator.studies.build
+      # study.build_entity
 
     #laboral
-      job_experience = collaborator.job_experiences.build
-      job_experience.build_entity
-      job_experience.build_reference
+      # job_experience = collaborator.job_experiences.build
+      # job_experience.build_entity
+      # job_experience.build_reference
 
     #payment
-      collaborator.build_collaborator_salary_bank
-      collaborator.build_collaborator_cts_bank
-      collaborator.build_collaborator_pension_entity
+      # collaborator.build_collaborator_salary_bank
+      # collaborator.build_collaborator_cts_bank
+      # collaborator.build_collaborator_pension_entity
 
     #emergency
-      emergency_relationship = collaborator.build_emergency_relationship
-      emergency_relationship.build_person
+      # emergency_relationship = collaborator.build_emergency_relationship
+      # emergency_relationship.build_person
 
   end
 
@@ -54,9 +54,8 @@ class CollaboratorsController < ApplicationController
 
   def create
     @person = Person.create(person_params)
-    @collaborator = Collaborator.new(collaborator_params)
 
-    if @collaborator.save
+    if @person.save
       redirect_to collaborators_path, notice: 'Collaborator was successfully created.'
     else
       render :new
@@ -92,10 +91,10 @@ class CollaboratorsController < ApplicationController
     end
 
     def person_params
-      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype)
+      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype, collaborator_attributes: [spouse_relationship_attributes: [person_attributes: relation_params], children_relationships_attributes: [person_attributes: relation_params]], studies_attributes: [:type, :degree, :start, :end, entity_attributes: [:name, :type, :address, :country_id]])
     end
 
-    def collaborator_params
-      params[:collaborator].permit()
+    def relation_params
+      [:first_name, :last_name, :dni, :birthday]
     end
 end

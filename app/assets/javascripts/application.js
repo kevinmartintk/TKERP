@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery.validationEngine
 //= require jquery_nested_form
+//= require cocoon
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery.bettertabs.min

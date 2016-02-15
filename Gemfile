@@ -94,6 +94,7 @@ gem 'will_paginate', '~> 3.0.7'
 
 # Gem to conveniently handle multiple models in a single form with Rails 3 and jQuery or Prototype.
 gem 'nested_form', '0.3.1'
+gem "cocoon"
 
 # Simple, Heroku-friendly Rails app configuration using ENV and a single YAML file
 gem 'figaro', '~> 1.1.0'

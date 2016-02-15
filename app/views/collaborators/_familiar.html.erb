@@ -1,0 +1,40 @@
+<h2 class="page-header">Familiar Information</h2>
+<div class="form-group col-sm-12">
+  <%= form.label :has_family_or_dependents? , class: "col-sm-4 text-left" %>
+  <div class="col-sm-6">
+    <label class="radio-inline"><%= radio_button_tag :has_family, "yes" %>Yes</label>
+    <label class="radio-inline"><%= radio_button_tag :has_family, "no", true %>No</label>
+  </div>
+</div>
+<div class="form-group col-sm-12 hide has_family">
+  <%= form.label :has_partner? , class: "col-sm-4 text-left" %>
+  <div class="col-sm-6">
+    <label class="radio-inline"><%= radio_button_tag :has_partner, "yes" %>Yes</label>
+    <label class="radio-inline"><%= radio_button_tag :has_partner, "no", true %>No</label>
+  </div>  
+</div>
+<div class="form-group col-sm-12 hide has_family">
+  <%= form.label :has_children? , class: "col-sm-4 text-left" %>
+  <div class="col-sm-6">
+    <label class="radio-inline"><%= radio_button_tag :has_children, "yes" %>Yes</label>
+    <label class="radio-inline"><%= radio_button_tag :has_children, "no", true %>No</label>
+  </div>
+</div>
+<div id="spouse-form" class="hide has_partner">
+  <%= form.fields_for :collaborator do |c| %>
+    <%= c.fields_for :spouse_relationship do |r| %>
+      <%= render "spouse_relationship_fields", f: r %>
+    <% end %>
+    <%#= link_to_add_association "Add a spouse", c, :spouse_relationship, wrap_object: Proc.new {|spouse_relationship| spouse_relationship.build_person; spouse_relationship }, class: "pull-left" %>
+  <% end %>
+</div>
+<div id="children-form" class="hide has_children">
+  <%= form.fields_for :collaborator do |c| %>
+    <%= c.fields_for :children_relationships do |r| %>
+      <%= render "children_relationship_fields", f: r %>
+    <% end %>
+    <div>
+      <%= link_to_add_association "Add a children", c, :children_relationships, wrap_object: Proc.new {|children_relationship| children_relationship.build_person; children_relationship }, class: "pull-left" %>
+    </div>
+  <% end %>
+</div>

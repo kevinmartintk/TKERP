@@ -1,4 +1,4 @@
-<%= nested_form_for @person, url: path, method: method, :html => { class: "form-horizontal validate" } do |f| %>
+<%= form_for @person, url: path, method: method, :html => { class: "form-horizontal validate" } do |f| %>
   <%= render "helpers/flash_errors", object: @person %>
   <%= render "helpers/flash_errors", object: @collaborator %>
 
@@ -12,7 +12,7 @@
   <div class="tab-content">
     <% collaborator_tabs.each do |tab| %>
       <div role="tabpanel" class="tab-pane" id="<%=tab.dasherize%>">
-        <%= render "collaborators/tabs/#{tab}", form: f %>
+        <%= render tab, form: f %>
       </div>
     <% end %>
     <div class="form-group">

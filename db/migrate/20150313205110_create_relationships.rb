@@ -1,8 +1,8 @@
 class CreateRelationships < ActiveRecord::Migration
   def change
     create_table :relationships do |t|
-      t.references :collaborator, null: false
-      t.references :person, null: false
+      t.references :collaborator
+      t.references :person
       t.integer :type, null: false, default: 0
 
       t.datetime :deleted_at
