@@ -25,8 +25,8 @@ class CollaboratorsController < ApplicationController
     #familiar
       spouse_relationship = collaborator.build_spouse_relationship
       spouse_relationship.build_person
-      children_relationship = collaborator.children_relationships.build
-      children_relationship.build_person
+      # children_relationship = collaborator.children_relationships.build
+      # children_relationship.build_person
 
     #academic
       # study = collaborator.studies.build
@@ -91,10 +91,6 @@ class CollaboratorsController < ApplicationController
     end
 
     def person_params
-      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype, collaborator_attributes: [spouse_relationship_attributes: [person_attributes: relation_params], children_relationships_attributes: [person_attributes: relation_params]], studies_attributes: [:type, :degree, :start, :end, entity_attributes: [:name, :type, :address, :country_id]])
-    end
-
-    def relation_params
-      [:first_name, :last_name, :dni, :birthday]
+      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype, collaborator_attributes: [spouse_relationship_attributes: [person_attributes: [:first_name, :last_name, :dni, :birthday]], children_relationships_attributes: [:id, :_destroy, person_attributes: [:first_name, :last_name, :dni, :birthday]], studies_attributes: [:type, :degree, :start, :end, entity_attributes: [ :name, :type, :address, :country_id]]])
     end
 end

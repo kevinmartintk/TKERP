@@ -6,8 +6,8 @@ class Person < ActiveRecord::Base
   has_many :relationships
   has_many :collaborators, through: :relationships
 
-  accepts_nested_attributes_for :contact
-  accepts_nested_attributes_for :collaborator
+  accepts_nested_attributes_for :contact, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :collaborator, reject_if: :all_blank, allow_destroy: true
 
   enum civil_status: [:single, :married, :widower, :divorced]
   enum gender: [:male, :female]

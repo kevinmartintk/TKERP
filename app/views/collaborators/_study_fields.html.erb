@@ -1,10 +1,10 @@
 <h3 class="page-header col-sm-12">Study Information</h2>
-<div id="study-form">
+<div class="study-form">
   <%= render "study", form: f %>
   <%= f.fields_for :entity do |e| %>
     <%= render "entity_fields", f: e %>
   <% end %>
   <div>
-    <%= link_to_add_association "Add entity", f, :entity, class: "pull-left" %>
+    <%#= link_to_add_association "Add entity", f, :entity, class: "pull-left" %>
   </div>
 </div>

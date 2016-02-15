@@ -38,7 +38,7 @@ module ApplicationHelper
     [
       "general",
       "familiar",
-      "academic",
+      # "academic",
       # "laboral",
       # "internal",
       # "payment",

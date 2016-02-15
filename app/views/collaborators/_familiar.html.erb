@@ -30,6 +30,7 @@
 </div>
 <div id="children-form" class="hide has_children">
   <%= form.fields_for :collaborator do |c| %>
+    <h3 class="page-header col-sm-12">Children</h3>
     <%= c.fields_for :children_relationships do |r| %>
       <%= render "children_relationship_fields", f: r %>
     <% end %>
