@@ -1,0 +1,4 @@
+<h3 class="page-header col-sm-12">Spouse</h3>
+<%= f.fields_for :person do |p| %>
+  <%= render "person", form: p %>
+<% end %>

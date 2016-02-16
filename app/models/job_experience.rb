@@ -1,3 +1,4 @@
+
 class JobExperience < ActiveRecord::Base
   self.inheritance_column = nil
 
@@ -8,7 +9,7 @@ class JobExperience < ActiveRecord::Base
   belongs_to :entity
   belongs_to :position
 
-  accepts_nested_attributes_for :entity
-  accepts_nested_attributes_for :reference
+  accepts_nested_attributes_for :entity, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :reference, reject_if: :all_blank, allow_destroy: true
 
 end

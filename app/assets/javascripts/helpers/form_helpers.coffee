@@ -16,6 +16,12 @@
     autoclose: true
     todayHighlight: true
     endDate: new Date()
+  $('.cocoon-form').on 'cocoon:after-insert', (e, insertedItem) ->
+    $('.datepicker').datepicker
+      format: "yyyy-mm-dd"
+      autoclose: true
+      todayHighlight: true
+      endDate: new Date()
 
 @type_ahead_clients = ->
   clientsSource = new Bloodhound(

@@ -1,0 +1,11 @@
+<h2 class="page-header">Laboral Information</h2>
+<div id="job-experience-form" class="cocoon-form">
+  <%= form.fields_for :collaborator do |c| %> 
+    <%= c.fields_for :job_experiences do |je| %>
+      <%= render "job_experience_fields", f: je %>
+    <% end %>
+    <div>
+      <%= link_to_add_association "Add job experience", c, :job_experiences, wrap_object: Proc.new {|job_exp| job_exp.build_entity; job_exp.build_reference; job_exp}, class: "pull-left" %>
+    </div>
+  <% end %>
+</div>

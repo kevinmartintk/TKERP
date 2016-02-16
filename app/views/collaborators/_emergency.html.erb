@@ -1,0 +1,16 @@
+<h2 class="page-header">Emergency Information</h2>
+<%= form.fields_for :collaborator do |c| %>
+  <%= c.fields_for :emergency_relationship do |r| %>
+    <h3 class="page-header">Emergency contact</h3>
+    <%= r.fields_for :person do |p| %>
+      <%= render "emergency_person", f: p, form: r %>
+    <% end %>
+  <% end %>
+<% end %>
+<div class="form-group">
+  <div class="col-md-10 col-sm-10 col-xs-12">
+    <div class="col-sm-12 text-right">
+      <%= form.submit "Save" , class: "btn btn-primary"%> <%= link_to 'Cancel', collaborators_path, class: "btn btn-default" %>
+    </div>
+  </div>
+</div>
