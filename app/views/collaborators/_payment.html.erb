@@ -10,11 +10,11 @@
   </div>
   <%= c.fields_for :collaborator_salary_bank do |csb| %>
     <h3 class="page-header">Salary Bank</h3>
-    <%= render "collaborators/forms/bank", form: csb %>
+    <%= render "bank", form: csb %>
   <% end %>
   <%= c.fields_for :collaborator_cts_bank do |ccb| %>
     <h3 class="page-header">CTS Bank</h3>
-    <%= render "collaborators/forms/bank", form: ccb %>
+    <%= render "bank", form: ccb %>
   <% end %>
   <%= c.fields_for :collaborator_pension_entity do |cpe| %>
     <h3 class="page-header">Pension System</h3>

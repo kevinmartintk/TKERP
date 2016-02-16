@@ -38,12 +38,12 @@ module ApplicationHelper
     [
       "general",
       "familiar",
-      # "academic",
-      # "laboral",
-      # "internal",
-      # "payment",
-      # "health",
-      # "emergency"
+      "academic",
+      "laboral",
+      "internal",
+      "payment",
+      "health",
+      "emergency"
     ]
   end
 

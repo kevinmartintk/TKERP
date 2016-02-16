@@ -10,6 +10,5 @@ class CreateCollaboratorEntities < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index :collaborator_entities, :deleted_at
-    add_index :collaborator_entities, [:collaborator_id, :entity_id], unique: true
   end
 end

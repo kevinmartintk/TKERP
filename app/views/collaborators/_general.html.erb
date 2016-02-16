@@ -24,7 +24,7 @@
   <div class="form-group col-sm-6">
     <%= form.label :dni_scan, class: "col-sm-4 text-left" %>
     <div class="col-sm-6">
-      <%= form.file_field :dni_scan, class: "pictureInput" %>
+      <%= form.file_field :dni_scan, class: "pictureInput form-control" %>
       <% unless @person.new_record? %>
         <%= form.label :new_image, id: "endTimeLabel", class: "hidden"%>
       <% end %>

@@ -1,6 +1,6 @@
 <h2 class="page-header col-sm-12">Academic Information</h2>
 <%= form.fields_for :collaborator do |c| %>
-  <div class="academic-form" %>
+  <div class="academic-form cocoon-form" %>
     <%= c.fields_for :studies do |s| %>
       <%= render "study_fields", f: s %>
     <% end %>

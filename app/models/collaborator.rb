@@ -22,24 +22,31 @@ class Collaborator < ActiveRecord::Base
   has_one :spouse, through: :spouse_relationship, class_name: "Person"
   has_many :children_relationships, -> { where(type: Relationship.types[:children]) }, foreign_key: "collaborator_id", class_name: "Relationship"
   has_many :children, through: :children_relationships, class_name: "Person"
-  has_one :emergency_relationship, -> { where(type: Relationship.types[:emergency]) }, foreign_key: "collaborator_id", class_name: "Relationship"
-  has_one :emergency_contact, through: :emergency_relationship, class_name: "Person"
+  has_many :parental_relationship, -> { where(type: Relationship.types[:parental]) }, foreign_key: "collaborator_id", class_name: "Relationship"
+  has_many :parents, through: :parental_relationship, class_name: "Person"
   has_many :job_experiences
   has_many :job_entities, through: :job_experiences, class_name: "Entity"
-  has_one :collaborator_salary_bank, -> { where(type: CollaboratorEntity.types[:bank]) }, foreign_key: "collaborator_id", class_name: "CollaboratorEntity"
+  has_one :collaborator_salary_bank, -> { where(type: CollaboratorEntity.types[:salary]) }, foreign_key: "collaborator_id", class_name: "CollaboratorEntity"
   has_one :salary_bank, through: :collaborator_salary_bank, class_name: "Entity"
-  has_one :collaborator_cts_bank, -> { where(type: CollaboratorEntity.types[:bank]) }, foreign_key: "collaborator_id", class_name: "CollaboratorEntity"
+  has_one :collaborator_cts_bank, -> { where(type: CollaboratorEntity.types[:cts]) }, foreign_key: "collaborator_id", class_name: "CollaboratorEntity"
   has_one :cts_bank, through: :collaborator_cts_bank, class_name: "Entity"
-  has_one :collaborator_pension_entity, -> { where(type: CollaboratorEntity.types[:bank]) }, foreign_key: "collaborator_id", class_name: "CollaboratorEntity"
+  has_one :collaborator_pension_entity, -> { where(type: CollaboratorEntity.types[:pension]) }, foreign_key: "collaborator_id", class_name: "CollaboratorEntity"
   has_one :pension_entity, through: :collaborator_pension_entity, class_name: "Entity"
+  has_one :emergency_relationship, -> { where(emergency: true) }, foreign_key: "collaborator_id", class_name: "Relationship"
+  has_one :emergency_contact, through: :emergency_relationship, class_name: "Person"
 
   accepts_nested_attributes_for :spouse_relationship, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :spouse, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :children_relationships, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :children, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :emergency_relationship, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :emergency_contact, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :job_experiences, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :job_entities, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :studies, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :collaborator_salary_bank, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :collaborator_cts_bank, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :collaborator_pension_entity, reject_if: :all_blank, allow_destroy: true
 
   enum type: [:practice, :payroll, :professional]
   enum status: [:active, :inactive, :former, :expelled]

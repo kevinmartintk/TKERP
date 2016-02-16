@@ -38,13 +38,13 @@ class CollaboratorsController < ApplicationController
       # job_experience.build_reference
 
     #payment
-      # collaborator.build_collaborator_salary_bank
-      # collaborator.build_collaborator_cts_bank
-      # collaborator.build_collaborator_pension_entity
+      collaborator.build_collaborator_salary_bank
+      collaborator.build_collaborator_cts_bank
+      collaborator.build_collaborator_pension_entity
 
     #emergency
-      # emergency_relationship = collaborator.build_emergency_relationship
-      # emergency_relationship.build_person
+      emergency_relationship = collaborator.build_emergency_relationship
+      emergency_relationship.build_person
 
   end
 
@@ -53,7 +53,7 @@ class CollaboratorsController < ApplicationController
   end
 
   def create
-    @person = Person.create(person_params)
+    @person = Person.create(collaborator_person_params)
 
     if @person.save
       redirect_to collaborators_path, notice: 'Collaborator was successfully created.'
@@ -79,6 +79,17 @@ class CollaboratorsController < ApplicationController
     end
   end
 
+  def update_insurance_types
+    insurance = params[:insurance]
+    @insurance_types = case insurance
+      when "fola" then %w(A B C D E F G)
+      when "eps" then %w(base adicional_1 adicional_2)
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
     def set_collaborator
@@ -90,7 +101,31 @@ class CollaboratorsController < ApplicationController
       @person = @contact.person
     end
 
+    def collaborator_person_params
+      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype, :position_id, collaborator_attributes: [:code, :first_day, :team_id, :work_mail, :type, :status, :salary, :blood_type, :allergies, :disability, :before_employment_test, :around_employment_test, :after_employment_test, :insurance, :insurance_type,spouse_relationship_attributes: [person_attributes: person_params], children_relationships_attributes: [:id, :_destroy, person_attributes: person_params], studies_attributes: [:id, :type, :degree, :start, :end, :_destroy, entity_attributes: study_params], job_experiences_attributes: [:position_id, :type, :start, :end, :achievements, :functions, :certificate, entity_attributes: job_experience_params, reference_attributes: reference_params], collaborator_salary_bank_attributes: bank_params, collaborator_cts_bank_attributes: bank_params, collaborator_pension_entity_attributes: [:entity_id], emergency_relationship_attributes: [person_attributes: emergency_params]])
+    end
+
+    def study_params
+      [:name, :type, :address, :country_id]
+    end
+
+    def job_experience_params
+      [:name, :address, :phone, :legal_id, :country_id, :type]
+    end
+
     def person_params
-      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype, collaborator_attributes: [spouse_relationship_attributes: [person_attributes: [:first_name, :last_name, :dni, :birthday]], children_relationships_attributes: [:id, :_destroy, person_attributes: [:first_name, :last_name, :dni, :birthday]], studies_attributes: [:type, :degree, :start, :end, entity_attributes: [ :name, :type, :address, :country_id]]])
+      [:first_name, :last_name, :dni, :birthday]
+    end
+
+    def reference_params
+      [:first_name, :last_name, :mobile, :email]
+    end
+
+    def bank_params
+      [:entity_id, :account_number]
+    end
+
+    def emergency_params
+      [:first_name, :last_name, :dni, :type, :phone, :mobile]
     end
 end

@@ -25,10 +25,9 @@
     <%= c.fields_for :spouse_relationship do |r| %>
       <%= render "spouse_relationship_fields", f: r %>
     <% end %>
-    <%#= link_to_add_association "Add a spouse", c, :spouse_relationship, wrap_object: Proc.new {|spouse_relationship| spouse_relationship.build_person; spouse_relationship }, class: "pull-left" %>
   <% end %>
 </div>
-<div id="children-form" class="hide has_children">
+<div id="children-form" class="hide has_children cocoon-form">
   <%= form.fields_for :collaborator do |c| %>
     <h3 class="page-header col-sm-12">Children</h3>
     <%= c.fields_for :children_relationships do |r| %>

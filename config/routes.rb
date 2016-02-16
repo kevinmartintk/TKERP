@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   end
   resources :collaborators do
     resources :schedule#, only: [:index, :edit, :create, :update, :destroy]
+    get :update_insurance_types, on: :collection
+    get :update_insurance_types, on: :member
   end
   resources :countries
   resources :clients
