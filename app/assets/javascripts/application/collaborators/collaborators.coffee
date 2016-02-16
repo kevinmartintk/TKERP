@@ -8,6 +8,8 @@ init = ->
   update_radio_button "has_family"
   update_radio_button "has_children"
   update_radio_button "has_partner"
+  ajax_insurance_types_dropdown() if current_scope "action", "new"
+  ajax_insurance_types_dropdown() if current_scope "action", "edit"
   $("#person_collaborator_attributes_insurance").change ajax_insurance_types_dropdown
 
 ajax_insurance_types_dropdown = ->
@@ -24,8 +26,6 @@ ready = ->
     picture_input()
     default_tab()
     init()
-    ajax_insurance_types_dropdown() if current_scope "action", "new"
-    ajax_insurance_types_dropdown() if current_scope "action", "edit"
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

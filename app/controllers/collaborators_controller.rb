@@ -63,10 +63,7 @@ class CollaboratorsController < ApplicationController
   end
 
   def update
-    @person.update_attributes(person_params)
-    @collaborator.assign_attributes(collaborator_params)
-
-    if @collaborator.update(collaborator_params)
+    if @person.update(collaborator_person_params)
       redirect_to collaborators_path, notice: 'Collaborator was successfully updated.'
     else
       render :edit
@@ -74,7 +71,7 @@ class CollaboratorsController < ApplicationController
   end
 
   def destroy
-    if @collaborator.destroy
+    if @person.destroy
       redirect_to collaborators_path, notice: 'Collaborator was successfully destroyed.'
     end
   end
@@ -98,11 +95,11 @@ class CollaboratorsController < ApplicationController
 
     def set_collaborator_and_person
       set_collaborator
-      @person = @contact.person
+      @person = @collaborator.person
     end
 
     def collaborator_person_params
-      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype, :position_id, collaborator_attributes: [:code, :first_day, :team_id, :work_mail, :type, :status, :salary, :blood_type, :allergies, :disability, :before_employment_test, :around_employment_test, :after_employment_test, :insurance, :insurance_type,spouse_relationship_attributes: [person_attributes: person_params], children_relationships_attributes: [:id, :_destroy, person_attributes: person_params], studies_attributes: [:id, :type, :degree, :start, :end, :_destroy, entity_attributes: study_params], job_experiences_attributes: [:position_id, :type, :start, :end, :achievements, :functions, :certificate, entity_attributes: job_experience_params, reference_attributes: reference_params], collaborator_salary_bank_attributes: bank_params, collaborator_cts_bank_attributes: bank_params, collaborator_pension_entity_attributes: [:entity_id], emergency_relationship_attributes: [person_attributes: emergency_params]])
+      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype, :position_id, collaborator_attributes: [:id, :code, :first_day, :team_id, :work_mail, :type, :status, :salary, :blood_type, :allergies, :disability, :before_employment_test, :around_employment_test, :after_employment_test, :insurance, :insurance_type, spouse_relationship_attributes: [person_attributes: person_params], children_relationships_attributes: [:id, :_destroy, person_attributes: person_params], studies_attributes: [:id, :type, :degree, :start, :end, :_destroy, entity_attributes: study_params], job_experiences_attributes: [:position_id, :type, :start, :end, :achievements, :functions, :certificate, entity_attributes: job_experience_params, reference_attributes: reference_params], collaborator_salary_bank_attributes: bank_params, collaborator_cts_bank_attributes: bank_params, collaborator_pension_entity_attributes: [:entity_id], emergency_relationship_attributes: [person_attributes: emergency_params]])
     end
 
     def study_params

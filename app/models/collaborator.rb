@@ -19,9 +19,9 @@ class Collaborator < ActiveRecord::Base
   has_many :relative_relationships, -> { where(type: Relationship.types[:relative]) }, foreign_key: "collaborator_id", class_name: "Relationship"
   has_many :relative, through: :relative_relationships, class_name: "Person"
   has_one :spouse_relationship, -> { where(type: Relationship.types[:spouse]) }, foreign_key: "collaborator_id", class_name: "Relationship"
-  has_one :spouse, through: :spouse_relationship, class_name: "Person"
+  has_one :spouse, through: :spouse_relationship, source: "person"
   has_many :children_relationships, -> { where(type: Relationship.types[:children]) }, foreign_key: "collaborator_id", class_name: "Relationship"
-  has_many :children, through: :children_relationships, class_name: "Person"
+  has_many :children, through: :children_relationships, source: "person"
   has_many :parental_relationship, -> { where(type: Relationship.types[:parental]) }, foreign_key: "collaborator_id", class_name: "Relationship"
   has_many :parents, through: :parental_relationship, class_name: "Person"
   has_many :job_experiences
@@ -103,5 +103,17 @@ class Collaborator < ActiveRecord::Base
     else
       order("created_at DESC")
     end 
+  end
+
+  def has_family?
+    has_partner? || has_children?
+  end
+
+  def has_partner?
+    !spouse.nil?
+  end
+
+  def has_children?
+    !children.empty?
   end
 end

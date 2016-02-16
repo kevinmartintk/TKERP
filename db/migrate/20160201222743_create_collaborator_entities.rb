@@ -1,8 +1,8 @@
 class CreateCollaboratorEntities < ActiveRecord::Migration
   def change
     create_table :collaborator_entities do |t|
-      t.references :collaborator, null: false
-      t.references :entity, null: false
+      t.references :collaborator
+      t.references :entity
       t.integer :type, null: false, default: 0
       t.string :account_number
 
