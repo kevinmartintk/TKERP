@@ -1,14 +1,17 @@
 module ApplicationHelper
-  def currencies_array
-  	Currency.all
+
+  # def payment_types
+  #   [['Transference',1], ['Check',2]]
+  # end
+
+  def class_enum_for_select class_name, enum_name
+    class_name.constantize.send(enum_name.pluralize).keys.map {|k| [k.humanize, k]}
   end
 
-  def status_array
-  	Status.all
-  end
-
-  def payment_types
-    [['Transference',1], ['Check',2]]
+  def class_enum_translated_for_select class_name, enum_name
+    class_name.constantize.send(enum_name.pluralize).map do |enum, _|
+      [I18n.t("#{enum_name}.#{enum}"), enum]
+    end
   end
 
   def disabled_info form
@@ -24,27 +27,24 @@ module ApplicationHelper
       });</script>".html_safe
   end
 
-	def paginate_ajax_js
-		"<script>
-			$(document).ready(function() {
-			$('.pagination a').attr('data-remote', 'true');
-		});</script>".html_safe
-	end
-
-  def prospect_status_array
-  	ProspectStatus.all
+  def paginate_ajax_js
+    "<script>
+      $(document).ready(function() {
+      $('.pagination a').attr('data-remote', 'true');
+    });</script>".html_safe
   end
 
-  def prospect_types_array
-  	ProspectType.all
-  end
-
-  def teams_array
-  	Team.all
-  end
-
-  def estimation_types_array
-    EstimationType.all
+  def collaborator_tabs
+    [
+      "general",
+      "familiar",
+      "academic",
+      "laboral",
+      "internal",
+      "payment",
+      "health",
+      "emergency"
+    ]
   end
 
 end

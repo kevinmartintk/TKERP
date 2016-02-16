@@ -1,4 +1,4 @@
-module InvoicesManagement
+  module InvoicesManagement
   class InvoicesController < ApplicationController
     before_action :set_headquarter, only: [:index, :new, :create,:show, :edit, :update, :destroy]
     before_action :set_invoice, only: [:show, :edit, :update, :destroy,:send_mail]
@@ -13,8 +13,8 @@ module InvoicesManagement
 
     def index
       @invoices = @headquarter.invoices.search_with(params[:client], params[:legal_id], params[:invoice_number], params[:from_date], params[:to_date], params[:status])
-      @total_invoices_soles = "#{Currency.get_symbol_sol} #{Invoice.total_soles(@invoices)}"
-      @total_invoices_dollar = "#{Currency.get_symbol_dolar} #{Invoice.total_dolar(@invoices)}"
+      @total_invoices_soles = "#{Currency.currency_symbol('Sol')} #{Invoice.total_soles(@invoices)}"
+      @total_invoices_dollar = "#{Currency.currency_symbol('Dolar')} #{Invoice.total_dolar(@invoices)}"
     end
 
     def send_mail
@@ -35,6 +35,8 @@ module InvoicesManagement
     end
 
     def new
+      @p =  params[:contact]
+      @contacts_client = Invoice.get_contacts_per_client(@p)
       add_breadcrumb "New Invoice", :new_invoices_management_country_invoice_path
       @invoice = Invoice.new
       @invoice.headquarter = @headquarter
@@ -45,21 +47,19 @@ module InvoicesManagement
     end
 
     def create
+      @invoices = @headquarter.invoices.search_with(params[:client], params[:legal_id], params[:invoice_number], params[:from_date], params[:to_date], params[:status])
       begin
         @invoice = Invoice.new(invoice_params)
         @invoice.headquarter = @headquarter
-        @invoice.currency = 2 if @headquarter.country.id != 173
-
         if @invoice.save
           attachment = @invoice.generate_pdf
           @invoice.invoice_pdf = @invoice.generate_pdf_file(attachment)
-
           redirect_to invoices_management_country_invoices_path(@headquarter.country), notice: 'Invoice was successfully created.'
         else
-          render :new
+          render :index
         end
       rescue
-        render :new
+        render :index
       end
     end
 
@@ -102,7 +102,7 @@ module InvoicesManagement
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def invoice_params
-        params.require(:invoice).permit(:client_id, :description, :currency, :amount, :status, :has_drawdown, :document, :purchase_order, :extra, :contact, :reason, :message, :invoice_number, :payment_type, :expiration_date, :billing_date, invoice_contacts_attributes: [:contact_id, :_destroy])
+        params.require(:invoice).permit(:client_id, :description, :currency_id, :amount, :status, :has_drawdown, :document, :purchase_order, :extra, :contact, :reason, :message, :invoice_number, :payment_type, :expiration_date, :billing_date, invoice_contacts_attributes: [:contact_id, :_destroy])
       end
 
   end

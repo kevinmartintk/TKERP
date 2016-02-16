@@ -1,6 +1,11 @@
 class Estimation < ActiveRecord::Base
+  self.inheritance_column = nil
+
+  enum type: [:rough, :quick, :detailed]
+
   belongs_to :prospect
   belongs_to :technology
+
   has_many :quotation_estimations
   has_many :quotations, through: :quotation_estimations
 

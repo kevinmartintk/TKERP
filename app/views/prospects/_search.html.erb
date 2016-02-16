@@ -13,7 +13,7 @@
         <%= label_tag :prospect_type, "Prospect Type", class: "control-tag" %>
       </div>
       <div class="col-sm-8">
-        <%= select_tag :prospect_type, options_from_collection_for_select(ProspectType.all, "id", "name"), prompt: "- Select type -", class: 'form-control ' %>
+        <%= select_tag :prospect_type, options_for_select(class_enum_for_select "Prospect", "status"), prompt: "- Select type -", class: 'form-control ' %>
       </div>
     </div>
     <div class="col-sm-4">
@@ -21,7 +21,7 @@
         <%= label_tag :status, nil, class: "control-tag" %>
       </div>
       <div class="col-sm-8">
-        <%= select_tag :status, options_from_collection_for_select(ProspectStatus.all, "id", "name"), prompt: "- Select status -", class: 'form-control ' %>
+        <%= select_tag :status, options_for_select(class_enum_for_select "Prospect", "status"), prompt: "- Select status -", class: 'form-control ' %>
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 ready = ->
-  update_status()
-  $('#invoice_status').change update_status
+  if current_scope "controller", "invoices"
+    update_status()
+    $('#invoice_status').change update_status
 
 update_status = ->
   value = default_format $('#invoice_status option:selected').text()

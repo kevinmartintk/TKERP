@@ -1,26 +1,31 @@
 class Prospect < ActiveRecord::Base
-  include PgSearch
+  self.inheritance_column = nil
+  acts_as_paranoid
 
   belongs_to :client
   belongs_to :account, class_name: "Collaborator"
+  belongs_to :team
 
   has_many :estimations
   has_many :quotations
   has_many :prospect_contacts
   has_many :contacts, through: :prospect_contacts
 
-  acts_as_paranoid
+  enum type: [:fixed_price, :times_x_material]
+  enum status: [:received, :at_estimation, :sent_id, :accepted, :canceled]
 
   accepts_nested_attributes_for :prospect_contacts, :allow_destroy => true
 
   validates :client, :prospect_contacts, presence: true
 
-  delegate :name, :type, :country_id, :to => :client, :prefix => true
-  delegate :partner_name, :to => :client
+  delegate :name, :type, :country_id, to: :client, prefix: true
+  delegate :partner_name, to: :client
+  delegate :name, to: :team
 
   extend FriendlyId
-    friendly_id :name, use: [:slugged, :finders]
+  friendly_id :slug_candidates, use: [:slugged, :finders]
 
+  include PgSearch
   pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_client_name,  associated_against: {
                            client: [:name]},
@@ -97,6 +102,15 @@ class Prospect < ActiveRecord::Base
     else
       order("created_at DESC")
     end
+  end
+
+  def slug_candidates
+    [
+      name,
+      [name, client_name],
+      [name, client_name, type],
+      [name, client_name, type, arrival_date]
+    ]
   end
 
 end

@@ -30,4 +30,10 @@ Rails.application.routes.draw do
   resources :contacts do
     get :autocomplete_client_name, :on => :collection
   end
+  resources :datasets, only: [] do
+    get :clients, on: :collection
+  end
+  resources :contacts_auxiliary, only: [] do
+    get :contacts
+  end
 end

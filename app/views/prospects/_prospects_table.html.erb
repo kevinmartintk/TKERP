@@ -23,19 +23,11 @@
           <td><%= prospect.client_name %></td>
           <td><%= prospect.client_type %></td>
           <td><%= prospect.partner_name %></td>
-          <td><%= ProspectType.find(prospect.prospect_type).name if !prospect.prospect_type.nil? %></td>
-          <td><%= Team.find(prospect.team).name if !prospect.team.nil? %></td>
-          <td><%= ProspectStatus.find(prospect.status).name if !prospect.status.nil? %></td>
-          <%if prospect.estimations.size > 0%>
-            <td><%= prospect.estimations.size%></td>
-          <%else%>
-            <td>No Estimations</td>
-          <%end%>
-          <%if prospect.quotations.size > 0%>
-            <td><%= prospect.quotations.size%></td>
-          <%else%>
-            <td>No Quotations</td>
-          <%end%> 
+          <td><%= prospect.type %></td>
+          <td><%= prospect.team_name %></td>
+          <td><%= prospect.status %></td>
+          <td><%= prospect.estimations.empty? ? prospect.estimations.size : "No Estimations" %></td>
+          <td><%= prospect.quotations.empty? ? prospect.quotations.size : "No Quotations" %></td>
           <td>
             <%= link_to '<span class="glyphicon glyphicon-search"></span>'.html_safe,  [prospect], class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Show" %>
             <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe,  edit_prospect_path(prospect), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>

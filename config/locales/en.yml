@@ -21,3 +21,12 @@
 
 en:
   hello: "Hello world"
+  blood_type: 
+    o_positive: O+
+    a_positive: A+
+    b_positive: B+
+    ab_positive: AB+
+    o_negative: O-
+    a_negative: A-
+    b_negative: B-
+    ab_negative: AB-

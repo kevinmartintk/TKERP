@@ -1,0 +1,2 @@
+module ContactAuxiliaryHelper
+end

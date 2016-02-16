@@ -26,6 +26,16 @@
     </div>
   </div>
   <div class="row form-group">
+    <%if @headquarter.is_peru? %>
+      <div class="col-sm-4">
+        <div class="col-sm-4">
+          <%= label_tag :legal_id, "RUC", class: "text-left" %>
+        </div>
+        <div class="col-sm-8">
+          <%= text_field_tag :legal_id, nil, class: "form-control" %>
+        </div>
+      </div>
+    <% end %>
     <div class="col-sm-4">
       <div class="col-sm-4">
         <%= label_tag :invoice_number, "Nº Invoice", class: "control-tag" %>
@@ -39,13 +49,15 @@
         <%= label_tag :status, nil, class: "control-tag" %>
       </div>
       <div class="col-sm-8">
-        <%= select_tag :status, options_from_collection_for_select(status_array, "id", "name"), prompt: "- Select a status -", class: 'form-control ' %>
+        <%= select_tag :status, options_for_select(class_enum_for_select("Invoice","status")), prompt: "- Select a status -", class: 'form-control ' %>
       </div>
     </div>
-    <div class="col-sm-4">
+  </div>
+  <div class="row form-group">
+    <div class="col-sm-12">
       <div class="col-sm-12">
         <input class="btn btn-default pull-right" type="submit" value="Search">
       </div>
     </div>
-  </div>
+  </div>  
 <% end %> 

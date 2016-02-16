@@ -1,19 +1,25 @@
 class Inventory < ActiveRecord::Base
-  include PgSearch
-  belongs_to :inventory_type
+  self.inheritance_column = nil
+  acts_as_paranoid
+
   belongs_to :collaborator
   belongs_to :operating_system
-  
-  acts_as_paranoid
+  belongs_to :team
+
+  delegate :name, to: :collaborator, prefix: true, allow_nil: true
+  delegate :name, to: :team, prefix: true
+
+  enum type: [:book, :appliance, :computation, :furniture, :computer, :device]
 
   has_attached_file :image, styles: { medium: "x180"}
   validates_attachment_file_name :image, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
 
+  include PgSearch
   pg_search_scope :seek_code_or_name, against: [:id, :name], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_description, against: [:description], using: { tsearch: { prefix: true  } }
 
   def code_inventory
-    symbol = inventory_type.name.first
+    symbol = type.first.capitalize
     symbol + ("%04d" % (id.to_s))
   end
 

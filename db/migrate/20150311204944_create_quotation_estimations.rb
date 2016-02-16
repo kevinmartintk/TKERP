@@ -1,14 +1,26 @@
 class CreateQuotationEstimations < ActiveRecord::Migration
   def change
     create_table :quotation_estimations do |t|
-      t.float :days_est, null: false, default:0
-      t.float :hours_est, null: false, default:0
-      t.float :price, null: false, default: 0
-      t.integer :quotation_id, null: false
-      t.integer :estimation_id, null: false
-      t.datetime :deleted_at
+      t.references :quotation, null: false
+      t.references :estimation, null: false
+      t.boolean :selected
 
-      t.timestamps
+      #developers
+      t.float :developer_days_est
+      t.float :developer_hours_est
+      t.float :developer_price
+
+      #designers
+      t.float :designer_days_est
+      t.float :designer_hours_est
+      t.float :designer_price
+
+      #accounts
+      t.float :account_hours_est
+      t.float :account_price
+
+      t.datetime :deleted_at
+      t.timestamps null: false
     end
     add_index :quotation_estimations, :deleted_at
   end

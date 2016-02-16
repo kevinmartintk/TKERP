@@ -2,24 +2,26 @@ class Contact < ActiveRecord::Base
   include PgSearch
   acts_as_paranoid
 
-  belongs_to	:client
+  belongs_to :person
+  belongs_to :client
+
   has_many :invoice_contacts
   has_many :prospect_contacts
   has_many :invoices, through: :invoice_contacts
   has_many :prospects, through: :prospect_contacts
   has_many :prospects
-  validates_format_of :phone, :with => /\A(([ \)])[0-9]{1,3}([ \)]))?([\(][0-9]{1,3}[\)])?([0-9 \.\-]{1,9})\Z/
-  validates_format_of :mobile, :with => /\A([\+][0-9]{1,3}([ \.\-])?)?([\(][0-9]{1,6}[\)])?([0-9 \.\-]{1,11})\Z/
-  validates :name, :email, :client, presence: true
-  delegate :name, :to => :client, :prefix => true
+
+  delegate :name, to: :client, prefix: true
+  delegate :name, :email, :phone, :mobile, :birthday, to: :person
+
+  validates :client, presence: true
 
   extend FriendlyId
-  friendly_id :name, use: [:slugged, :finders]
+  friendly_id :slug_candidates, use: [:slugged, :finders]
 
   pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
-  pg_search_scope :seek_client_name,  associated_against: {
-                           client: [:name]},
-                         using: { tsearch: { prefix: true  } }
+  pg_search_scope :seek_client_name,  associated_against: {client: [:name]},using: {tsearch: {prefix: true}}
+
 
   def self.search_with name, company
     search_name(name).
@@ -40,6 +42,12 @@ class Contact < ActiveRecord::Base
     else
       order("created_at DESC")
     end    
+  end
+
+  def slug_candidates
+    [
+      person.name
+    ]
   end
   
 end

@@ -1,0 +1,30 @@
+<h2 class="page-header">Payment Information</h2>
+<%= form.fields_for :collaborator do |c| %>
+  <div class="form-group col-sm-12">
+    <div class="form-group col-sm-6">
+      <%= c.label :salary, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= c.text_field :salary, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <%= c.fields_for :collaborator_salary_bank do |csb| %>
+    <h3 class="page-header">Salary Bank</h3>
+    <%= render "collaborators/forms/bank", form: csb %>
+  <% end %>
+  <%= c.fields_for :collaborator_cts_bank do |ccb| %>
+    <h3 class="page-header">CTS Bank</h3>
+    <%= render "collaborators/forms/bank", form: ccb %>
+  <% end %>
+  <%= c.fields_for :collaborator_pension_entity do |cpe| %>
+    <h3 class="page-header">Pension System</h3>
+    <div class="form-group col-sm-12">
+      <div class="form-group col-sm-6">
+        <%= cpe.label :pension, class: "col-sm-4 text-left" %>
+        <div class="col-sm-6">
+          <%= cpe.collection_select :entity_id, Entity.pension, :id, :name, { prompt: '- Select a Pension -' }, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

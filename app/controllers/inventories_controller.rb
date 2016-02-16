@@ -74,13 +74,11 @@ class InventoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_inventory
       @inventory = Inventory.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_params
-      params.require(:inventory).permit(:collaborator_id, :name, :brand, :team, :inventory_type_id, :edition, :writer, :reg_date, :editorial, :model, :description, :copies, :serie, :image, :operating_system_id, :storage, :hdd, :cpu, :ram)
+      params.require(:inventory).permit(:collaborator_id, :name, :brand, :team_id, :inventory_type_id, :edition, :writer, :register_date, :editorial, :model, :description, :quantity, :serie, :image, :operating_system_id, :storage, :hdd, :cpu, :ram, :type)
     end
 end
