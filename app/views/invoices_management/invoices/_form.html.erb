@@ -1,18 +1,18 @@
 <%=  nested_form_for([:invoices_management, @headquarter.country, @invoice], html: {id: "form_invoice", role: "form", class: "form-horizontal validate", data: {action: params[:action]}, multipart: true}) do |f|  %>
   <%= render "helpers/flash_errors", object: @invoice %>
   <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-6 country" id="<%=params[:country_id]%>">
       <%= f.label :client_id, class: "col-sm-4 text-left" %>
       <div class="col-sm-6 autocomplete-field">
-        <%= autocomplete_field_tag 'invoice_client', (@invoice.client.name unless @invoice.client.nil?) , autocomplete_client_name_invoices_management_country_invoices_path, :id_element => '#client_id_field', class: "form-control validate[required] to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
-        <%= f.hidden_field :client_id, :id => "client_id_field" %>
+        <input class="search_typeahead form-control typeahead" type="text">
+        <%= f.hidden_field :client_id, class: "clients-typeahead-id" %>
       </div>
     </div>
-  
+
     <div class="form-group col-sm-6">
-      <%= label_tag :address, nil, class: "col-sm-4 text-left" %>
+      <%= f.label :address, nil, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= text_field_tag :address_textfield, (@invoice.client.address unless @invoice.client.nil?), readonly: true, class: "form-control" %>    
+        <%= text_field_tag :address_textfield, (@invoice.client.address unless @invoice.client.nil?), readonly: true, class: "form-control clients-typeahead-address" %>    
       </div>
     </div>
   </div>
@@ -25,14 +25,14 @@
         <%= label_tag :legal_id, "Nro Legal ID", class: "col-sm-4 text-left" %>
       <%end%>
       <div class="col-sm-6">
-        <%= text_field_tag :legal_id_textfield, (@invoice.client.legal_id unless @invoice.client.nil?), readonly: true, class: "form-control" %>
+        <%= text_field_tag :legal_id_textfield, (@invoice.client.legal_id unless @invoice.client.nil?), readonly: true, class: "form-control clients-typeahead-legal-id" %>
       </div>
     </div>
 
     <div class="form-group col-sm-6">
       <%= label_tag :corporate_name, "Corporate name", class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= text_field_tag :corporate_name_textfield, (@invoice.client.corporate_name unless @invoice.client.nil?), readonly: true, class: "form-control" %>
+        <%= text_field_tag :corporate_name_textfield, (@invoice.client.corporate_name unless @invoice.client.nil?), readonly: true, class: "form-control clients-typeahead-corporate-name" %>
       </div>
     </div>
   </div>
@@ -59,9 +59,9 @@
 
   <div class="form-group col-sm-12">
     <div class="form-group col-sm-6">
-      <%= f.label :currency, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6 text-left">
-        <%= f.collection_select :currency, currencies_array, :id, :name,  {prompt: '- Select a currency -'}, class: "form-control validate[required] to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
+      <%= f.label :currency_id, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6 text-left" >
+        <%= f.collection_select :currency_id, Currency.all, :id, :name, {prompt: "- Select type -"}, class: "form-control" %>
       </div>
     </div>
 
@@ -74,15 +74,15 @@
   </div>
 
   <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-6 ">
       <%= f.label :status, class: "col-sm-4 text-left" %>
       <div class="col-sm-6 text-left">
-        <%= f.select :status, class_enum_for_select("Invoice","status"),  :id, :name, {prompt: '- Select a status -'}, class: "form-control validate[required]" %>
+        <%= f.select :status, class_enum_for_select("Invoice","status"),{prompt: "- Select type -"}, class: "form-control" %>
       </div>
     </div>
 
     <%if @headquarter.is_peru? %>
-      <div class="form-group col-sm-6">
+      <div class="form-group col-sm-6 peru-show united-states-hide">
         <label class="col-sm-4 text-left">
           <%= f.check_box :has_drawdown, class: "to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
           Seal Drawdown
@@ -93,17 +93,17 @@
 
   <%if @headquarter.is_peru? %>
     <%if @invoice.new_record? %>
-      <div class="form-group col-sm-12">
+      <div class="form-group col-sm-12 peru-show united-states-hide">
         <div class="form-group col-sm-6">
           <%= f.label :reference, class: "col-sm-4 text-left" %>
-          <div class="col-sm-8">
+          <div class="col-sm-6">
             <%= f.text_field :extra, class: "form-control" %>
           </div>
         </div>
       </div>
     <% end %>
 
-    <div class="form-group col-sm-12">
+    <div class="form-group col-sm-12 peru-show united-states-hide">
       <div class="form-group col-sm-6 to-issue-show">
         <%= f.label :purchase_order, class: "col-sm-4 text-left" %>
         <div class="col-sm-6">
@@ -118,16 +118,15 @@
       </div>
     </div>
   <%end%>
-
   <% if @headquarter.is_peru? || (!@headquarter.is_peru? && @invoice.new_record?) %>
-    <div class="form-group col-sm-12">
+    <div class="form-group col-sm-12 peru-show united-states-hide">
       <div class="form-group col-sm-6">
         <%= f.label :contacts, class: "col-sm-4 text-left" %>
         <div id="contacts-fields" class="col-sm-6 <%= 'hide' if @invoice.client.nil? %>">
           <%= f.fields_for :invoice_contacts do |r| %>
-            <% unless @invoice.client.nil? %>
-              <div class="form-group col-sm-12">
-                <%= r.collection_select(:contact_id, @invoice.client.contacts, :id, :name, { :include_blank => 'Select contact' }, {:class => "form-control"} ) %>
+            <% if @invoice.client.nil? %>
+              <div class="form-group col-sm-12" >
+                <%= r.collection_select(:contact_id, [], :id, :name, { :include_blank => 'Select contact' }, {:class => "form-control"} ) %>
                 <%= r.link_to_remove "Remove" %>
               </div>
             <% end %>
@@ -136,7 +135,7 @@
         </div>
       </div>
 
-      <div class="form-group col-sm-6">
+      <div class="form-group col-sm-6 peru-show united-states-hide">
         <%= f.label :message, class: "col-sm-4 text-left" %>
         <div class="col-sm-6 to-issue-show">
           <%= f.text_area :message, class: "form-control custom-textarea to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
@@ -145,7 +144,7 @@
     </div>
   <%end%>
 
-  <div class="form-group col-sm-12">
+  <div class="form-group col-sm-12 peru-show united-states-hide">
     <div class="form-group col-sm-6 to-issue-hide issued-show paid-show partial-payment-show canceled-show <%= "hide" if params[:action] == "new" %>" id='billing_date'>
       <%= f.label :billing_date, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
@@ -160,11 +159,10 @@
     </div>
   </div>
 
-  <div class="form-group col-sm-12 to-issue-hide issued-hide paid-hide partial-payment-hide canceled-show <%= "hide" if params[:action] == "new" %>" id="cancel_reason">
+  <div class="form-group col-sm-12 peru-show united-states-hide to-issue-hide issued-hide paid-hide partial-payment-hide canceled-show <%= "hide" if params[:action] == "new" %>" id="cancel_reason">
     <div class="form-group col-sm-6 to-issue-show issued-show paid-show partial-payment-show canceled-hide">
       <%= f.label :payment_type, class: "col-sm-4 text-left" %>
       <div class="col-sm-6 text-left">
-        <%= f.select :payment_type, options_for_select(payment_types, @invoice.payment_type), { prompt: '- Select a payment type -' }, class: "payment form-control validate[required] to-issue-show issued-show paid-show partial-payment-show canceled-disable" %>
       </div>
     </div>
     <div class="form-group col-sm-6 <%= "hide" if params[:action] == "new" %>">
@@ -190,29 +188,5 @@
     format: "yyyy-mm-dd",
     autoclose: true,
     todayHighlight: true
-  });
-
-  $('#invoice_client').bind('railsAutocomplete.select', function(event, data){
-    var client_selected_id = data.item.id;
-    var client_path = "<%= client_path('client_id')%>";
-    client_path = client_path.replace('client_id',client_selected_id);
-    $.ajax({
-      type: 'GET',
-      dataType: "json",
-      url: client_path,
-      success: function( response ){
-        $('#address_textfield').val(response["address"]);
-        $('#legal_id_textfield').val(response["legal_id"]);
-        $('#corporate_name_textfield').val(response["corporate_name"]);
-        $('.fields').remove();
-        var blueprint = '<div class="fields"><div class="form-group col-sm-12"><select class="form-control" name="invoice[invoice_contacts_attributes][new_invoice_contacts][contact_id]" id="invoice_invoice_contacts_attributes_new_invoice_contacts_contact_id"><option value="">Select contact</option>';
-        $.each(response['contacts'], function (index, contact){
-          blueprint += '<option value="' + contact["id"] + '">' + contact["name"] + '</option>';
-        });
-        blueprint += '</select><input type="hidden" value="false" name="invoice[invoice_contacts_attributes][new_invoice_contacts][_destroy]" id="invoice_invoice_contacts_attributes_new_invoice_contacts__destroy" /><a class="remove_nested_fields" data-association="invoice_contacts" href="javascript:void(0)">Remove</a></div></div>';
-        $('#invoice_contacts_fields_blueprint').data('blueprint', blueprint);
-        $('#contacts-fields').removeClass('hide');
-      }
-    });
   });
 </script>

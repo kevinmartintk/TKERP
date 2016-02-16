@@ -9,11 +9,7 @@
 </div>
 
 <div id="invoices-table">
-  <% if @headquarter.country.id == 173 %>
-    <%= render 'table_peru', invoices: @invoices %>
-  <% else %>
-    <%= render 'table', invoices: @invoices %>
-  <% end %>
+  <%= render 'table', invoices: @invoices %>
 </div>
 
 <script type="text/javascript">

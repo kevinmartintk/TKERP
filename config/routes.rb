@@ -33,4 +33,7 @@ Rails.application.routes.draw do
   resources :datasets, only: [] do
     get :clients, on: :collection
   end
+  resources :contacts_auxiliary, only: [] do
+    get :contacts
+  end
 end

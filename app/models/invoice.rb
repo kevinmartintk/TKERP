@@ -3,6 +3,7 @@ class Invoice < ActiveRecord::Base
   include PgSearch
 
   belongs_to :client
+  belongs_to :currency
   belongs_to :headquarter
   has_attached_file :document, styles: { medium: "400x600>"}
   validates_attachment_file_name :document, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
@@ -10,17 +11,15 @@ class Invoice < ActiveRecord::Base
   has_attached_file :purchase_order, styles: { medium: "400x600>"}
   validates_attachment_file_name :purchase_order, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
 
-  has_attached_file :invoice_pdf
-  validates_attachment_content_type :invoice_pdf, content_type: /pdf/
-
   has_many :invoice_contacts
   has_many :contacts, through: :invoice_contacts
 
   acts_as_paranoid
 
-  validates :client,:description, :currency, :amount, :status, presence: true
-  validates :invoice_contacts, presence: { message: "are required. Please add at least one." }
-  validates :reason, presence: true, if: :is_canceled?
+  #esta shit falta separando para usa y peru
+  #validates :client,:description, :currency_id, :amount, :status, presence: true
+  #validates :invoice_contacts, presence: { message: "are required. Please add at least one." }
+  #validates :reason, presence: true
 
   accepts_nested_attributes_for :invoice_contacts, :allow_destroy => true
 
@@ -35,9 +34,7 @@ class Invoice < ActiveRecord::Base
                            client: [:legal_id]},
                          using: { tsearch: { prefix: true  } }                       
 
-	# extend FriendlyId
-	# friendly_id :name, use: [:slugged, :finders]
-  enum status: [:to_issue_id, :issue_id, :paid_id, :canceled_id, :partial_payment_id]
+  enum status: [:to_issue, :issue, :paid, :canceled, :partial_payment]
 
   def self.search_with company, ruc, invoice_number, from_date, to_date, status
     to_date(to_date).
@@ -113,18 +110,6 @@ class Invoice < ActiveRecord::Base
     number_with_precision(amount, :precision => 2) || 0
   end
 
-  def is_issued?
-    status == Status::ISSUED_ID
-  end
-
-  def is_to_be_issued?
-    status == Status::TO_ISSUE_ID
-  end
-
-  def is_canceled?
-    status == Status::CANCELED_ID
-  end
-
   def invoice_igv
     number_with_precision(amount * headquarter.country.igv.to_f, :precision => 2) || 0
   end
@@ -154,5 +139,11 @@ class Invoice < ActiveRecord::Base
     file.original_filename = "invoice_#{invoice_number}.pdf"
     file.content_type = "application/pdf"
     file
+  end
+
+  def self.get_contacts_per_client client
+    unless client.nil?
+      return Client.find(client["contact_id"]).contacts
+    end
   end
 end

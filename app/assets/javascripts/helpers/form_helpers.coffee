@@ -36,6 +36,9 @@
     $('.clients-typeahead-country').val datum.country
     $('.clients-typeahead-address').val datum.address
     $('.clients-typeahead-legal-id').val datum.legal_id
+    $('.clients-typeahead-corporate-name').val datum.corporate_name
+
+
 
 @picture_input = ->
   $('.pictureInput').on 'change', (event) ->
