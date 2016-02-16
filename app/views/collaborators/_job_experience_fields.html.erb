@@ -1,0 +1,16 @@
+<div class="nested-fields">
+  <h3 class="page-header">Job Experience</h2>
+  <h4 class="page-header">Company Information</h3>
+  <%= f.fields_for :entity do |e|%>
+    <%= render "entity", form: e %>
+  <% end %>
+  <h4 class="page-header">Labour Information</h3>
+  <%= render "job_experience", form: f %>
+  <h4 class="page-header">Reference Information</h3>
+  <%= f.fields_for :reference  do |r| %>
+    <%= render "reference", form: r %>
+  <% end %>
+  <div>
+    <%= link_to_remove_association "Remove job_experience", f, class: "pull-right" %>
+  </div>
+</div>

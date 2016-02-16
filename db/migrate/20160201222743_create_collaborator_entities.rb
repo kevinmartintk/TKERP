@@ -1,8 +1,8 @@
 class CreateCollaboratorEntities < ActiveRecord::Migration
   def change
     create_table :collaborator_entities do |t|
-      t.references :collaborator, null: false
-      t.references :entity, null: false
+      t.references :collaborator
+      t.references :entity
       t.integer :type, null: false, default: 0
       t.string :account_number
 
@@ -10,6 +10,5 @@ class CreateCollaboratorEntities < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index :collaborator_entities, :deleted_at
-    add_index :collaborator_entities, [:collaborator_id, :entity_id], unique: true
   end
 end

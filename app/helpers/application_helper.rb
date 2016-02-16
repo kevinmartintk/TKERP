@@ -39,11 +39,11 @@ module ApplicationHelper
       "general",
       "familiar",
       "academic",
-      # "laboral",
-      # "internal",
-      # "payment",
-      # "health",
-      # "emergency"
+      "laboral",
+      "internal",
+      "payment",
+      "health",
+      "emergency"
     ]
   end
 

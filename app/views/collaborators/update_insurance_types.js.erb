@@ -1,0 +1,1 @@
+$("#person_collaborator_attributes_insurance_type").empty().append("<%= escape_javascript( render 'helpers/dropdown_array', collection: @insurance_types, prompt: '- Select a insurance types -' )  %>").val("<%= params[:insurance_type]%>")
