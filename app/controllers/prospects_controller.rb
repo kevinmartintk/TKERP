@@ -58,6 +58,6 @@ class ProspectsController < ApplicationController
     end
 
     def prospect_params
-      params.require(:prospect).permit(:client_id,:country_id,:name,:arrival_date, :contact, :arrival_team_date,:type,:legal_id,:team_id,:status,:observation,:approved_at, :account_id, prospect_contacts_attributes: [:id, :contact_id, :_destroy])
+      params.require(:prospect).permit(:client_id, :country_id, :name, :arrival_date, :contact, :arrival_team_date, :type, :legal_id, :team_id, :status, :observation, :approved_at, :account_id, prospect_contacts_attributes: [:id, :contact_id, :_destroy])
     end
 end

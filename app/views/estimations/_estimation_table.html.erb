@@ -15,7 +15,7 @@
       <% @estimations.each do |estimation| %>
         <tr>
           <td><%= Technology.find(estimation.technology_id).name %></td>
-          <td><%= EstimationType.find(estimation.estimation_type).name %></td>
+          <td><%= estimation.type %></td>
           <td><%= estimation.developers || 0 %></td>
           <td><%= estimation.designers || 0 %></td>
           <td><%= estimation.accounts%></td>

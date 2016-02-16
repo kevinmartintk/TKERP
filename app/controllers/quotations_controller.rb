@@ -94,7 +94,7 @@ class QuotationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def quotation_params
-      quotation_params = params.require(:quotation).permit(:currency, :developer_price_per_hour, :designer_price_per_hour, :account_price_per_hour, :total, quotation_estimations_attributes: [:id,:selected, :estimation_id, :quotation_id, :developer_days_est, :developer_hours_est,:designer_days_est, :designer_hours_est, :account_hours_est, :developer_price, :designer_price, :account_price], estimations_attributes: [:id, :technology_id, :days, :hours])
+      quotation_params = params.require(:quotation).permit(:currency_id, :developer_price_per_hour, :designer_price_per_hour, :account_price_per_hour, :total, quotation_estimations_attributes: [:id,:selected, :estimation_id, :quotation_id, :developer_days_est, :developer_hours_est,:designer_days_est, :designer_hours_est, :account_hours_est, :developer_price, :designer_price, :account_price], estimations_attributes: [:id, :technology_id, :days, :hours])
       # remove estimations that weren't selected
       # quotation_params[:quotation_estimations_attributes].delete_if{|k,v| v[:selected] == "0"}
       return quotation_params

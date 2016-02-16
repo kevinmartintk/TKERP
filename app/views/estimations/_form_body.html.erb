@@ -19,7 +19,7 @@
 <div class="form-group col-sm-12">
   <%= form.label :estimation_type, class: "col-sm-2 text-left" %>
   <div class="col-sm-6">
-    <%= form.collection_select :estimation_type, estimation_types_array,:id,:name, {prompt: 'Select a Type'}, class: "form-control validate[required]" %>
+    <%= form.select :type, class_enum_for_select("Estimation", "type"), {prompt: '- Select a Type -'}, class: "form-control validate[required]" %>
   </div>
 </div>
 
