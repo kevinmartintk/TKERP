@@ -1,0 +1,29 @@
+ready = ->
+  if current_scope "controller", "invoices"
+    invoice_us()
+    default_datepicker()
+    update_status()
+    $('#invoice_status').change update_status
+    type_ahead_clients()
+    show_icons()
+
+invoice_us = ->
+  type = $('.country')[0]["id"]
+  show(type)
+  hide(type)
+
+show_icons = ->
+  $('.search_typeahead').bind 'typeahead:selected', (obj, datum, name) ->
+    $("#contacts-fields").removeClass("hide")
+
+update_status = ->
+  value = default_format $('#invoice_status option:selected').text()
+  action = $('#form_invoice').data("action")
+  switch action 
+    when "edit", "update"
+      show(value)
+      disable(value)
+      hide(value)
+
+$(document).ready(ready)
+$(document).on('page:load', ready)
