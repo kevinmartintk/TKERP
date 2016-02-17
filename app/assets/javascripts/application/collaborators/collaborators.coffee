@@ -9,8 +9,8 @@ init = ->
   update_radio_button "has_family"
   update_radio_button "has_children"
   update_radio_button "has_partner"
-  ajax_insurance_types_dropdown() if current_scope "action", "new"
-  ajax_insurance_types_dropdown() if current_scope "action", "edit"
+  unless current_scope "action", "index" 
+    ajax_insurance_types_dropdown()
   $("#person_collaborator_attributes_insurance").change ajax_insurance_types_dropdown
 
 month_datepicker = ->

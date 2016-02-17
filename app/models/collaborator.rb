@@ -62,9 +62,11 @@ class Collaborator < ActiveRecord::Base
   scope :team, -> (team_id) { where(team: team_id)}
   scope :team_name, -> (name) { joins("JOIN teams ON teams.name = '#{name}' AND teams.id = collaborators.id")}
 
+
   def full_name
     first_name + " " + last_name
   end
+  alias_method :name, :full_name
 
   def self.search_with first_name, last_name, month, start_date
     search_first_name(first_name).
