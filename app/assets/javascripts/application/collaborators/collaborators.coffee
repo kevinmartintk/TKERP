@@ -5,12 +5,19 @@ update_radio_button = (radio_button) ->
       when "no" then $("." + radio_button).addClass "hide"
 
 init = ->
+  month_datepicker()
   update_radio_button "has_family"
   update_radio_button "has_children"
   update_radio_button "has_partner"
   ajax_insurance_types_dropdown() if current_scope "action", "new"
   ajax_insurance_types_dropdown() if current_scope "action", "edit"
   $("#person_collaborator_attributes_insurance").change ajax_insurance_types_dropdown
+
+month_datepicker = ->
+  $(".month-datepicker").datepicker
+    format: "mm-yyyy"
+    startView: "months"
+    minViewMode: "months"
 
 ajax_insurance_types_dropdown = ->
   $.ajax 'update_insurance_types',
