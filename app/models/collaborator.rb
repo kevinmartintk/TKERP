@@ -56,8 +56,8 @@ class Collaborator < ActiveRecord::Base
   delegate :first_name, :last_name, :dni, :email, :birthday, :mobile, :phone, to: :person
   delegate :name, to: :team, prefix: true, allow_nil: true
 
-  pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
-  pg_search_scope :seek_last_name, against: [:last_name], using: { tsearch: { prefix: true  } }
+  pg_search_scope :seek_first_name, associated_against: { person: [:first_name] }, using: { tsearch: { prefix: true }}
+  pg_search_scope :seek_last_name, associated_against: { person: [:last_name] }, using: { tsearch: { prefix: true }}
 
   scope :team, -> (team_id) { where(team: team_id)}
   scope :team_name, -> (name) { joins("JOIN teams ON teams.name = '#{name}' AND teams.id = collaborators.id")}
@@ -66,16 +66,16 @@ class Collaborator < ActiveRecord::Base
     first_name + " " + last_name
   end
 
-  def self.search_with name, last_name, month, start_date
-    search_name(name).
+  def self.search_with first_name, last_name, month, start_date
+    search_first_name(first_name).
     search_last_name(last_name).
     include_birthday(month).
     include_start_date(start_date)
   end
 
-  def self.search_name name
-    if name.present?
-      seek_name(name)
+  def self.search_first_name first_name
+    if first_name.present?
+      seek_first_name(first_name)
     else
       order("created_at DESC")
     end       
@@ -91,15 +91,16 @@ class Collaborator < ActiveRecord::Base
 
   def self.include_birthday month
     if month.present?
-      where("extract(month from birthday) = ?", month)
+      joins(:person).where("extract(month from birthday) = ?", month)
     else
       order("created_at DESC")
     end 
   end
 
-  def self.include_start_date start_date
-    if start_date.present?
-      where("extract(year from start_day) = ? AND extract(month from start_day) = ?", start_date.to_date.year, start_date.to_date.month)
+  def self.include_start_date str_date
+    if str_date.present?
+      start_date = Date.strptime(str_date,"%m-%Y")
+      where("extract(year from first_day) = ? AND extract(month from first_day) = ?", start_date.to_date.year, start_date.to_date.month)
     else
       order("created_at DESC")
     end 

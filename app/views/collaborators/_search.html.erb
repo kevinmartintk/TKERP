@@ -10,7 +10,7 @@
     </div>
     <div class="col-sm-6">
       <div class="col-sm-4">
-        <%= label_tag :birthday_month, "Birthday", class: "control-tag" %>
+        <%= label_tag :birthday_month, nil, class: "control-tag" %>
       </div>
       <div class="col-sm-8">
         <select id="birthday_month" name="birthday_month" class="form-control">
@@ -42,10 +42,10 @@
     </div>
     <div class="col-sm-6">
       <div class="col-sm-4">
-        <%= label_tag :start_date, "Strating day", class: "control-tag" %>
+        <%= label_tag :start_date, "Starting month", class: "control-tag" %>
       </div>
       <div class="col-sm-8">
-        <%= text_field_tag :start_date, nil, class: 'datepicker form-control' %>
+        <%= text_field_tag :start_date, nil, class: 'month-datepicker form-control' %>
       </div>
     </div>
   </div>
