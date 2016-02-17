@@ -9,9 +9,7 @@ init = ->
   update_radio_button "has_family"
   update_radio_button "has_children"
   update_radio_button "has_partner"
-  unless current_scope "action", "index" 
-    ajax_insurance_types_dropdown()
-  $("#person_collaborator_attributes_insurance").change ajax_insurance_types_dropdown
+  ajax()
 
 month_datepicker = ->
   $(".month-datepicker").datepicker
@@ -19,8 +17,13 @@ month_datepicker = ->
     startView: "months"
     minViewMode: "months"
 
+ajax = ->
+  unless current_scope "action", "index" 
+    ajax_insurance_types_dropdown()
+  $("#person_collaborator_attributes_insurance").change ajax_insurance_types_dropdown
+
 ajax_insurance_types_dropdown = ->
-  $.ajax 'update_insurance_types',
+  $.ajax "<%=RELATIVE_URL_ROOT%>" + 'collaborators/update_insurance_types',
     type: 'GET'
     dataType: 'script'
     data:
