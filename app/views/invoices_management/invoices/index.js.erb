@@ -1,5 +1,1 @@
-<% if @headquarter.country.id == 173 %>
-  $('#invoices-table').html('<%= escape_javascript(render(:partial => "table_peru", locals: {invoices: @invoices})).html_safe %>');
-<% else %>
-  $('#invoices-table').html('<%= escape_javascript(render(:partial => "table", locals: {invoices: @invoices})).html_safe %>');
-<% end %>
+$('#invoices-table').html('<%= escape_javascript(render(:partial => "table", locals: {invoices: @invoices})).html_safe %>');

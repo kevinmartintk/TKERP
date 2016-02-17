@@ -35,8 +35,6 @@
     end
 
     def new
-      @p =  params[:contact]
-      @contacts_client = Invoice.get_contacts_per_client(@p)
       add_breadcrumb "New Invoice", :new_invoices_management_country_invoice_path
       @invoice = Invoice.new
       @invoice.headquarter = @headquarter

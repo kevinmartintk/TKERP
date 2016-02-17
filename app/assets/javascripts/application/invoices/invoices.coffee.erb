@@ -1,7 +1,7 @@
 ready = ->
   if current_scope "controller", "invoices"
-    invoice_us()
     default_datepicker()
+    invoice_us()
     update_status()
     $('#invoice_status').change update_status
     type_ahead_clients()

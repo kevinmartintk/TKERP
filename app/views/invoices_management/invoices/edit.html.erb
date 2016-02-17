@@ -1,7 +1,3 @@
 <h1 class="page-header">Invoice - <%= @invoice.headquarter.country.get_abrev %> <small>Editing</small></h1>
 
-<% if @headquarter.is_peru? %>
-  <%= render partial: "form" %>
-<% else %>
-  <%= render partial: "form_us" %>
-<% end %>
+<%= render partial: "form" %>

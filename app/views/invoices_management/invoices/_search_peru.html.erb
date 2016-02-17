@@ -4,8 +4,8 @@
       <div class="col-sm-4">
         <%= label_tag :client, "Company", class: "control-tag" %>
       </div>
-      <div class="col-sm-8">
-        <%= text_field_tag :client, nil, class: 'form-control' %>
+      <div class="col-sm-8 autocomplete-field search_typeahead">
+        <%= text_field_tag :client, nil, class: ' form-control clients-typeahead-id ' %>
       </div>
     </div>
     <div class="col-sm-4">
@@ -49,7 +49,7 @@
         <%= label_tag :status, nil, class: "control-tag" %>
       </div>
       <div class="col-sm-8">
-        <%= select_tag :status, options_from_collection_for_select(status_array, "id", "name"), prompt: "- Select a status -", class: 'form-control ' %>
+        <%= select_tag :status, options_for_select(class_enum_for_select("Invoice","status")), prompt: "- Select a status -", class: 'form-control '  %>
       </div>
     </div>
   </div>
