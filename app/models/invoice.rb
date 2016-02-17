@@ -27,21 +27,15 @@ class Invoice < ActiveRecord::Base
 
   pg_search_scope :seek_ruc, against: [:ruc], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_invoice_number, against: [:invoice_number], using: { tsearch: { prefix: true  } }
-  pg_search_scope :seek_client_name,  associated_against: {
-                           client: [:name]},
-                         using: { tsearch: { prefix: true  } }
-  pg_search_scope :seek_client_ruc,  associated_against: {
-                           client: [:legal_id]},
-                         using: { tsearch: { prefix: true  } }                       
 
-  enum status: [:to_issue, :issue, :paid, :canceled, :partial_payment]
+  enum status: [:to_issue, :issued, :paid, :canceled, :partial_payment]
 
   def self.search_with company, ruc, invoice_number, from_date, to_date, status
-    to_date(to_date).
-    from_date(from_date).
     search_invoice_number(invoice_number).
     search_client_name(company).
     search_client_ruc(ruc).
+    to_date(to_date).
+    from_date(from_date).
     include_status(status)
   end
 
@@ -55,7 +49,7 @@ class Invoice < ActiveRecord::Base
 
   def self.from_date from_date
     if from_date.present?
-      where("created_at > ?", from_date)
+      where("created_at > ?", from_date.to_datetime)
     else
       order("created_at DESC")
     end      
@@ -63,7 +57,7 @@ class Invoice < ActiveRecord::Base
 
   def self.to_date to_date
      if to_date.present?
-      where("created_at < ?", to_date)
+      where("created_at < ?", to_date.to_datetime)
     else
       order("created_at DESC")
     end
@@ -71,7 +65,7 @@ class Invoice < ActiveRecord::Base
 
   def self.search_client_name company
     if company.present?
-      seek_client_name(company)
+      Invoice.joins("JOIN clients ON clients.id = invoices.client_id").joins("JOIN entities ON entities.id = clients.entity_id").where("entities.name =?", company)
     else
       order("created_at DESC")
     end    
@@ -79,7 +73,7 @@ class Invoice < ActiveRecord::Base
 
   def self.search_client_ruc ruc
     if ruc.present?
-      seek_client_ruc(ruc)
+      Invoice.joins("JOIN clients ON clients.id = invoices.client_id").joins("JOIN entities ON entities.id = clients.entity_id").where("entities.legal_id =?", ruc)
     else
       order("created_at DESC")
     end
@@ -87,7 +81,7 @@ class Invoice < ActiveRecord::Base
 
   def self.include_status status
     if status.present?
-      where(status: status)
+      Invoice.send(status)
     else
       order("created_at DESC")
     end
