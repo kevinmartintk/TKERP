@@ -21,9 +21,9 @@ class Invoice < ActiveRecord::Base
   #validates :invoice_contacts, presence: { message: "are required. Please add at least one." }
   #validates :reason, presence: true
 
-  accepts_nested_attributes_for :invoice_contacts, :allow_destroy => true
+  accepts_nested_attributes_for :invoice_contacts, allow_destroy: true
 
-  delegate :name, :legal_id, :to => :client, :prefix => true
+  delegate :name, :legal_id, to: :client, prefix: :true, allow_nil: true
 
   pg_search_scope :seek_ruc, against: [:ruc], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_invoice_number, against: [:invoice_number], using: { tsearch: { prefix: true  } }

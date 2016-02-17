@@ -1,11 +1,14 @@
 ready = ->
   if current_scope "controller", "invoices"
     default_datepicker()
-    invoice_us()
-    update_status()
-    $('#invoice_status').change update_status
     type_ahead_clients()
-    show_icons()
+    init()
+
+init = ->
+  update_status()
+  $('#invoice_status').change update_status
+  invoice_us()
+  show_icons()
 
 invoice_us = ->
   type = $('.country')[0]["id"]
