@@ -27,7 +27,8 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @entity = Entity.new(entity_params)
+    @entity = Entity.create(entity_params)
+    @client = @entity.build_client(client_params)
 
     respond_to do |format|
       if @entity.save
@@ -64,6 +65,7 @@ class ClientsController < ApplicationController
   end
 
   private
+
     def set_client
       @client = Client.find(params[:id])
     end
@@ -74,7 +76,11 @@ class ClientsController < ApplicationController
     end
 
     def entity_params
-      params.require(:entity).permit(:name, :corporate_name, :address, :phone, :legal_id, :country_id, :type, client_attributes: [:partner_id])
+      params.require(:entity).permit(:name, :corporate_name, :address, :phone, :legal_id, :country_id, :type)
+    end
+
+    def client_params
+      params[:entity].require(:client_attributes).permit(:partner_id)
     end
 
 end
