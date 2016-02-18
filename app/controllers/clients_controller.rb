@@ -64,6 +64,7 @@ class ClientsController < ApplicationController
   end
 
   private
+
     def set_client
       @client = Client.find(params[:id])
     end
@@ -74,7 +75,11 @@ class ClientsController < ApplicationController
     end
 
     def entity_params
-      params.require(:entity).permit(:name, :corporate_name, :address, :phone, :legal_id, :country_id, :type, client_attributes: [:partner_id])
+      params.require(:entity).permit(:name, :corporate_name, :address, :phone, :legal_id, :country_id, :type)
+    end
+
+    def client_params
+      params[:entity].require(:client_attributes).permit(:partner_id)
     end
 
 end
