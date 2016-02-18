@@ -11,10 +11,11 @@ class Contact < ActiveRecord::Base
   has_many :prospects, through: :prospect_contacts
   has_many :prospects
 
-  delegate :name, to: :client, prefix: true
+
+  delegate :name, to: :client, prefix: true, allow_nil: true
   delegate :name, :email, :phone, :mobile, :birthday, to: :person
 
-  validates :client, presence: true
+  validates_associated :person, :client
 
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
@@ -45,9 +46,13 @@ class Contact < ActiveRecord::Base
   end
 
   def slug_candidates
-    [
-      person.name
-    ]
+    if person_id.present?
+      [
+        person.name
+      ]
+    else
+      nil
+    end
   end
-  
+
 end

@@ -27,10 +27,10 @@ class ContactsController < ApplicationController
 
   def create
     @person = Person.create(person_params)
-    @contact = @person.build_contact(contact_params)
+    @person.contact.save if @person.valid?
 
     respond_to do |format|
-      if @contact.save
+      if @person.save
         format.html { redirect_to contacts_path, notice: 'Contact was successfully created.' }
         format.json { render :show, status: :created, location: @contact }
       else
@@ -74,10 +74,6 @@ class ContactsController < ApplicationController
     end
 
     def person_params
-      params.require(:person).permit(:id, :first_name, :last_name, :email, :phone, :extension, :mobile, :birthday, :position_id)
-    end
-
-    def contact_params
-      params[:person].require(:contact_attributes).permit(:client_id)
+      params.require(:person).permit(:id, :first_name, :last_name, :email, :phone, :extension, :mobile, :birthday, :position_id, contact_attributes: [:client_id])
     end
 end
