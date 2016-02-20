@@ -8,16 +8,35 @@ init = ->
   update_status()
   $('#invoice_status').change update_status
   invoice_us()
+  show_contacts()
   show_icons()
 
+show_contacts = ->
+  action = $('#form_invoice').data("action")
+  switch action 
+    when "edit", "update"  
+      ajax_update_contacts()
+      $("#contacts-fields").removeClass("hide")
+
 invoice_us = ->
-  type = $('.country')[0]["id"]
-  show(type)
-  hide(type)
+  unless current_scope "action", "index"
+    type = $("#contacts-fields").data("country")
+    show(type)
+    hide(type)
 
 show_icons = ->
   $('.search_typeahead').bind 'typeahead:selected', (obj, datum, name) ->
+    ajax_update_contacts()
     $("#contacts-fields").removeClass("hide")
+
+ajax_update_contacts = ->
+  country_id = $("#contacts-fields").data("country")
+  $.ajax "<%= RELATIVE_URL_ROOT %>" + 'invoices_management/countries/' + country_id + '/invoices/update_contacts',
+   type: 'GET'
+   dataType: 'script'
+   data:
+     client_id: $("#hidden_field").val()
+     invoice_id: $("#contacts-fields").data("invoice")
 
 update_status = ->
   value = default_format $('#invoice_status option:selected').text()

@@ -21,6 +21,7 @@ class Person < ActiveRecord::Base
   def name
     "#{first_name} #{last_name}"
   end
+  alias_method :full_name, :name
 
   def save_contact
     if contact.nil?

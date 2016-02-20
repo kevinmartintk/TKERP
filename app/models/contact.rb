@@ -11,6 +11,7 @@ class Contact < ActiveRecord::Base
   has_many :prospects, through: :prospect_contacts
   has_many :prospects
 
+
   delegate :name, to: :client, prefix: true, allow_nil: true
   delegate :name, :first_name, :last_name, :email, :phone, :mobile, :birthday, to: :person
 
@@ -18,6 +19,7 @@ class Contact < ActiveRecord::Base
 
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
+
 
   pg_search_scope :seek_first_name, associated_against: {person: [:first_name]}, using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_last_name, associated_against: {person: [:last_name]}, using: { tsearch: { prefix: true  } }
@@ -72,6 +74,14 @@ class Contact < ActiveRecord::Base
       ]
     else
       nil
+    end
+  end
+
+
+  def belongs_to_invoice invoice_id
+    if invoice_id.present?
+      invoice = Invoice.find(invoice_id)
+      invoice.contacts.include? self
     end
   end
 

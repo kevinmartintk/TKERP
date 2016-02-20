@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :invoices_management do
     resources :countries, only: :index do
       resources :invoices do
+          get :update_contacts, :on => :collection
           get :deletion_reason, :on => :collection
           get :send_mail, :on => :collection
           get :autocomplete_client_name, :on => :collection

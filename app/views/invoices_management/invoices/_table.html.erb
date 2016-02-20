@@ -21,9 +21,9 @@
 			<% invoices.each do |invoice| %>
 				<tr>
 					<td><%= invoice.invoice_number %></td>
-          <td><%= invoice.client.name %></td>
-          <td><%= invoice.client.legal_id %></td>
-          <td><%= invoice.client.address %></td>
+          <td><%= invoice.client_name %></td>
+          <td><%= invoice.client_legal_id %></td>
+          <td><%= invoice.client_address %></td>
           <td><%= invoice.amount_decimal%></td>
           <td><%= invoice.status%></td>
           <td><%= invoice.created_at.to_date%></td>
