@@ -4,8 +4,8 @@
       <div class="col-sm-4">
         <%= label_tag :client, "Company", class: "control-tag" %>
       </div>
-      <div class="col-sm-8">
-        <%= text_field_tag :client, nil, class: 'form-control clients-typeahead-id' %>
+      <div class="col-sm-8 autocomplete-field">
+        <%= text_field_tag :client, nil, class: 'form-control clients-typeahead-id search_typeahead typeahead' %>
       </div>
     </div>
     <div class="col-sm-4">

@@ -10,7 +10,7 @@ class Client < ActiveRecord::Base
   has_many :prospects
   has_many :invoices, :dependent => :restrict_with_error
 
-  delegate :name, :corporate_name, :address, :phone, :legal_id, :country, :country_name, :type, to: :entity#, allow_nil: true
+  delegate :name, :corporate_name, :address, :phone, :legal_id, :country, :country_name, :type, to: :entity #, :allow_nil true
   delegate :type, to: :entity, prefix: true
 
   validates_associated :entity
@@ -28,6 +28,7 @@ class Client < ActiveRecord::Base
 
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders]
+
 
   def type
     (clients.empty?) ? "Regular" : "Partner"

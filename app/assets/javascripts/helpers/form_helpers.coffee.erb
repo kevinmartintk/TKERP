@@ -1,8 +1,9 @@
 @show = (value) ->
-  $("." + value + "-show").removeClass("hide disabled")
+  $("." + value + "-show").removeClass("hide")
+  $("." + value + "-disable").attr('readonly', false);
 
 @disable = (value) ->
-  $("." + value + "-disable").attr('disabled', true);
+   $("." + value + "-disable").attr('readonly', true);
 
 @hide = (value) ->
   $("." + value + "-hide").addClass("hide")

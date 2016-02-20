@@ -16,19 +16,19 @@ class Invoice < ActiveRecord::Base
 
   acts_as_paranoid
 
-  #esta shit falta separando para usa y peru
-  #validates :client,:description, :currency_id, :amount, :status, presence: true
+  validates :client_id, :description, :currency_id, :amount, :status, presence: true
   #validates :invoice_contacts, presence: { message: "are required. Please add at least one." }
   #validates :reason, presence: true
 
   accepts_nested_attributes_for :invoice_contacts, allow_destroy: true
 
-  delegate :name, :legal_id, to: :client, prefix: :true, allow_nil: true
+  delegate :name, :legal_id, :address, to: :client, prefix: true, allow_nil: true
 
   pg_search_scope :seek_ruc, against: [:ruc], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_invoice_number, against: [:invoice_number], using: { tsearch: { prefix: true  } }
 
   enum status: [:to_issue, :issued, :paid, :canceled, :partial_payment]
+
 
   def self.search_with company, ruc, invoice_number, from_date, to_date, status
     search_invoice_number(invoice_number).
@@ -140,4 +140,6 @@ class Invoice < ActiveRecord::Base
       return Client.find(client["contact_id"]).contacts
     end
   end
+
+
 end

@@ -37,6 +37,7 @@
     def new
       add_breadcrumb "New Invoice", :new_invoices_management_country_invoice_path
       @invoice = Invoice.new
+      @invoice.invoice_contacts.build
       @invoice.headquarter = @headquarter
     end
 
@@ -50,6 +51,11 @@
         @invoice = Invoice.new(invoice_params)
         @invoice.headquarter = @headquarter
         if @invoice.save
+          params.keys.each { |x| 
+            if x.include? "client_contacts" 
+              @invoice.contacts.push(Contact.find(params[x]))
+            end
+          }
           attachment = @invoice.generate_pdf
           @invoice.invoice_pdf = @invoice.generate_pdf_file(attachment)
           redirect_to invoices_management_country_invoices_path(@headquarter.country), notice: 'Invoice was successfully created.'
@@ -65,6 +71,11 @@
       begin
         @invoice.invoice_contacts.delete_all
         if @invoice.update(invoice_params)
+          params.keys.each { |x| 
+            if x.include? "client_contacts" 
+              @invoice.contacts.push(Contact.find(params[x]))
+            end
+          }
           attachment = @invoice.generate_pdf
           @invoice.invoice_pdf = @invoice.generate_pdf_file(attachment)
           @invoice.save!
@@ -87,6 +98,9 @@
       end
     end
 
+    def update_contacts
+      @contacts = Contact.from_client(params[:client_id])
+    end
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_headquarter
