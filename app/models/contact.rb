@@ -29,7 +29,7 @@ class Contact < ActiveRecord::Base
     search_first_name(first_name).
     search_last_name(last_name).
     search_email(email).
-    search_client_name(company)
+    include_client_name(company)
   end
 
   def self.search_first_name first_name
@@ -56,12 +56,12 @@ class Contact < ActiveRecord::Base
     end
   end
 
-  def self.search_client_name company
-    if company.present?
-      seek_client_name(company)
+  def self.include_client_name client_name
+    if client_name.present?
+      Contact.joins("JOIN clients ON clients.id = contacts.client_id").joins("JOIN entities ON entities.id = clients.entity_id").where("entities.name ILIKE '%' || ? || '%'", client_name)
     else
       order("created_at DESC")
-    end
+    end    
   end
 
   def slug_candidates
