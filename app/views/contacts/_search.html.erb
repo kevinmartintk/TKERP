@@ -2,18 +2,36 @@
   <div class="row form-group">
     <div class="col-sm-5">
       <div class="col-sm-4">
-        <%= label_tag :name, nil, class: "control-tag" %>
+        <%= label_tag :first_name, nil,  class: "control-tag" %>
       </div>
       <div class="col-sm-8">
-        <%= text_field_tag :name, nil, class: 'form-control' %>
+        <%= text_field_tag :first_name, nil, class: "form-control" %>
       </div>
     </div>
     <div class="col-sm-5">
       <div class="col-sm-4">
-        <%= label_tag :client_name, "Client", class: "control-tag" %>
+        <%= label_tag :last_name, nil, class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :last_name, nil, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-sm-5">
+      <div class="col-sm-4">
+        <%= label_tag :client_name, nil, class: "control-tag" %>
       </div>
       <div class="col-sm-8">
         <%= text_field_tag :client_name, nil, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="col-sm-4">
+        <%= label_tag :email, nil, class: "control-tag" %>
+      </div>
+      <div class="col-sm-8">
+        <%= text_field_tag :email, nil, class: 'form-control' %>
       </div>
     </div>
     <div class="col-sm-2">
