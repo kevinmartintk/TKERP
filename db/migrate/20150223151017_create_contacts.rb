@@ -1,8 +1,8 @@
 class CreateContacts < ActiveRecord::Migration
   def change
     create_table :contacts do |t|
-      t.references :person, null: false
-      t.references :client, null: false
+      t.references :person
+      t.references :client
 
       t.string :slug
       t.datetime :deleted_at

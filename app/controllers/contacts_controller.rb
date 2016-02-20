@@ -9,7 +9,7 @@ class ContactsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @contacts = Contact.search_with(params[:name], params[:client_name])
+    @contacts = Contact.search_with(params[:first_name], params[:last_name], params[:email], params[:client_name])
   end
 
   def show
@@ -26,31 +26,25 @@ class ContactsController < ApplicationController
   end
 
   def create
-    @person = Person.create(person_params)
-    @person.contact.save if @person.valid?
+    @person = Person.new(person_params)
 
     respond_to do |format|
-      if @person.save
+      if @person.save_contact
         format.html { redirect_to contacts_path, notice: 'Contact was successfully created.' }
-        format.json { render :show, status: :created, location: @contact }
       else
         format.html { render :new }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    @person.update_attributes(person_params)
-    @contact.assign_attributes(contact_params)
+    @person.assign_attributes(person_params)
 
     respond_to do |format|
-      if @contact.update(contact_params)
+      if @person.save_contact
         format.html { redirect_to contacts_path, notice: 'Contact was successfully updated.' }
-        format.json { render :show, status: :ok, location: @contact }
       else
         format.html { render :edit }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -74,6 +68,7 @@ class ContactsController < ApplicationController
     end
 
     def person_params
-      params.require(:person).permit(:id, :first_name, :last_name, :email, :phone, :extension, :mobile, :birthday, :position_id, contact_attributes: [:client_id])
+      params.require(:person).permit(:id, :first_name, :last_name, :email, :phone, :extension, :mobile, :birthday, :position_id, :skype, contact_attributes: [:id, :client_id])
     end
+
 end

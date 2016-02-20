@@ -43,8 +43,9 @@
     $('.clients-typeahead-address').val datum.address
     $('.clients-typeahead-legal-id').val datum.legal_id
     $('.clients-typeahead-corporate-name').val datum.corporate_name
-
-
+  $(".tt-hint").removeClass("validate[required]")
+  $(".search_typeahead").bind "focusout", ->
+    $(".tt-hint").removeClass("validate[required]")
 
 @picture_input = ->
   $('.pictureInput').on 'change', (event) ->

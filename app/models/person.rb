@@ -22,4 +22,16 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def save_contact
+    if contact.nil?
+      errors.add(:contact_client,"must be valid.")
+      build_contact
+      false
+    else
+      self.save
+      self.contact.save #slug
+      true
+    end
+  end
+
 end

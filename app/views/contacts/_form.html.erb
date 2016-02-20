@@ -40,18 +40,18 @@
       </div>
     </div>
     <div class="form-group col-sm-6">
-      <%= f.label :email, class: "col-sm-4 text-left" %>
+      <%= f.label :skype, class: "col-sm-4 text-left" %>
       <div class="col-sm-8">
-        <%= f.text_field :email, class: "form-control validate[required,custom[email]]" %>
+        <%= f.text_field :skype, class: "form-control" %>
       </div>
     </div>
   </div>
 
   <div class="form-group col-sm-12">
     <div class="form-group col-sm-6">
-      <%= f.label :position, class: "col-sm-4 text-left" %>
+      <%= f.label :email, class: "col-sm-4 text-left" %>
       <div class="col-sm-8">
-        <%= f.collection_select :position_id, Position.all, :id,:name, { prompt: '- Select a Position -' }, class: "form-control" %>
+        <%= f.text_field :email, class: "form-control validate[required,custom[email]]" %>
       </div>
     </div>
     <div class="form-group col-sm-6">
@@ -67,11 +67,17 @@
       <div class="form-group col-sm-6">
         <%= c.label :client_id, class: "col-sm-4 text-left" %>
         <div class="col-sm-8">
-          <input class="search_typeahead form-control typeahead validate[required]" type="text" id="person_client_name" value="<%= @person.client_name %>">
+          <input class="search_typeahead form-control typeahead validate[required]" type="text" value="<%= @person.client_name %>">
           <%= c.hidden_field :client_id, class: "clients-typeahead-id" %>
         </div>
       </div>
     <% end %>
+    <div class="form-group col-sm-6">
+      <%= f.label :position, class: "col-sm-4 text-left" %>
+      <div class="col-sm-8">
+        <%= f.collection_select :position_id, Position.all, :id,:name, { prompt: '- Select a Position -' }, class: "form-control" %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
