@@ -9,7 +9,7 @@ class CollaboratorsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @collaborators = Collaborator.search_with(params[:name], params[:last_name], params[:birthday_month], params[:start_date])
+    @collaborators = Collaborator.search_with(params[:first_name], params[:last_name], params[:birthday_month], params[:start_date])
   end
 
   def show
