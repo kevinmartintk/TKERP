@@ -49,7 +49,7 @@ class Inventory < ActiveRecord::Base
 
   def self.include_register_date register_date
     if register_date.present?
-      where("reg_date =?", register_date)
+      where(register_date: register_date)
     else
       order("created_at DESC")
     end
@@ -57,7 +57,7 @@ class Inventory < ActiveRecord::Base
 
   def self.include_type type
     if type.present?
-      where(inventory_type: type)
+      send(type)
     else
       order("created_at DESC")
     end
