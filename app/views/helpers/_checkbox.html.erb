@@ -3,7 +3,7 @@
 		<li>
 			<label>
 				<input type="checkbox" name= "<%="#{name}-#{element.id}"%>" value="<%=element.id%>" <%="checked" if element.send(method, params) %>>
-				<%= element.full_name %>
+				<%= element.name %>
 			</label>
 		</li>
 	<% end %>

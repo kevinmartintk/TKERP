@@ -1,0 +1,40 @@
+ready = ->
+  if current_scope "controller", "prospects"
+    default_datepicker()
+    set_today_date()
+    type_ahead_clients()
+    show_contacts()
+    show_contacts_edit()
+
+show_contacts = ->
+  $('.search_typeahead').bind 'typeahead:selected', (obj, datum, name) ->
+    ajax_update_contacts()
+    $("#contact-label").removeClass("hide")
+    $("#contacts-fields").removeClass("hide")
+
+show_contacts_edit = ->
+  action = $('#form_prospect').data("action")
+  switch action 
+    when "edit", "update"  
+      ajax_update_contacts()
+      $("#contact-label").removeClass("hide")
+      $("#contacts-fields").removeClass("hide")
+
+
+ajax_update_contacts = ->
+  $.ajax '/prospects/update_contacts',
+   type: 'GET'
+   dataType: 'script'
+   data:
+     client_id: $("#hidden_field").val()
+     prospect_id: $("#contacts-fields").data("prospect")
+
+set_today_date = ->
+  myDate = new Date();
+  today = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
+
+  if $('#prospect_arrival_date').val() == null or $('#prospect_arrival_date').val() == ""
+    $("#prospect_arrival_date").datepicker("setDate", today)
+
+$(document).ready(ready)
+$(document).on('page:load', ready)

@@ -27,7 +27,7 @@
       respond_to do |format|
         format.pdf do
           attachment = @invoice.generate_pdf
-          @invoice.invoice_pdf = @invoice.generate_pdf_file(attachment)
+          @invoice.pdf = @invoice.generate_pdf_file(attachment)
           @invoice.save!
           send_data attachment, filename: 'invoice.pdf', type: 'application/pdf', disposition: "inline"
         end
@@ -57,7 +57,7 @@
             end
           }
           attachment = @invoice.generate_pdf
-          @invoice.invoice_pdf = @invoice.generate_pdf_file(attachment)
+          @invoice.pdf = @invoice.generate_pdf_file(attachment)
           redirect_to invoices_management_country_invoices_path(@headquarter.country), notice: 'Invoice was successfully created.'
         else
           render :index

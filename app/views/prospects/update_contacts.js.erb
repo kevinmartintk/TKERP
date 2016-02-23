@@ -1,0 +1,1 @@
+$("#contacts-fields").html("<%= escape_javascript( render 'helpers/checkbox', collection: @contacts, name: 'client_contacts', method: 'belongs_to_prospect', params: params[:prospect_id] )  %>")

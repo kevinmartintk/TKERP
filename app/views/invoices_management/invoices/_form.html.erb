@@ -88,44 +88,50 @@
       </div>
   </div>
 
-      <div class="form-group col-sm-12 peru-show united-states-hide">
-        <div class="form-group col-sm-6">
-          <%= f.label :reference, class: "col-sm-4 text-left" %>
-          <div class="col-sm-6">
-            <%= f.text_field :extra, class: "form-control" %>
-          </div>
-        </div>
+  <div class="form-group col-sm-12 peru-show united-states-hide">
+    <div class="form-group col-sm-6">
+      <%= f.label :reference, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6">
+        <%= f.text_field :extra, class: "form-control" %>
       </div>
+    </div>
+  </div>
 
-    <div class="form-group col-sm-12 peru-show united-states-hide">
-      <div class="form-group col-sm-6 to-issue-show">
-        <%= f.label :purchase_order, class: "col-sm-4 text-left" %>
-        <div class="col-sm-6">
-          <%= f.file_field :purchase_order, class: "form-control to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
-        </div>
+  <div class="form-group col-sm-12 peru-show united-states-hide">
+    <div class="form-group col-sm-6 to-issue-show">
+      <%= f.label :purchase_order, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6 ">
+        <%= f.file_field :purchase_order, class: "form-control to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
       </div>
-      <div class="form-group col-sm-6 to-issue-hide issued-show paid-show partial-payment-show canceled-show">
+      <div class="col-sm-6 <%= "hide" if params[:action] == "new" %>" id="download_pdf">
+       <%= link_to_if @invoice.purchase_order.nil?, '<i class="fa fa-picture-o"></i> Show'.html_safe,  @invoice.purchase_order.url %>
+      </div>
+    </div>
+    <div class="form-group col-sm-6 to-issue-hide issued-show paid-show partial-payment-show canceled-show">
       <%= f.label :invoice_copy, class: "col-sm-4 text-left" %>
-        <div class="col-sm-6">
-          <%= f.file_field :document, class: "form-control to-issue-disable issued-show paid-disable canceled-disable partial-payment-disable" %>
-        </div>
+      <div class="col-sm-6 ">
+        <%= f.file_field :document, class: "form-control to-issue-disable issued-show paid-disable canceled-disable partial-payment-disable" %>
+      </div>
+      <div class="col-sm-6 <%= "hide" if params[:action] == "new" %>" id="download_pdf">
+        <%= link_to_if @invoice.document.nil?, '<i class="fa fa-picture-o"></i> Show'.html_safe, @invoice.document.url %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12 peru-show united-states-hide">
+    <div class="form-group col-sm-6">
+      <%= f.label :contacts, class: "col-sm-4 text-left hide", id: "contact-label" %>
+      <div id="contacts-fields" class="col-sm-6 hide" data-country="<%= params[:country_id]%>" data-invoice="<%= @invoice.id %>">
       </div>
     </div>
 
-    <div class="form-group col-sm-12 peru-show united-states-hide">
-      <div class="form-group col-sm-6">
-        <%= f.label :contacts, class: "col-sm-4 text-left" %>
-        <div id="contacts-fields" class="col-sm-6 hide" data-country="<%= params[:country_id]%>" data-invoice="<%= @invoice.id %>">
-        </div>
-      </div>
-
-      <div class="form-group col-sm-6 peru-show united-states-hide">
-        <%= f.label :message, class: "col-sm-4 text-left" %>
-        <div class="col-sm-6 to-issue-show">
-          <%= f.text_area :message, class: "form-control custom-textarea to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
-        </div>
+    <div class="form-group col-sm-6 peru-show united-states-hide">
+      <%= f.label :message, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6 to-issue-show">
+        <%= f.text_area :message, class: "form-control custom-textarea to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
       </div>
     </div>
+  </div>
 
   <div class="form-group col-sm-12 peru-show united-states-hide">
     <div class="form-group col-sm-6 to-issue-hide issued-show paid-show partial-payment-show canceled-show <%= "hide" if params[:action] == "new" %>" id='billing_date'>
@@ -148,7 +154,7 @@
       <div class="col-sm-6 text-left">
       </div>
     </div>
-    <div class="form-group col-sm-6 <%= "hide" if params[:action] == "new" %>">
+    <div class="form-group col-sm-6  <%= "hide" if params[:action] == "new" %>">
         <%= f.label :reason, class: "col-sm-4 text-left" %>
         <div class="col-sm-6">
           <%= f.text_area :reason, class: "form-control custom-textarea validate[required]" %>

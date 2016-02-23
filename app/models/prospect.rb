@@ -16,20 +16,17 @@ class Prospect < ActiveRecord::Base
 
   accepts_nested_attributes_for :prospect_contacts, :allow_destroy => true
 
-  validates :client, :prospect_contacts, presence: true
+  validates :client, presence: true
 
   delegate :name, :type, :country_id, to: :client, prefix: true, allow_nil: true
-  delegate :partner_name, to: :client
-  delegate :name, to: :team
+  delegate :partner_name, to: :client, prefix: true
+  delegate :name, to: :team, prefix: true
 
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
 
   include PgSearch
   pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
-  pg_search_scope :seek_client_name,  associated_against: {
-                           client: [:name]},
-                         using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_client_country,  associated_against: {
                            client: [:country_id] }
   pg_search_scope :seek_client_partner,  associated_against: {
@@ -39,13 +36,11 @@ class Prospect < ActiveRecord::Base
   scope :regular, -> { joins('JOIN "clients" ON "clients"."id" = "prospects"."client_id" AND "clients"."deleted_at" IS NULL').merge(Client.regular) }
 
   def self.search_with name, company, status, prospect_type, country_id, client_type, partner_id
-    include_client_type(client_type).
-    include_status(status).
-    include_prospect_type(prospect_type).
     search_name(name).
     search_client_name(company).
-    search_client_country(country_id).
-    search_client_partner(partner_id)
+    search_client_country(country_id)
+    #search_client_partner(partner_id)
+    #include_status(status).
   end
 
   def self.search_client_partner(partner_id)
@@ -66,10 +61,10 @@ class Prospect < ActiveRecord::Base
 
   def self.search_client_name company
     if company.present?
-      seek_client_name(company)
+      Prospect.joins("JOIN clients ON clients.id = prospects.client_id").joins("JOIN entities ON entities.id = clients.entity_id").where("entities.name =?", company)
     else
       order("created_at DESC")
-    end
+    end  
   end
 
   def self.search_client_country country_id
@@ -88,21 +83,6 @@ class Prospect < ActiveRecord::Base
     end
   end
 
-  def self.include_prospect_type prospect_type
-    if prospect_type.present?
-      where(prospect_type: prospect_type)
-    else
-      order("created_at DESC")
-    end
-  end
-
-  def self.include_client_type client_type
-    if client_type.present?
-       send(client_type)
-    else
-      order("created_at DESC")
-    end
-  end
 
   def slug_candidates
     [

@@ -28,10 +28,10 @@ class InvoicePDF < Prawn::Document
       text "Telf. 422 10 39", size: 11
       text "Web: www.tektonlabs.com", size: 11
       text " "
-      day = "#{@invoice.billing_date.strftime("%d de ")}"
-      month = "#{@invoice.billing_date.strftime("%B")}".downcase
-      year = "#{@invoice.billing_date.strftime(" del %Y")}"
-      text "Lima, " + day + I18n.t(month) + year, size: 12
+      #day = "#{@invoice.billing_date.strftime("%d de ")}"
+      #month = "#{@invoice.billing_date.strftime("%B")}".downcase
+      #year = "#{@invoice.billing_date.strftime(" del %Y")}"
+      #text "Lima, " + day + I18n.t(month) + year, size: 12
     end    
   end
  

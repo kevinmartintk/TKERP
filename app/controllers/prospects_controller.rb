@@ -52,6 +52,9 @@ class ProspectsController < ApplicationController
     end
   end
 
+  def update_contacts
+    @contacts = Contact.from_client(params[:client_id])
+  end
   private
     def set_prospect
       @prospect = Prospect.find(params[:id])
