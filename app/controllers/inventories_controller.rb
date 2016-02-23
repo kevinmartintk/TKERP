@@ -5,7 +5,7 @@ class InventoriesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @inventories = Inventory.search_with(params[:name], params[:description], params[:reg_date], params[:inventory_type_id], params[:team])
+    @inventories = Inventory.search_with(params[:name], params[:description], params[:reg_date], params[:type], params[:team])
   end
 
   def show
