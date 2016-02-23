@@ -87,7 +87,7 @@ class CollaboratorsController < ApplicationController
     end
 
     def person_params
-      [:first_name, :last_name, :dni, :birthday]
+      [:first_name, :last_name, :dni, :birthday, :dni_scan, :certificate]
     end
 
     def reference_params

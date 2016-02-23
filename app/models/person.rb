@@ -8,6 +8,8 @@ class Person < ActiveRecord::Base
 
   has_attached_file :dni_scan, styles: { medium: "400x600>"}
   validates_attachment_file_name :dni_scan, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
+  has_attached_file :certificate, styles: { medium: "400x600>"}
+  validates_attachment_file_name :dni_scan, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
 
   accepts_nested_attributes_for :contact, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :collaborator, reject_if: :all_blank, allow_destroy: true
