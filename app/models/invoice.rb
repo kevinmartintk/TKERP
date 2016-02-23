@@ -5,20 +5,24 @@ class Invoice < ActiveRecord::Base
   belongs_to :client
   belongs_to :currency
   belongs_to :headquarter
+
   has_attached_file :document, styles: { medium: "400x600>"}
   validates_attachment_file_name :document, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
-
+  
   has_attached_file :purchase_order, styles: { medium: "400x600>"}
   validates_attachment_file_name :purchase_order, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
 
+  #fata verificar
+  has_attached_file :pdf, :url => Rails.application.config.action_controller.relative_url_root.to_s + "/system/:class/:attachment/:id_partition/:style/:basename.:extension", 
+    :path => ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension", 
+    :default_url => Rails.application.config.action_controller.relative_url_root.to_s + "/images/:style/missing.pdf"
+  
   has_many :invoice_contacts
   has_many :contacts, through: :invoice_contacts
 
   acts_as_paranoid
 
   validates :client_id, :description, :currency_id, :amount, :status, presence: true
-  #validates :invoice_contacts, presence: { message: "are required. Please add at least one." }
-  #validates :reason, presence: true
 
   accepts_nested_attributes_for :invoice_contacts, allow_destroy: true
 

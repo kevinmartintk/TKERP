@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
   resources :prospects do
       get :autocomplete_client_name, :on => :collection
+      get :update_contacts, :on => :collection
       resources :estimations
       resources :quotations
   end

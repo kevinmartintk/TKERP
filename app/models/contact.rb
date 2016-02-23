@@ -85,4 +85,15 @@ class Contact < ActiveRecord::Base
     end
   end
 
+  def belongs_to_prospect prospect_id
+    if prospect_id.present?
+      prospect = Prospect.find(prospect_id)
+      prospect.contacts.include? self
+    end
+  end
+
+  def self.from_client client_id
+    Contact.where(client_id: client_id )
+  end
+
 end

@@ -60,7 +60,7 @@ class Collaborator < ActiveRecord::Base
   pg_search_scope :seek_last_name, associated_against: { person: [:last_name] }, using: { tsearch: { prefix: true }}
 
   scope :team, -> (team_id) { where(team: team_id)}
-  scope :team_name, -> (name) { joins("JOIN teams ON teams.name = '#{name}' AND teams.id = collaborators.id")}
+  scope :team_name, -> (name) { joins("JOIN teams ON teams.name = '#{name}' AND teams.id = collaborators.team_id")}
 
 
   def full_name

@@ -1,4 +1,4 @@
-<%= nested_form_for(@prospect, html: {id: "form_prospect", role: "form", class: "form-horizontal validate", multipart: true}) do |f| %>
+<%= nested_form_for(@prospect, html: {id: "form_prospect", role: "form", class: "form-horizontal validate", data: {action: params[:action]}, multipart: true } ) do |f| %>
   <%= render "helpers/flash_errors", object: @prospect %>
 
   <div class="form-group col-sm-12">
@@ -6,7 +6,7 @@
       <%= f.label :client_id, class: "col-sm-4 text-left" %>
       <div class="col-sm-6 autocomplete-field">
         <input class="search_typeahead form-control typeahead" type="text" value=<%= @prospect.client_name %>>
-        <%= f.hidden_field :client_id, class: "clients-typeahead-id" %>
+        <%= f.hidden_field :client_id, class: "clients-typeahead-id", id:"hidden_field"%>
       </div>
     </div>
   
@@ -50,19 +50,10 @@
   </div>
 
   <div class="form-group col-sm-12">
-    <div class="form-group col-sm-6">
-      <%= f.label :contacts, class: "col-sm-4 text-left" %>
-      <div id="contacts-fields" class="col-sm-6 <%= 'hide' if @prospect.client.nil? %>">
-        <%= f.fields_for :prospect_contacts do |r| %>
-          <% unless @prospect.client.nil? %>
-            <div class="form-group col-sm-12">
-              <%= r.collection_select(:contact_id, @prospect.client.contacts, :id, :name, { :include_blank => 'Select contact' }, {:class => "form-control validate[required]"} ) %>
-              <%= r.link_to_remove "Remove" , id: "remove-contact"%>
-            </div>
-          <% end %>
-        <% end %>
-        <%= f.link_to_add '<i class="glyphicon glyphicon-plus"></i> Add'.html_safe, :prospect_contacts, class: "col-sm-1", id: "add-contact" %>
-      </div>
+      <div class="form-group col-sm-6">
+        <%= f.label :contacts, class: "col-sm-4 text-left hide", id: "contact-label" %>
+        <div id="contacts-fields" class="col-sm-6 hide" data-prospect="<%= @prospect.id %>">
+        </div>
     </div>
 
     <div class="form-group col-sm-6">
@@ -77,7 +68,7 @@
     <div class="form-group col-sm-6">
       <%= f.label :account_id, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%#= f.collection_select :account_id, Collaborator.team_name("Account") ,:id,:name, {prompt: '- Select an Account -'}, class: "form-control validate[required]" %>
+        <%= f.collection_select :account_id, Collaborator.team_name("Account") ,:id,:name, {prompt: '- Select an Account -'}, class: "form-control validate[required]" %>
       </div>
     </div>
 
