@@ -2,6 +2,7 @@
   <table class="table table-hover table-striped">
     <thead>
       <tr>
+        <th>Code</th>
         <th>Name</th>
         <th>Last Name</th>
         <th>DNI</th>
@@ -16,6 +17,7 @@
     <tbody>
       <% @collaborators.each do |collaborator| %>
         <tr>
+          <td><%= collaborator.code %></td>
           <td><%= collaborator.first_name %></td>
           <td><%= collaborator.last_name %></td>
           <td><%= collaborator.dni %></td>

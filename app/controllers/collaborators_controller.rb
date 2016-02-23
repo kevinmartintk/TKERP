@@ -17,45 +17,19 @@ class CollaboratorsController < ApplicationController
 
   def new
     add_breadcrumb "New Collaborator", :new_collaborator_path
-
-    #general #internal #health
-      @person = Person.new
-      collaborator = @person.build_collaborator
-
-    #familiar
-      spouse_relationship = collaborator.build_spouse_relationship
-      spouse_relationship.build_person
-      # children_relationship = collaborator.children_relationships.build
-      # children_relationship.build_person
-
-    #academic
-      # study = collaborator.studies.build
-      # study.build_entity
-
-    #laboral
-      # job_experience = collaborator.job_experiences.build
-      # job_experience.build_entity
-      # job_experience.build_reference
-
-    #payment
-      collaborator.build_collaborator_salary_bank
-      collaborator.build_collaborator_cts_bank
-      collaborator.build_collaborator_pension_entity
-
-    #emergency
-      emergency_relationship = collaborator.build_emergency_relationship
-      emergency_relationship.build_person
-
+    @person = Person.new
+    @person.prepare_collaborator
   end
 
   def edit
     add_breadcrumb "Editing Collaborator", :edit_collaborator_path
+    @person.prepare_collaborator
   end
 
   def create
-    @person = Person.create(collaborator_person_params)
+    @person = Person.new(collaborator_person_params)
 
-    if @person.save
+    if @person.save_collaborator
       redirect_to collaborators_path, notice: 'Collaborator was successfully created.'
     else
       render :new
@@ -63,7 +37,9 @@ class CollaboratorsController < ApplicationController
   end
 
   def update
-    if @person.update(collaborator_person_params)
+    @person.assign_attributes(collaborator_person_params)
+
+    if @person.save_collaborator
       redirect_to collaborators_path, notice: 'Collaborator was successfully updated.'
     else
       render :edit
@@ -71,7 +47,7 @@ class CollaboratorsController < ApplicationController
   end
 
   def destroy
-    if @person.destroy
+    if @collaborator.destroy
       redirect_to collaborators_path, notice: 'Collaborator was successfully destroyed.'
     end
   end
@@ -99,7 +75,7 @@ class CollaboratorsController < ApplicationController
     end
 
     def collaborator_person_params
-      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype, :position_id, collaborator_attributes: [:id, :code, :first_day, :team_id, :work_mail, :type, :status, :salary, :blood_type, :allergies, :disability, :before_employment_test, :around_employment_test, :after_employment_test, :insurance, :insurance_type, spouse_relationship_attributes: [person_attributes: person_params], children_relationships_attributes: [:id, :_destroy, person_attributes: person_params], studies_attributes: [:id, :type, :degree, :start, :end, :_destroy, entity_attributes: study_params], job_experiences_attributes: [:position_id, :type, :start, :end, :achievements, :functions, :certificate, entity_attributes: job_experience_params, reference_attributes: reference_params], collaborator_salary_bank_attributes: bank_params, collaborator_cts_bank_attributes: bank_params, collaborator_pension_entity_attributes: [:entity_id], emergency_relationship_attributes: [person_attributes: emergency_params]])
+      params.require(:person).permit(:first_name, :last_name, :dni, :dni_scan, :birthday, :email, :civil_status, :gender, :address, :phone, :mobile, :skype, :position_id, collaborator_attributes: [:id, :code, :first_day, :team_id, :work_mail, :type, :status, :salary, :blood_type, :allergies, :disability, :before_employment_test, :around_employment_test, :after_employment_test, :insurance, :insurance_type, spouse_relationship_attributes: [person_attributes: person_params], children_relationships_attributes: [:id, :_destroy, person_attributes: person_params], studies_attributes: [:id, :type, :degree, :start, :end, :_destroy, entity_attributes: study_params], job_experiences_attributes: [:position_id, :type, :start, :end, :achievements, :functions, :certificate, entity_attributes: job_experience_params, reference_attributes: reference_params], collaborator_salary_bank_attributes: bank_params, collaborator_cts_bank_attributes: bank_params, collaborator_pension_entity_attributes: [:entity_id], emergency_relationship_attributes: [:type, person_attributes: emergency_params]])
     end
 
     def study_params
