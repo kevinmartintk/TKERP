@@ -12,4 +12,7 @@ class JobExperience < ActiveRecord::Base
   accepts_nested_attributes_for :entity, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :reference, reject_if: :all_blank, allow_destroy: true
 
+  has_attached_file :certificate, styles: { medium: "400x600>"}
+  validates_attachment_file_name :certificate, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
+
 end
