@@ -11,10 +11,10 @@
     </div>
     <div class="col-sm-4">
       <div class="col-sm-4">
-        <%= label_tag :inventory_type_id, "Type", class: "control-tag" %>
+        <%= label_tag :type, "Type", class: "control-tag" %>
       </div>
       <div class="col-sm-8">
-        <%= select_tag :inventory_type_id, options_for_select(class_enum_for_select "Inventory", "type"), prompt: "- Select a type -", class: 'form-control' %>
+        <%= select_tag :type, options_for_select(class_enum_for_select "Inventory", "type"), prompt: "- Select a type -", class: 'form-control' %>
       </div>
     </div>
     <div class="col-sm-4">

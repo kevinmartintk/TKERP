@@ -18,7 +18,7 @@ class ContactsController < ApplicationController
   def new
     add_breadcrumb "New Contact", :new_contact_path
     @person = Person.new
-    @person.build_contact
+    @person.prepare_contact
   end
 
   def edit

@@ -77,7 +77,6 @@ class Contact < ActiveRecord::Base
     end
   end
 
-
   def belongs_to_invoice invoice_id
     if invoice_id.present?
       invoice = Invoice.find(invoice_id)
