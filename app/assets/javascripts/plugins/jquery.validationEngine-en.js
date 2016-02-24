@@ -163,6 +163,11 @@
                     "regex": /^[0-9\ ]{8}$/,
                     "alertText": "* Invalid DNI number"
                 },
+                "bankAccount": {
+                    // credit: jquery.h5validate.js / orefalo
+                    "regex": /^(\d+-?)+\d+$/,
+                    "alertText": "* Invalid bank account number"
+                },
 
                 // --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
                 "ajaxUserCall": {
