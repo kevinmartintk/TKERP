@@ -22,7 +22,7 @@ show_contacts_edit = ->
 
 
 ajax_update_contacts = ->
-  $.ajax '/prospects/update_contacts',
+  $.ajax "<%= RELATIVE_URL_ROOT %>" + 'prospects/update_contacts',
    type: 'GET'
    dataType: 'script'
    data:
