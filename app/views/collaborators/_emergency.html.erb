@@ -1,7 +1,6 @@
-<h2 class="page-header">Emergency Information</h2>
+<h2 class="page-header">Emergency Contact</h2>
 <%= form.fields_for :collaborator do |c| %>
   <%= c.fields_for :emergency_relationship do |r| %>
-    <h3 class="page-header">Emergency contact</h3>
     <%= r.fields_for :person do |p| %>
       <%= render "emergency_person", f: p, form: r %>
     <% end %>
