@@ -5,7 +5,6 @@
           <th>Name</th>
           <th>Client</th>
           <th>Client Type</th>
-          <th>Partner</th>
           <th>Prospect Type</th>
           <th>Team</th>
           <th>Status</th>
@@ -22,9 +21,8 @@
           <td><%= prospect.name %></td>
           <td><%= prospect.client_name %></td>
           <td><%= prospect.client_type %></td>
-          <td><%#= prospect.partner_name %></td>
           <td><%= prospect.type %></td>
-          <td><%#= prospect.team_name %></td>
+          <td><%= prospect.team_name %></td>
           <td><%= prospect.status %></td>
           <td><%= prospect.estimations.empty? ? prospect.estimations.size : "No Estimations" %></td>
           <td><%= prospect.quotations.empty? ? prospect.quotations.size : "No Quotations" %></td>
@@ -50,7 +48,7 @@
             <td>
               <%= link_to 'New Estimation', new_prospect_estimation_path(prospect)%>
             </td>
-            <td>-----------------</td>
+            <td>------------</td>
           <%end%>
         </tr>
       <% end %>

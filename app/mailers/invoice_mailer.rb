@@ -5,8 +5,9 @@ class InvoiceMailer < ApplicationMailer
 	  @contact = contact
 	  @invoice = invoice
     @message = message
+
     attachments['invoice.pdf'] = {
-    	content: open(Rails.root + invoice.pdf.expiring_url).read
+    	content: open(invoice.pdf.path).read
     }
 	  mail(to: @contact.email, subject: "Invoice")
 	end
