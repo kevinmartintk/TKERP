@@ -120,7 +120,9 @@
 
   <div class="form-group col-sm-12 peru-show united-states-hide">
     <div class="form-group col-sm-6">
-      <%= f.label :contacts, class: "col-sm-4 text-left hide", id: "contact-label" %>
+      <div id="contact-label">
+        <%= f.label :contacts, class: "col-sm-4 text-left"%>
+      </div>
       <div id="contacts-fields" class="col-sm-6 hide" data-country="<%= params[:country_id]%>" data-invoice="<%= @invoice.id %>">
       </div>
     </div>

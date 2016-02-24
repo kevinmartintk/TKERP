@@ -3,7 +3,6 @@ class Prospect < ActiveRecord::Base
   acts_as_paranoid
 
   belongs_to :client
-  # belongs_to :account, class_name: "Collaborator"
   belongs_to :team
 
   has_many :estimations
@@ -27,10 +26,6 @@ class Prospect < ActiveRecord::Base
 
   include PgSearch
   pg_search_scope :seek_name, against: [:name], using: { tsearch: { prefix: true  } }
-  pg_search_scope :seek_client_country,  associated_against: {
-                           client: [:country_id] }
-  pg_search_scope :seek_client_partner,  associated_against: {
-                           client: [:partner_id] }
 
   scope :partner, -> { joins('JOIN "clients" ON "clients"."id" = "prospects"."client_id" AND "clients"."deleted_at" IS NULL').merge(Client.partner) }
   scope :regular, -> { joins('JOIN "clients" ON "clients"."id" = "prospects"."client_id" AND "clients"."deleted_at" IS NULL').merge(Client.regular) }
@@ -38,17 +33,8 @@ class Prospect < ActiveRecord::Base
   def self.search_with name, company, status, prospect_type, country_id, client_type, partner_id
     search_name(name).
     search_client_name(company).
-    search_client_country(country_id)
-    #search_client_partner(partner_id)
-    #include_status(status).
-  end
-
-  def self.search_client_partner(partner_id)
-    if partner_id.present?
-      seek_client_partner(partner_id)
-    else
-      order("created_at DESC")
-    end
+    search_client_country(country_id).
+    include_status(status)
   end
 
   def self.search_name name
@@ -69,7 +55,7 @@ class Prospect < ActiveRecord::Base
 
   def self.search_client_country country_id
     if country_id.present?
-      seek_client_country(country_id)
+      Prospect.joins("JOIN clients ON clients.id = prospects.client_id").joins("JOIN entities ON entities.id = clients.entity_id").where("entities.country_id = ?", country_id)
     else
       order("created_at DESC")
     end
@@ -77,7 +63,7 @@ class Prospect < ActiveRecord::Base
 
   def self.include_status status
     if status.present?
-      where(status: status)
+      Prospect.send(status)
     else
       order("created_at DESC")
     end

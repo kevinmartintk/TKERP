@@ -77,7 +77,7 @@
             end
           }
           attachment = @invoice.generate_pdf
-          @invoice.invoice_pdf = @invoice.generate_pdf_file(attachment)
+          @invoice.pdf = @invoice.generate_pdf_file(attachment)
           @invoice.save!
 
           redirect_to invoices_management_country_invoices_path, notice: 'Invoice was successfully updated.'

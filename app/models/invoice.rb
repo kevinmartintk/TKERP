@@ -12,7 +12,6 @@ class Invoice < ActiveRecord::Base
   has_attached_file :purchase_order, styles: { medium: "400x600>"}
   validates_attachment_file_name :purchase_order, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
 
-  #fata verificar
   has_attached_file :pdf, :url => Rails.application.config.action_controller.relative_url_root.to_s + "/system/:class/:attachment/:id_partition/:style/:basename.:extension", 
     :path => ":rails_root/public/system/:class/:attachment/:id_partition/:style/:basename.:extension", 
     :default_url => Rails.application.config.action_controller.relative_url_root.to_s + "/images/:style/missing.pdf"

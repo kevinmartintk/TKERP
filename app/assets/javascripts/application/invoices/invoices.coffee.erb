@@ -27,7 +27,7 @@ invoice_us = ->
 show_icons = ->
   $('.search_typeahead').bind 'typeahead:selected', (obj, datum, name) ->
     ajax_update_contacts()
-    $("#contact-label").removeClass("hide")
+    $("#{}contact-label").removeClass("hide")
     $("#contacts-fields").removeClass("hide")
 
 ajax_update_contacts = ->

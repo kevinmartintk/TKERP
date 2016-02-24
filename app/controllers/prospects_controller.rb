@@ -23,6 +23,11 @@ class ProspectsController < ApplicationController
     begin
       @prospect = Prospect.new(prospect_params)
       if @prospect.save
+        params.keys.each { |x| 
+            if x.include? "client_contacts" 
+              @prospect.contacts.push(Contact.find(params[x]))
+            end
+        }
         redirect_to prospects_path, notice: 'Prospect was successfully created.'
       else
         render :new
@@ -35,6 +40,11 @@ class ProspectsController < ApplicationController
   def update
     begin
       if @prospect.update(prospect_params)
+        params.keys.each { |x| 
+          if x.include? "client_contacts" 
+            @prospect.contacts.push(Contact.find(params[x]))
+          end
+        }
         redirect_to prospects_path, notice: 'Prospect was successfully updated.'
       else
         render :edit
