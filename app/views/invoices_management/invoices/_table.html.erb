@@ -1,17 +1,16 @@
-<div class="table-responsive">
+<div class="table-responsive" id="table-invoices" >
 	<table class="table table-hover table-striped">
 		<thead>
 			<th>Nro</th>
 			<th>Company</th>
 			<th>Nro Legal ID</th>
 			<th>Address</th>
-			<th>Amount</th>
+			<th colspan="2">Amount</th>
 			<th>Status</th>
 			<th>Date</th>
 			<% if !@headquarter.is_peru? %>
 				<th>Expiration Date</th>
 				<th>Drawdown</th>
-				<th>Currency</th>
 				<th>IGV</th>
 				<th>Total</th>
 			<% end %>
@@ -24,7 +23,8 @@
           <td><%= invoice.client_name %></td>
           <td><%= invoice.client_legal_id %></td>
           <td><%= invoice.client_address %></td>
-          <td><%= invoice.amount_decimal%></td>
+          <td class="symbol"><%= invoice.currency.symbol%></td>
+          <td class="amount"><%= invoice.amount_decimal%></td>
           <td><%= invoice.status%></td>
           <td><%= invoice.created_at.to_date%></td>
           <% if !@headquarter.is_peru? %>
@@ -34,7 +34,6 @@
           	<%else%>
             	<td>No</td>
           	<%end%>
-          	<td><%= Currency.find(invoice.currency).name %></td> 
           	<td><%= invoice.invoice_igv %></td>
           	<td><%= invoice.invoice_total %></td>
           <% end %>

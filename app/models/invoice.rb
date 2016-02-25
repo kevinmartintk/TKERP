@@ -91,16 +91,16 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.total_amount invoices, currency_id
-    amount = invoices.select{|invoice| invoice.currency == currency_id }.sum(&:amount)
+    amount = invoices.select{|invoice| invoice.currency_id == currency_id }.sum(&:amount)
     '%.2f' % amount
   end
 
   def self.total_soles invoices
-    self.total_amount(invoices, Currency.currency_symbol('Sol'))
+    self.total_amount(invoices, Currency.currency_id('Sol'))
   end
 
   def self.total_dolar invoices
-    self.total_amount(invoices, Currency.currency_symbol('Dolar'))
+    self.total_amount(invoices, Currency.currency_id('Dollar'))
   end
 
   def amount_decimal
