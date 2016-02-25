@@ -4,7 +4,7 @@ Currency.create([
     symbol: 'S/.'
   },
   {
-    name: 'Dolar',
+    name: 'Dollar',
     symbol: '$'
   }
 ])

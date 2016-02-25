@@ -28,10 +28,7 @@ class InvoicePDF < Prawn::Document
       text "Telf. 422 10 39", size: 11
       text "Web: www.tektonlabs.com", size: 11
       text " "
-      #day = "#{@invoice.billing_date.strftime("%d de ")}"
-      #month = "#{@invoice.billing_date.strftime("%B")}".downcase
-      #year = "#{@invoice.billing_date.strftime(" del %Y")}"
-      #text "Lima, " + day + I18n.t(month) + year, size: 12
+
     end    
   end
  
@@ -45,7 +42,7 @@ class InvoicePDF < Prawn::Document
     end 
     bounding_box([70, y_position ], :width => 270, :height => 150) do
       text " "
-      text "#{ @invoice.client.name }", size: 11
+      text "#{ @invoice.client.corporate_name }", size: 11
       text "#{ @invoice.client.address }", size: 11
       text "#{ @invoice.client.legal_id }", size: 11
     end 

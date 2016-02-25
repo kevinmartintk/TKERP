@@ -8,4 +8,9 @@ class Currency < ActiveRecord::Base
     find_by(name: name).symbol
   end
 
+  def self.currency_id name
+    find_by(name: name).id
+  end
+
+
 end

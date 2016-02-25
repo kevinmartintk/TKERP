@@ -13,8 +13,8 @@
 
     def index
       @invoices = @headquarter.invoices.search_with(params[:client], params[:legal_id], params[:invoice_number], params[:from_date], params[:to_date], params[:status])
-      @total_invoices_soles = "#{Currency.currency_symbol('Sol')} #{Invoice.total_soles(@invoices)}"
-      @total_invoices_dollar = "#{Currency.currency_symbol('Dolar')} #{Invoice.total_dolar(@invoices)}"
+      @total_invoices_soles = Invoice.total_soles(@invoices)
+      @total_invoices_dollar = Invoice.total_dolar(@invoices)
     end
 
     def send_mail
@@ -114,7 +114,7 @@
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def invoice_params
-        params.require(:invoice).permit(:client_id, :description, :currency_id, :amount, :status, :has_drawdown, :document, :purchase_order, :extra, :contact, :reason, :message, :invoice_number, :payment_type, :expiration_date, :billing_date, invoice_contacts_attributes: [:contact_id, :_destroy])
+        params.require(:invoice).permit(:client_id, :description, :currency_id, :amount, :status, :has_drawdown, :partial_payment, :document, :purchase_order, :extra, :contact, :reason, :message, :invoice_number, :payment_type, :expiration_date, :billing_date, invoice_contacts_attributes: [:contact_id, :_destroy])
       end
 
   end

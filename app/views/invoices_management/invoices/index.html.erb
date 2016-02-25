@@ -12,6 +12,12 @@
   <%= render 'table', invoices: @invoices %>
 </div>
 
+<div id="amounts">
+  Total Soles: <%= "#{Currency.currency_symbol('Sol')}" "#{@total_invoices_soles}"%>
+  <br>
+  Total Dollars: <%= "#{Currency.currency_symbol('Dollar')}" "#{@total_invoices_dollar}"%>
+</div>
+
 <script type="text/javascript">
   $(document).ready(function () {
     $('.datepicker').datepicker({

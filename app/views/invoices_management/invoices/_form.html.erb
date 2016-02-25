@@ -80,12 +80,14 @@
       </div>
     </div>
 
-      <div class="form-group col-sm-6 peru-show united-states-hide">
-        <label class="col-sm-4 text-left">
-          <%= f.check_box :has_drawdown, class: "to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
-          Seal Drawdown
-        </label>
+    <div class="form-group col-sm-6 hide issued-hide paid-hide canceled-hide partial-payment-show" id="partial-payment">
+      <%= f.label :partial_payment, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6 text-left">
+        <%= f.text_field :partial_payment, class: "form-control" %>
       </div>
+    </div>
+
+
   </div>
 
   <div class="form-group col-sm-12 peru-show united-states-hide">
@@ -94,6 +96,13 @@
       <div class="col-sm-6">
         <%= f.text_field :extra, class: "form-control" %>
       </div>
+    </div>
+    
+    <div class="form-group col-sm-6 peru-show united-states-hide">
+      <label class="col-sm-4 text-left">
+        <%= f.check_box :has_drawdown, class: "to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
+        Seal Drawdown
+      </label>
     </div>
   </div>
 
