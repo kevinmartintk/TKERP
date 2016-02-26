@@ -1,0 +1,7 @@
+<% if object.send("#{file}_content_type") == "application/pdf" %>
+  <%= object.send("#{file}_file_name") %>
+  <%= link_to '<span class="glyphicon glyphicon-search"></span>'.html_safe, object.send("#{file}").url, class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Preview", target: "_blank" %>
+<% else %>
+  <%= image_tag object.send("#{file}").url, size: "200x150", class: "image" %>
+  <%= object.send("#{file}_file_name") %>
+<% end %>

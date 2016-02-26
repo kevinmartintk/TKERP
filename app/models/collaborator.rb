@@ -65,11 +65,11 @@ class Collaborator < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
 
-  has_attached_file :before_employment_test, styles: { medium: "400x600>"}
+  has_attached_file :before_employment_test
   validates_attachment_file_name :before_employment_test, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
-  has_attached_file :around_employment_test, styles: { medium: "400x600>"}
+  has_attached_file :around_employment_test
   validates_attachment_file_name :around_employment_test, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
-  has_attached_file :after_employment_test, styles: { medium: "400x600>"}
+  has_attached_file :after_employment_test
   validates_attachment_file_name :after_employment_test, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
 
   def full_name

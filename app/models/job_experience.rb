@@ -1,4 +1,3 @@
-
 class JobExperience < ActiveRecord::Base
   self.inheritance_column = nil
 
@@ -12,7 +11,7 @@ class JobExperience < ActiveRecord::Base
   accepts_nested_attributes_for :entity, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :reference, reject_if: :all_blank, allow_destroy: true
 
-  has_attached_file :certificate, styles: { medium: "400x600>"}
+  has_attached_file :certificate
   validates_attachment_file_name :certificate, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
 
 end

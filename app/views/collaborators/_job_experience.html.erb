@@ -44,7 +44,15 @@
   <div class="form-group col-sm-6">
     <%= form.label :certificate, class: "col-sm-4 text-left" %>
     <div class="col-sm-6">
-      <%= form.file_field :certificate, class: "form-control" %>
+      <%= render "helpers/file_field_with_preview", file_field: :certificate, form: form %>
     </div>
   </div>
+  <% if form.object.certificate? %>
+    <div class="form-group col-sm-6">
+      <%= form.label :current_file, class: "col-sm-4 text-left"%>
+      <div class="col-sm-6">
+        <%= render "helpers/preview_file", object: form.object, file: :certificate %>
+      </div>
+    </div>
+  <% end %>
 </div>

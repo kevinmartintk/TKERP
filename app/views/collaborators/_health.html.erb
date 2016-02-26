@@ -34,23 +34,55 @@
     <div class="form-group col-sm-6">
       <%= c.label :before_employment_test, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= c.file_field :before_employment_test, class: "form-control validate[required]" %>
+        <%= render "helpers/file_field_with_preview", file_field: :before_employment_test, form: c %>
       </div>
     </div>
   </div>
+
+  <div class="form-group col-sm-12">
+    <% if c.object.before_employment_test? %>
+      <div class="form-group col-sm-6"></div>
+      <div class="form-group col-sm-6">
+        <%= c.label :current_file, class: "col-sm-4 text-left"%>
+        <div class="col-sm-6">
+          <%= render "helpers/preview_file", object: c.object, file: :before_employment_test %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
   <div class="form-group col-sm-12">
     <div class="form-group col-sm-6">
       <%= c.label :around_employment_test, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= c.file_field :around_employment_test, class: "form-control validate[required]" %>
+        <%= render "helpers/file_field_with_preview", file_field: :around_employment_test, form: c %>
       </div>
     </div>
     <div class="form-group col-sm-6">
       <%= c.label :after_employment_test, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= c.file_field :after_employment_test, class: "form-control validate[required]" %>
+        <%= render "helpers/file_field_with_preview", file_field: :after_employment_test, form: c %>
       </div>
     </div>
+  </div>
+
+  <div class="form-group col-sm-12">
+    <% if c.object.around_employment_test? %>
+      <div class="form-group col-sm-6">
+        <%= c.label :current_file, class: "col-sm-4 text-left"%>
+        <div class="col-sm-6">
+          <%= render "helpers/preview_file", object: c.object, file: :around_employment_test %>
+        </div>
+      </div>
+    <% end %>
+    <% if c.object.after_employment_test? %>
+      <div class="form-group col-sm-6">
+        <%= c.label :current_file, class: "col-sm-4 text-left"%>
+        <div class="col-sm-6">
+          <%= render "helpers/preview_file", object: c.object, file: :after_employment_test %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <div class="form-group col-sm-12">
