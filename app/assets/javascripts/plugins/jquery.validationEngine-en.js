@@ -142,7 +142,7 @@
                     "alertText": "* Invalid quantity"
                 },
                 "customRuc": {
-                    "regex": /^[0-9\ ]{11}$/,
+                    "regex": /^[0-9\ ]{6,13}$/,
                     "alertText": "* Invalid RUC"
                 },
                 "legalIdenfitication": {
