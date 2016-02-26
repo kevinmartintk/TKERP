@@ -150,7 +150,7 @@
                     "alertText": "* Invalid legal identification"
                 },
                 "customPhone":{
-                    "regex": /^(([ \)])[0-9]{1,3}([ \)]))?([\(][0-9]{1,3}[\)])?([0-9 \.\-]{1,9})$/,
+                    "regex": /^(([ \)])[0-9]{1,3}([ \)]))?([\(][0-9]{1,3}[\)])?([0-9 \.\-]{1,12})$/,
                     "alertText": "* Invalid phone number"
                 },
                 "customMobile": {
