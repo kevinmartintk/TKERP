@@ -8,7 +8,7 @@
   <div class="form-group col-sm-6">
     <%= form.label :account_number, class: "col-sm-4 text-left" %>
     <div class="col-sm-6">
-      <%= form.text_field :account_number, class: "form-control" %>
+      <%= form.text_field :account_number, class: "form-control validate[required, custom[bankAccount]]" %>
     </div>
   </div>
 </div>
