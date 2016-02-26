@@ -10,14 +10,8 @@ init = ->
   invoice_us()
   show_contacts()
   show_icons()
-  show_amounts()
 
-show_amounts = ->
-  if current_scope "action", "index"
-    position = $("#table-invoices").position()
-    extra =  $("#table-invoices").innerHeight()
-    set_top = position.top + extra
-    $("#amounts").offset({top: set_top})
+
 
 
 show_contacts = ->
@@ -51,17 +45,14 @@ ajax_update_contacts = ->
 update_status = ->
   value = default_format $('#invoice_status option:selected').text()
   action = $('#form_invoice').data("action")
-  times = 1
   switch action 
     when "edit", "update"
       show(value)
       disable(value)
       hide(value)
     when  "new"
-      console.log value
-      if value == "partial-payment" && times == 1
+      if value == "partial-payment" 
         $("#partial-payment").removeClass("hide")
-        times++
       else  
         $("#partial-payment").addClass("hide")
 
