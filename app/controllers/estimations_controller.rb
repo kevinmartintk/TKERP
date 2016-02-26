@@ -58,7 +58,6 @@ class EstimationsController < ApplicationController
       end
     end
   end
-
   # DELETE /estimations/1
   # DELETE /estimations/1.json
   def destroy
@@ -68,7 +67,6 @@ class EstimationsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   private
 
     def set_prospect
@@ -80,8 +78,7 @@ class EstimationsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def estimation_params
-      params.require(:estimation).permit(:technology_id, :estimation_type, :developers, :developer_days, :developer_hours, :developer_hours_per_day, :designers, :designer_days, :designer_hours, :designer_hours_per_day, :accounts, :account_hours, :sent_at)
-
+    def estimation_pgitarams
+      params.require(:estimation).permit(:technology_id, :estimation_type, :developers, :status, :developer_days, :developer_hours, :developer_hours_per_day, :designers, :designer_days, :designer_hours, :designer_hours_per_day, :accounts, :account_hours, :sent_at)
     end
 end

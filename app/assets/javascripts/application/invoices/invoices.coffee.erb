@@ -10,14 +10,8 @@ init = ->
   invoice_us()
   show_contacts()
   show_icons()
-  show_amounts()
 
-show_amounts = ->
-  if current_scope "action", "index"
-    position = $("#table-invoices").position()
-    extra =  $("#table-invoices").innerHeight()
-    set_top = position.top + extra
-    $("#amounts").offset({top: set_top})
+
 
 
 show_contacts = ->
