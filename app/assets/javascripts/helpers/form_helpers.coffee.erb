@@ -17,12 +17,6 @@
     autoclose: true
     todayHighlight: true
     endDate: new Date()
-  $('.cocoon-form').on 'cocoon:after-insert', (e, insertedItem) ->
-    $('.datepicker').datepicker
-      format: "yyyy-mm-dd"
-      autoclose: true
-      todayHighlight: true
-      endDate: new Date()
 
 @type_ahead_clients = ->
   clientsSource = new Bloodhound(
@@ -49,18 +43,24 @@
     $(".tt-hint").removeClass("validate[required]")
 
 @picture_input = ->
-  $('.pictureInput').on 'change', (event) ->
-    files = event.target.files
-    image = files[0]
-    reader = new FileReader()
-    reader.onload = (file) ->
-      img = new Image()
-      img.src = file.target.result
-      $('#target').html(img)
-      img.style.height = '180px'
-      img.style.width = 'auto'
-    reader.readAsDataURL(image)
-    $("#endTimeLabel").removeClass()
+  $('.pictureInput').each ->
+    $(this).on 'change', (event) ->
+      files = event.target.files
+      image = files[0]
+      extension = image.name.split('.').pop().toLowerCase()
+      reader = new FileReader()
+      input = $(this)
+      switch extension
+        when "pdf" then input.parent().find(".target").html(image.name)
+        when "jpg", "jpeg", "png"
+          reader.onload = (file) ->
+            img = new Image()
+            img.src = file.target.result
+            input.parent().find(".target").html(img)
+            img.style.height = '180px'
+            img.style.width = 'auto'
+          reader.readAsDataURL(image)
+      input.parent().find("label").removeClass()
     
 @current_scope = (data, value) ->
   $("#wrapper").data(data).search(value) >= 0

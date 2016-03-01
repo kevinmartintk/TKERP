@@ -28,11 +28,7 @@
           <td><%= collaborator.mobile %></td>
           <td>
             <%= link_to '<span class="glyphicon glyphicon-pencil"></span>'.html_safe, edit_collaborator_path(collaborator), class: "btn btn-default btn-sm", data: { "toggle" => "tooltip" }, title: "Edit" %>
-            
-            <%#= link_to '<span class="glyphicon glyphicon-calendar"></span>'.html_safe, collaborator_schedule_index_path(collaborator), data: {"toggle" => "tooltip"}, title: "Schedule", class: "btn btn-default btn-sm"%>
-
             <%= link_to '<span class="glyphicon glyphicon-remove"></span>'.html_safe, [collaborator], method: :delete ,data: { toggle: "tooltip", confirm: "Are you sure?" }, title: "Delete", class: "btn btn-default btn-sm" %>
-
           </td>
         </tr>
       <% end %>

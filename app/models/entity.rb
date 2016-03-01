@@ -12,18 +12,36 @@ class Entity < ActiveRecord::Base
 
   belongs_to :country
 
-  accepts_nested_attributes_for :client
+  accepts_nested_attributes_for :client, reject_if: :all_blank, allow_destroy: true
 
   enum type: [:company, :university, :pension, :institute, :organization, :bank, :ong]
 
   delegate :name, to: :country, prefix: true
 
-  validates :legal_id, length: {is: 11}, allow_blank: true#, presence: true, uniqueness: true, if: :is_peruvian?
-  #validates_presence_of :phone
   validates :name, :address, :country, presence: true
   validates_format_of :phone, :with => /\A(([ \)])[0-9]{1,3}([ \)]))?([\(][0-9]{1,3}[\)])?([0-9 \.\-]{1,9})\Z/, allow_blank: true
 
   def is_peruvian?
     country_id.eql?(173)
   end
+
+  def prepare_client
+    build_client
+  end
+
+  def save_client
+    ap client
+    if client.nil?
+      ap "client nil"
+      errors.add(:client, "must be valid.")
+      prepare_client
+      false
+    else
+      ap "client NOT nil"
+      self.save
+      self.client.save
+      true
+    end
+  end
+
 end

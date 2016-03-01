@@ -142,7 +142,7 @@
                     "alertText": "* Invalid quantity"
                 },
                 "customRuc": {
-                    "regex": /^[0-9\ ]{11}$/,
+                    "regex": /^[0-9\ ]{6,13}$/,
                     "alertText": "* Invalid RUC"
                 },
                 "legalIdenfitication": {
@@ -150,7 +150,7 @@
                     "alertText": "* Invalid legal identification"
                 },
                 "customPhone":{
-                    "regex": /^(([ \)])[0-9]{1,3}([ \)]))?([\(][0-9]{1,3}[\)])?([0-9 \.\-]{1,9})$/,
+                    "regex": /^(([ \)])[0-9]{1,3}([ \)]))?([\(][0-9]{1,3}[\)])?([0-9 \.\-]{1,12})$/,
                     "alertText": "* Invalid phone number"
                 },
                 "customMobile": {
@@ -165,7 +165,7 @@
                 },
                 "bankAccount": {
                     // credit: jquery.h5validate.js / orefalo
-                    "regex": /^(\d+-?)+\d+$/,
+                    "regex": /^\d{8,20}$/,
                     "alertText": "* Invalid bank account number"
                 },
 

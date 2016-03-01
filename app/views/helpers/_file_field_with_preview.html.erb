@@ -1,0 +1,6 @@
+<%= form.file_field file_field, class: "pictureInput form-control" %>
+<% unless form.object.new_record? %>
+  <%= form.label :new_file, class: "hidden"%>
+<% end %>
+<div class="target">
+</div>

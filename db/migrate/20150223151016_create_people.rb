@@ -14,7 +14,7 @@ class CreatePeople < ActiveRecord::Migration
       t.string :phone
       t.string :mobile
       t.string :skype
-      t.attachment :certificate_scan
+      t.attachment :certificate
       t.references :position
       t.integer :extension
 
