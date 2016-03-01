@@ -43,6 +43,7 @@
 
     def edit
       add_breadcrumb "Editing Invoice", :edit_invoices_management_country_invoice_path
+      @statuses = [Invoice.statuses.keys,@invoice.status]
     end
 
     def create
@@ -79,7 +80,6 @@
           attachment = @invoice.generate_pdf
           @invoice.pdf = @invoice.generate_pdf_file(attachment)
           @invoice.save!
-
           redirect_to invoices_management_country_invoices_path, notice: 'Invoice was successfully updated.'
         else
           render :edit
