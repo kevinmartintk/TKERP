@@ -40,20 +40,18 @@ class ContactsController < ApplicationController
   def update
     @person.assign_attributes(person_params)
 
-    respond_to do |format|
-      if @person.save_contact
-        format.html { redirect_to contacts_path, notice: 'Contact was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+    if @person.save_contact
+      redirect_to contacts_path, notice: 'Contact was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
-    @contact.destroy
-    respond_to do |format|
-      format.html { redirect_to contacts_path, notice: 'Contact was successfully destroyed.' }
-      format.json { head :no_content }
+    if @contact.destroy
+      redirect_to contacts_path, notice: 'Contact was successfully destroyed.'
+    else
+      redirect_to contacts_path, alert: "Contact couldn't be destroyed."
     end
   end
 
