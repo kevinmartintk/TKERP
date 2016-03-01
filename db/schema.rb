@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160225172019) do
+ActiveRecord::Schema.define(version: 20160226144050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(version: 20160225172019) do
     t.datetime "deleted_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "status"
     t.index ["deleted_at"], :name => "index_estimations_on_deleted_at"
     t.index ["prospect_id"], :name => "fk__estimations_prospect_id"
     t.index ["slug"], :name => "index_estimations_on_slug", :unique => true
