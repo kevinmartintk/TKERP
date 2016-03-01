@@ -11,9 +11,6 @@ init = ->
   show_contacts()
   show_icons()
 
-
-
-
 show_contacts = ->
   action = $('#form_invoice').data("action")
   switch action 
@@ -50,11 +47,24 @@ update_status = ->
       show(value)
       disable(value)
       hide(value)
+      status_options = $("#status-options").data("status")[0]
+      status_selected = $("#status-options").data("status")[1]
+      i = 0
+      while i < status_options.length
+        if status_options[i] != status_selected
+          option = $("option[value='" + status_options[i] + "']",  $("#status-invoice"))
+          option.attr "disabled","disabled"
+        else
+          break
+        i++
+
+
     when  "new"
       if value == "partial-payment"
         $("#partial-payment").removeClass("hide")
       else  
         $("#partial-payment").addClass("hide")
+
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

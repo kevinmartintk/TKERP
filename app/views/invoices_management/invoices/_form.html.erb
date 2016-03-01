@@ -75,8 +75,8 @@
   <div class="form-group col-sm-12">
     <div class="form-group col-sm-6 ">
       <%= f.label :status, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6 text-left">
-        <%= f.select :status, class_enum_for_select("Invoice","status"),{prompt: "- Select type -"}, class: "form-control" %>
+      <div id="status-options" class="col-sm-6 text-left" data-status = "<%= @statuses %>">
+        <%= f.select :status, class_enum_for_select("Invoice","status"),{prompt: "- Select type -"}, class: "form-control", id: "status-invoice" %>
       </div>
     </div>
 
