@@ -12,7 +12,7 @@ class Entity < ActiveRecord::Base
 
   belongs_to :country
 
-  accepts_nested_attributes_for :client
+  accepts_nested_attributes_for :client, reject_if: :all_blank, allow_destroy: true
 
   enum type: [:company, :university, :pension, :institute, :organization, :bank, :ong]
 
@@ -24,4 +24,24 @@ class Entity < ActiveRecord::Base
   def is_peruvian?
     country_id.eql?(173)
   end
+
+  def prepare_client
+    build_client
+  end
+
+  def save_client
+    ap client
+    if client.nil?
+      ap "client nil"
+      errors.add(:client, "must be valid.")
+      prepare_client
+      false
+    else
+      ap "client NOT nil"
+      self.save
+      self.client.save
+      true
+    end
+  end
+
 end
