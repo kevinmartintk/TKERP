@@ -6,10 +6,16 @@ update_radio_button = (radio_button) ->
 
 init = ->
   month_datepicker()
+  cocoon_insertion()
   update_radio_button "has_family"
   update_radio_button "has_children"
   update_radio_button "has_partner"
   ajax()
+
+cocoon_insertion = ->
+  $('.cocoon-form').on 'cocoon:after-insert', (e, insertedItem) ->
+    default_datepicker()
+    picture_input()
 
 month_datepicker = ->
   $(".month-datepicker").datepicker
