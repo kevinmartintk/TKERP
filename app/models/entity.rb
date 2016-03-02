@@ -30,14 +30,11 @@ class Entity < ActiveRecord::Base
   end
 
   def save_client
-    ap client
     if client.nil?
-      ap "client nil"
       errors.add(:client, "must be valid.")
       prepare_client
       false
     else
-      ap "client NOT nil"
       self.save
       self.client.save
       true
