@@ -86,8 +86,6 @@
         <%= f.text_field :partial_payment, class: "form-control" %>
       </div>
     </div>
-
-
   </div>
 
   <div class="form-group col-sm-12 peru-show united-states-hide">
@@ -163,6 +161,7 @@
     <div class="form-group col-sm-6 to-issue-show issued-show paid-show partial-payment-show canceled-hide <%= "hide" if params[:action] == "new" %> ">
       <%= f.label :payment_type, class: "col-sm-4 text-left" %>
       <div class="col-sm-6 text-left">
+        <%= f.select :payment_type, class_enum_for_select("Invoice","payment_type"),{prompt: "- Select type -"}, class: "form-control"%>
       </div>
     </div>
     <div class="form-group col-sm-6  <%= "hide" if params[:action] == "new" %>">
