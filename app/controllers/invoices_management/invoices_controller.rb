@@ -107,6 +107,10 @@
         @headquarter = Headquarter.joins(:country).find_by('countries.slug' => params[:country_id])
       end
 
+      def status_options
+        
+      end
+
       # Use callbacks to share common setup or constraints between actions.
       def set_invoice
         @invoice = Invoice.find(params[:id])

@@ -42,8 +42,15 @@ ajax_update_contacts = ->
 update_status = ->
   value = default_format $('#invoice_status option:selected').text()
   action = $('#form_invoice').data("action")
+  $("#status-invoice").change ->
+    status_value = default_format $('#status-invoice option:selected').text()  
+    if status_value == "partial-payment"
+      $("#partial-payment").removeClass("hide")
+    else  
+      $("#partial-payment").addClass("hide")
   switch action 
     when "edit", "update"
+      console.log value
       show(value)
       disable(value)
       hide(value)
@@ -57,14 +64,6 @@ update_status = ->
         else
           break
         i++
-
-
-    when  "new"
-      if value == "partial-payment"
-        $("#partial-payment").removeClass("hide")
-      else  
-        $("#partial-payment").addClass("hide")
-
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
