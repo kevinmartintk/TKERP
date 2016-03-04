@@ -14,7 +14,7 @@ class Entity < ActiveRecord::Base
 
   accepts_nested_attributes_for :client, reject_if: :all_blank, allow_destroy: true
 
-  enum type: [:company, :university, :pension, :institute, :organization, :bank, :ong]
+  enum type: [:company, :university, :pension, :institute, :organization, :natural_person, :bank, :ong]
 
   delegate :name, to: :country, prefix: true
 
