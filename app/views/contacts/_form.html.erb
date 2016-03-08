@@ -71,13 +71,13 @@
           <%= c.hidden_field :client_id, class: "clients-typeahead-id" %>
         </div>
       </div>
-    <% end %>
-    <div class="form-group col-sm-6">
-      <%= f.label :position, class: "col-sm-4 text-left" %>
-      <div class="col-sm-8">
-        <%= f.collection_select :position_id, Position.all, :id,:name, { prompt: '- Select a Position -' }, class: "form-control" %>
+      <div class="form-group col-sm-6">
+        <%= c.label :position, class: "col-sm-4 text-left" %>
+        <div class="col-sm-8">
+          <%= c.text_field :position, class: "form-control" %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 
   <div class="form-group">
