@@ -34,7 +34,7 @@
     <div class="form-group col-sm-6">
       <%= c.label :internal_mail, class: "col-sm-4 text-left" %>
       <div class="col-sm-6">
-        <%= c.text_field :work_mail, class: "form-control validate[required]" %>
+        <%= c.text_field :work_mail, class: "form-control validate[required,custom[email]]" %>
       </div>
     </div>
     <div class="form-group col-sm-6">
