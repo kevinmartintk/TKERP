@@ -19,7 +19,7 @@ class Entity < ActiveRecord::Base
   delegate :name, to: :country, prefix: true
 
   validates :name, :address, :country, presence: true
-  validates_format_of :phone, :with => /\A(([ \)])[0-9]{1,3}([ \)]))?([\(][0-9]{1,3}[\)])?([0-9 \.\-]{1,9})\Z/, allow_blank: true
+  validates_format_of :phone, :with => /\A([\+][0-9]{1,3}([ \.\-])?)?([\(][0-9]{1,6}[\)])?([0-9 \.\-]{1,32})(([A-Za-z \:]{1,11})?[0-9]{1,4}?)\z/, allow_blank: true
 
   def is_peruvian?
     country_id.eql?(173)
@@ -33,11 +33,16 @@ class Entity < ActiveRecord::Base
     if client.nil?
       errors.add(:client, "must be valid.")
       prepare_client
-      false
+      return false
     else
       self.save
-      self.client.save
-      true
+      if self.errors.empty?
+        self.client.save
+        return true
+      else
+        prepare_client
+        return false
+      end
     end
   end
 
