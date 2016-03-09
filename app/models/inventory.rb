@@ -6,6 +6,8 @@ class Inventory < ActiveRecord::Base
   belongs_to :operating_system
   belongs_to :team
 
+  before_create :generate_code
+
   delegate :name, to: :collaborator, prefix: true, allow_nil: true
   delegate :name, to: :team, prefix: true
 
@@ -18,9 +20,9 @@ class Inventory < ActiveRecord::Base
   pg_search_scope :seek_code_or_name, against: [:id, :name], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_description, against: [:description], using: { tsearch: { prefix: true  } }
 
-  def code_inventory
+  def generate_code
     symbol = type.first.capitalize
-    symbol + ("%04d" % (id.to_s))
+    self.code = symbol + ("%04d" % (Inventory.send(self.type).count + 1))
   end
 
   def self.search_with code_or_name, description, date, type, team
