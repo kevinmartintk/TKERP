@@ -70,7 +70,7 @@
   <div class="form-group">
     <div class="col-md-8 col-sm-8 col-xs-12">
       <div class="col-sm-12 text-right">
-        <%= f.submit "Save", class: "btn btn-primary" %> <%= link_to 'Cancel', clients_path, class: "btn btn-default" %>
+        <%= f.submit "Save", class: "btn btn-primary",:data => {:disable_with => 'Please Wait...'}  %> <%= link_to 'Cancel', clients_path, class: "btn btn-default" %>
       </div>
     </div>
   </div>

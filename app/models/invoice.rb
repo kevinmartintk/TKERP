@@ -30,7 +30,7 @@ class Invoice < ActiveRecord::Base
   pg_search_scope :seek_ruc, against: [:ruc], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_invoice_number, against: [:invoice_number], using: { tsearch: { prefix: true  } }
 
-  enum status: [:to_issue, :issued, :partial_payment, :paid, :canceled]
+  enum status: [:to_issue, :issued, :partial_payment, :canceled, :paid ]
   enum payment_type: [:transference, :check]
 
   def self.search_with company, ruc, invoice_number, from_date, to_date, status

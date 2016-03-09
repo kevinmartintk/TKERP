@@ -40,14 +40,14 @@ ajax_update_contacts = ->
      invoice_id: $("#contacts-fields").data("invoice")
 
 update_status = ->
-  value = default_format $('#invoice_status option:selected').text()
+  value = default_format $('#status-invoice option:selected').text()
   action = $('#form_invoice').data("action")
   $("#status-invoice").change ->
     status_value = default_format $('#status-invoice option:selected').text()  
     if status_value == "partial-payment"
-      $("#partial-payment").removeClass("hide")
+      $('#partial-payment').removeClass('hide')
     else  
-      $("#partial-payment").addClass("hide")
+      $('#partial-payment').removeClass('hide')
   switch action 
     when "edit", "update"
       show(value)
