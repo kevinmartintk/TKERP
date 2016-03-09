@@ -20,8 +20,8 @@ class Person < ActiveRecord::Base
   delegate :client_name, to: :contact
 
   validates :first_name, :last_name, presence: true
-  validates_format_of :phone, :mobile, with: /\A(([ \)])[0-9]{1,3}([ \)]))?([\(][0-9]{1,3}[\)])?([0-9 \.\-]{1,9})\Z/, allow_blank: true
-  validates_format_of :extension, with: /\A(([ \)])[0-9]{1,3}([ \)]))?([\(][0-9]{1,3}[\)])?([0-9 \.\-]{1,9})\Z/, allow_blank: true
+  validates_format_of :phone, :mobile, with: /\A([\+][0-9]{1,3}([ \.\-])?)?([\(][0-9]{1,6}[\)])?([0-9 \.\-]{1,32})(([A-Za-z \:]{1,11})?[0-9]{1,4}?)\z/, allow_blank: true
+  validates_format_of :extension, with: /\A([\+][0-9]{1,3}([ \.\-])?)?([\(][0-9]{1,6}[\)])?([0-9 \.\-]{1,32})(([A-Za-z \:]{1,11})?[0-9]{1,4}?)\z/, allow_blank: true
 
   def name
     "#{first_name} #{last_name}"
@@ -44,11 +44,16 @@ class Person < ActiveRecord::Base
     if collaborator.nil?
       errors.add(:collaborator,"must be valid.")
       prepare_collaborator
-      false
+      return false
     else
       self.save
-      self.collaborator.save #slug
-      true
+      if self.errors.empty?
+        self.collaborator.save
+        return true
+      else
+        prepare_collaborator
+        return false
+      end
     end
   end
 
