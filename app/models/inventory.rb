@@ -11,7 +11,7 @@ class Inventory < ActiveRecord::Base
   delegate :name, to: :collaborator, prefix: true, allow_nil: true
   delegate :name, to: :team, prefix: true
 
-  enum type: [:book, :appliance, :computation, :furniture, :computer, :device]
+  enum type: [:book, :appliance, :peripheral, :furniture, :computer, :device]
 
   has_attached_file :image, styles: { medium: "x180"}
   validates_attachment_file_name :image, :matches => [/png\Z/, /jpe?g\Z/, /pdf\Z/]
