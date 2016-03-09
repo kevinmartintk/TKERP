@@ -66,7 +66,7 @@ class ContactsController < ApplicationController
     end
 
     def person_params
-      params.require(:person).permit(:id, :first_name, :last_name, :email, :phone, :extension, :mobile, :birthday, :skype, contact_attributes: [:id, :client_id, :position])
+      params.require(:person).permit(:id, :first_name, :last_name, :email, :phone, :extension, :mobile, :birthday, :position_id, :skype, contact_attributes: [:id, :client_id])
     end
 
 end

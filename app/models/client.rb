@@ -15,7 +15,7 @@ class Client < ActiveRecord::Base
   enum type: [:regular, :partner]
 
   delegate :name, :corporate_name, :address, :phone, :legal_id, :country, :country_name, to: :entity, allow_nil: true
-  delegate :type, to: :entity, prefix: true, allow_nil: true
+  delegate :type, to: :entity, prefix: true
 
   validates_associated :entity
 
