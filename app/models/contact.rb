@@ -11,7 +11,7 @@ class Contact < ActiveRecord::Base
   has_many :prospects, through: :prospect_contacts
 
   delegate :name, to: :client, prefix: true, allow_nil: true
-  delegate :name, :first_name, :last_name, :email, :phone, :mobile, :birthday, to: :person, allow_nil: true
+  delegate :name, :first_name, :last_name, :email, :phone, :mobile, :birthday, to: :person
 
   validates_associated :person, :client
 
