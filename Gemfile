@@ -1,11 +1,5 @@
 source 'https://rubygems.org'
 
-
-#tut gems calendar
-gem 'rabl', '~> 0.9.3'
-gem 'simple_form', '3.1.0.rc1'
-gem 'bootstrap-sass', '~> 3.1.1'
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 
@@ -108,6 +102,13 @@ gem 'prawnto', '~> 0.1.1'
 # Prawn::Table provides tables for the Prawn PDF toolkit
 gem 'prawn-table', '~> 0.2.1'
 
+# tut gems calendar
+gem 'rabl', '~> 0.9.3'
+
+gem 'simple_form', '3.1.0.rc1'
+
+gem 'bootstrap-sass', '~> 3.1.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '3.5.1'
@@ -115,17 +116,21 @@ group :development, :test do
   gem 'web-console', '2.0.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '1.2.0'
-  gem 'rails-erd'
-  gem 'awesome_print'
-  gem 'quiet_assets'
 end
 
 group :development do
-  # gem 'better_errors', '2.1.1'
+  gem 'better_errors', '2.1.1'
   gem 'binding_of_caller', '0.7.2'
   gem 'bullet', '4.14.4'
   gem 'rails_best_practices', '1.15.6'
+  gem 'rdoc'
+  gem "awesome_print"
+  gem 'rubocop', require: false
+  #Generate Entity-Relationship Diagrams for Rails applications
+  gem 'rails-erd'
+  #Ruby/Graphviz provides an interface to layout and generate images of directed graphs in a variety of formats (PostScript, PNG, etc.) using GraphViz.
+  gem 'ruby-graphviz'
+  gem 'quiet_assets'
 end
 
-
-# push test
+ruby '2.1.1'
