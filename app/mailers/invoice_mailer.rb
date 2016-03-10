@@ -5,11 +5,10 @@ class InvoiceMailer < ApplicationMailer
 	  @contact = contact
 	  @invoice = invoice
     @message = message
-
     attachments['invoice.pdf'] = {
     	content: open(invoice.pdf.path).read
     }
-	  mail(to: @contact.email, subject: "Invoice")
+	  mail(to: @contact.email, subject: "Invoice" + "N° "+"#{@invoice.invoice_number}")
 	end
 
 end
