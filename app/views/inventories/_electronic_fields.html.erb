@@ -24,13 +24,13 @@
   <div class="form-group col-sm-6 book-hide appliance-hide computation-hide furniture-hide device-hide computer-show select-a-type-hide">
     <%= form.label :hdd, "HDD", class: "col-sm-4 text-left" %>
     <div class="col-sm-6">
-      <%= form.text_field :hdd, class: "form-control validate[integer]" %>
+      <%= form.text_field :hdd, class: "form-control validate[custom[integer]]" %>
     </div>
   </div>
   <div class="form-group col-sm-6 book-hide appliance-hide computation-hide furniture-hide device-show computer-hide select-a-type-hide">
     <%= form.label :storage, "Capacity", class: "col-sm-4 text-left" %>
     <div class="col-sm-6">
-      <%= form.text_field :storage, class: "form-control validate[integer]" %>
+      <%= form.text_field :storage, class: "form-control validate[custom[integer]]" %>
     </div>
   </div>
 </div>
