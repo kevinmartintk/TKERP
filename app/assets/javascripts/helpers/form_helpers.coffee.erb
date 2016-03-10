@@ -4,6 +4,7 @@
 
 @disable = (value) ->
    $("." + value + "-disable").attr('readonly', true);
+   $("." + value + "-disable").attr("disabled", disable);
 
 @hide = (value) ->
   $("." + value + "-hide").addClass("hide")
