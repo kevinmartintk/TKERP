@@ -20,7 +20,7 @@
     def send_mail
       contact = Contact.find(params[:contact])
       message = params[:message]
-      InvoiceMailer.send_invoice(contact,@invoice,message).deliver_now
+      InvoiceMailer.send_invoice(contact, @invoice, message).deliver_now
     end
 
     def show
