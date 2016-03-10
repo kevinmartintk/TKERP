@@ -9,7 +9,30 @@ init = ->
   $('#invoice_status').change update_status
   invoice_us()
   show_contacts()
+  modify_mailer()
   show_icons()
+
+
+modify_mailer = ->
+  $('a[id^="tag"]').on 'click', ->
+    id = $(this).data("invoiceId")
+    $('#' + 'send_invoice_modal_' + id ).on 'show.bs.modal', ->
+      edit_text( $('#' + 'contact_' + id).text(), id )
+      $("#contact").change ->
+        edit_text( $('#' + 'contact_' + id + 'option:selected').text(), id )
+
+edit_text  =  (contact_value, id) ->
+  text_value = $('#' + 'message_' + id).val()
+  words = text_value.split(' ')
+  n = 0
+  while n < words.length
+    if words[n] = ","
+      words[n] =  contact_value
+      break
+    else
+      n++
+  text_edited = words.join(" ")
+  $('#' + 'message_' + id).text(text_edited)
 
 show_contacts = ->
   action = $('#form_invoice').data("action")
