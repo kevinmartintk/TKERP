@@ -44,11 +44,16 @@ class Person < ActiveRecord::Base
     if collaborator.nil?
       errors.add(:collaborator,"must be valid.")
       prepare_collaborator
-      false
+      return false
     else
       self.save
-      self.collaborator.save #slug
-      true
+      if self.errors.empty?
+        self.collaborator.save
+        return true
+      else
+        prepare_collaborator
+        return false
+      end
     end
   end
 

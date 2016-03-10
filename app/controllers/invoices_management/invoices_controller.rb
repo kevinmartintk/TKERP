@@ -13,14 +13,14 @@
 
     def index
       @invoices = @headquarter.invoices.search_with(params[:client], params[:legal_id], params[:invoice_number], params[:from_date], params[:to_date], params[:status])
-      @total_invoices_soles = "#{Currency.currency_symbol('Sol')} #{Invoice.total_soles(@invoices)}"
-      @total_invoices_dollar = "#{Currency.currency_symbol('Dolar')} #{Invoice.total_dolar(@invoices)}"
+      @total_invoices_soles = Invoice.total_soles(@invoices)
+      @total_invoices_dollar = Invoice.total_dolar(@invoices)
     end
 
     def send_mail
       contact = Contact.find(params[:contact])
       message = params[:message]
-      InvoiceMailer.send_invoice(contact,@invoice,message).deliver_now
+      InvoiceMailer.send_invoice(contact, @invoice, message).deliver_now
     end
 
     def show
@@ -43,6 +43,7 @@
 
     def edit
       add_breadcrumb "Editing Invoice", :edit_invoices_management_country_invoice_path
+      @statuses = [Invoice.statuses.keys,@invoice.status]
     end
 
     def create
@@ -79,7 +80,6 @@
           attachment = @invoice.generate_pdf
           @invoice.pdf = @invoice.generate_pdf_file(attachment)
           @invoice.save!
-
           redirect_to invoices_management_country_invoices_path, notice: 'Invoice was successfully updated.'
         else
           render :edit
@@ -114,7 +114,7 @@
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def invoice_params
-        params.require(:invoice).permit(:client_id, :description, :currency_id, :amount, :status, :has_drawdown, :document, :purchase_order, :extra, :contact, :reason, :message, :invoice_number, :payment_type, :expiration_date, :billing_date, invoice_contacts_attributes: [:contact_id, :_destroy])
+        params.require(:invoice).permit(:client_id, :description, :currency_id, :amount, :status, :has_drawdown, :partial_payment, :document, :purchase_order, :extra, :contact, :reason, :message, :invoice_number, :payment_type, :expiration_date, :billing_date, invoice_contacts_attributes: [:contact_id, :_destroy])
       end
 
   end

@@ -17,11 +17,11 @@
     <tbody>
       <% @inventories.each do |inventory| %>
         <tr>
-          <td><%= inventory.code_inventory %></td>
+          <td><%= inventory.code %></td>
           <td><%= inventory.name %></td>
           <td><%= inventory.collaborator_name %></td>
           <td><%= inventory.brand %></td>
-          <td><%= inventory.type %></td>
+          <td><%= inventory.type.to_s.humanize %></td>
           <td><%= inventory.description %></td>
           <td><%= inventory.team_name %></td>
           <td><%= inventory.register_date %></td>

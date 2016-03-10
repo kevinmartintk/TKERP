@@ -9,23 +9,19 @@ class Contact < ActiveRecord::Base
   has_many :prospect_contacts
   has_many :invoices, through: :invoice_contacts
   has_many :prospects, through: :prospect_contacts
-  has_many :prospects
-
 
   delegate :name, to: :client, prefix: true, allow_nil: true
-  delegate :name, :first_name, :last_name, :email, :phone, :mobile, :birthday, to: :person
+  delegate :name, :first_name, :last_name, :email, :phone, :mobile, :birthday, to: :person, allow_nil: true
 
   validates_associated :person, :client
 
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :finders]
 
-
   pg_search_scope :seek_first_name, associated_against: {person: [:first_name]}, using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_last_name, associated_against: {person: [:last_name]}, using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_email, associated_against: {person: [:email]}, using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_client_name,  associated_against: {client: [:name]},using: {tsearch: {prefix: true}}
-
 
   def self.search_with first_name, last_name, email, company
     search_first_name(first_name).

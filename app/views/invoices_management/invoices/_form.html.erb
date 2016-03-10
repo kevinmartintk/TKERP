@@ -60,7 +60,7 @@
     <div class="form-group col-sm-6">
       <%= f.label :currency_id, class: "col-sm-4 text-left" %>
       <div class="col-sm-6 text-left" >
-        <%= f.collection_select :currency_id, Currency.all, :id, :name, {prompt: "- Select type -"}, class: "form-control" %>
+        <%= f.collection_select :currency_id, Currency.all, :id, :name, {prompt: "- Select type -"}, class: "form-control validate[required] canceled-disable paid-disable" %>
       </div>
     </div>
 
@@ -75,17 +75,17 @@
   <div class="form-group col-sm-12">
     <div class="form-group col-sm-6 ">
       <%= f.label :status, class: "col-sm-4 text-left" %>
-      <div class="col-sm-6 text-left">
-        <%= f.select :status, class_enum_for_select("Invoice","status"),{prompt: "- Select type -"}, class: "form-control" %>
+      <div id="status-options" class="col-sm-6 text-left" data-status = "<%= @statuses %>">
+        <%= f.select :status, class_enum_for_select("Invoice","status"),{prompt: "- Select type -"}, class: "form-control", id: "status-invoice" %>
       </div>
     </div>
 
-      <div class="form-group col-sm-6 peru-show united-states-hide">
-        <label class="col-sm-4 text-left">
-          <%= f.check_box :has_drawdown, class: "to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
-          Seal Drawdown
-        </label>
+    <div class="form-group col-sm-6 hide issued-hide paid-hide canceled-hide partial-payment-show" id="partial-payment">
+      <%= f.label :partial_payment, class: "col-sm-4 text-left" %>
+      <div class="col-sm-6 text-left">
+        <%= f.text_field :partial_payment, class: "form-control" %>
       </div>
+    </div>
   </div>
 
   <div class="form-group col-sm-12 peru-show united-states-hide">
@@ -94,6 +94,13 @@
       <div class="col-sm-6">
         <%= f.text_field :extra, class: "form-control" %>
       </div>
+    </div>
+    
+    <div class="form-group col-sm-6 peru-show united-states-hide">
+      <label class="col-sm-4 text-left">
+        <%= f.check_box :has_drawdown, class: "to-issue-show issued-disable paid-disable canceled-disable partial-payment-disable" %>
+        Seal Drawdown
+      </label>
     </div>
   </div>
 
@@ -149,17 +156,18 @@
       </div>
     </div>
   </div>
-
+   
   <div class="form-group col-sm-12 peru-show united-states-hide to-issue-hide issued-hide paid-hide partial-payment-hide canceled-show <%= "hide" if params[:action] == "new" %>" id="cancel_reason">
     <div class="form-group col-sm-6 to-issue-show issued-show paid-show partial-payment-show canceled-hide <%= "hide" if params[:action] == "new" %> ">
       <%= f.label :payment_type, class: "col-sm-4 text-left" %>
       <div class="col-sm-6 text-left">
+        <%= f.select :payment_type, class_enum_for_select("Invoice","payment_type"),{prompt: "- Select type -"}, class: "form-control"%>
       </div>
     </div>
-    <div class="form-group col-sm-6  <%= "hide" if params[:action] == "new" %>">
+    <div class="form-group col-sm-6  <%= "hide" if params[:action] == "new" %> issued-hide paid-hide partial-payment-hide canceled-show">
         <%= f.label :reason, class: "col-sm-4 text-left" %>
         <div class="col-sm-6">
-          <%= f.text_area :reason, class: "form-control custom-textarea validate[required]" %>
+          <%= f.text_area :reason, class: "form-control custom-textarea validate[required] " %>
         </div>
       </div>
   </div>

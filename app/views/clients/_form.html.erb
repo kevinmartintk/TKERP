@@ -1,5 +1,6 @@
 <%= nested_form_for @entity, url: path, method: method, :html => { class: "form-horizontal validate" } do |f| %>
   <%= render "helpers/flash_errors", object: @entity %>
+  <%= render "helpers/flash_errors", object: @entity.client %>
 
   <div class="form-group col-sm-12">
     <%= f.label :name, class: "col-sm-2 text-left" %>
@@ -50,11 +51,18 @@
     </div>
   </div>
 
+
   <%= f.fields_for :client do |c| %>
     <div class="form-group col-sm-12">
+      <%= c.label :type, class: "col-sm-2 text-left" %>
+      <div class="col-sm-6">
+        <%= render "helpers/radio_buttons", model_name: "Client", enum: "type", form: c %>
+      </div>
+    </div>
+    <div class="form-group col-sm-12 regular-show partner-hide">
       <%= c.label :partner_id, class: "col-sm-2 text-left", id: "partner_id_label" %>
       <div class="col-sm-6">
-        <%= c.collection_select :partner_id, Client.all_except(@client), :id, :name, {prompt: "- Choose a partner -"}, class: "form-control" %>
+        <%= c.collection_select :partner_id, Client.partner, :id, :name, {prompt: "- Choose a partner -"}, class: "form-control" %>
       </div>
     </div>
   <% end %>
@@ -62,7 +70,7 @@
   <div class="form-group">
     <div class="col-md-8 col-sm-8 col-xs-12">
       <div class="col-sm-12 text-right">
-        <%= f.submit "Save", class: "btn btn-primary" %> <%= link_to 'Cancel', clients_path, class: "btn btn-default" %>
+        <%= f.submit "Save", class: "btn btn-primary",:data => {:disable_with => 'Please Wait...'}  %> <%= link_to 'Cancel', clients_path, class: "btn btn-default" %>
       </div>
     </div>
   </div>

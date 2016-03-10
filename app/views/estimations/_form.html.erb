@@ -24,7 +24,7 @@
 
     array.forEach(function(entry){
       var calculate_days = function () {
-        var hours = $(this).val();
+        var hours = $("#estimation_" + entry + "_hours").val();
         var days =  $("#estimation_" + entry + "_days");
         var price_per_hour = $("#estimation_" + entry + "_hours_per_day").val();
         var number_days = hours/price_per_hour;
@@ -36,6 +36,7 @@
       }
       calculate_days
       $("#estimation_" + entry + "_hours").bind("keyup change", calculate_days);
+      $("#estimation_" + entry + "_hours_per_day").bind("keyup change", calculate_days);
 
       var calculate_hours = function () {
         var days = $(this).val();

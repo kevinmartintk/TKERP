@@ -4,7 +4,7 @@ class ClientsController < ApplicationController
   before_action :set_client_and_entity, only: [:show, :edit, :update]
   before_action :set_client, only: [:destroy]
 
-  respond_to :html,:json
+  respond_to :html
 
   load_and_authorize_resource
 
@@ -19,7 +19,7 @@ class ClientsController < ApplicationController
   def new
     add_breadcrumb "New Client", :new_client_path
     @entity = Entity.new
-    @entity.build_client
+    @entity.prepare_client
   end
 
   def edit
@@ -27,31 +27,23 @@ class ClientsController < ApplicationController
   end
 
   def create
-    @entity = Entity.create(entity_params)
-    @client = @entity.build_client(client_params)
+    @entity = Entity.new(entity_params)
 
-    respond_to do |format|
-      if @entity.save
-        format.html { redirect_to clients_path, notice: 'Client was successfully created.' }
-        format.json { render :show, status: :created, location: @entity }
-      else
-        format.html { render :new }
-        format.json { render json: @entity.errors, status: :unprocessable_entity }
-      end
+    if @entity.save_client
+      redirect_to clients_path, notice: 'Client was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
-    @entity.update_attributes(entity_params)
-    @client.assign_attributes(client_params)
+    @entity.assign_attributes(entity_params)
 
     respond_to do |format|
-      if @client.update(client_params)
+      if @entity.save_client
         format.html { redirect_to clients_path, notice: 'Client was successfully updated.' }
-        format.json { render :show, status: :ok, location: @client }
       else
         format.html { render :edit }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,11 +68,7 @@ class ClientsController < ApplicationController
     end
 
     def entity_params
-      params.require(:entity).permit(:name, :corporate_name, :address, :phone, :legal_id, :country_id, :type)
-    end
-
-    def client_params
-      params[:entity].require(:client_attributes).permit(:partner_id)
+      params.require(:entity).permit(:id, :name, :corporate_name, :address, :phone, :legal_id, :country_id, :type, client_attributes: [:id, :partner_id, :type])
     end
 
 end

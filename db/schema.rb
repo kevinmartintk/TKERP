@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160212162858) do
+ActiveRecord::Schema.define(version: 20160226144050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,14 +156,13 @@ ActiveRecord::Schema.define(version: 20160212162858) do
   end
 
   create_table "collaborator_entities", force: :cascade do |t|
-    t.integer  "collaborator_id",             null: false
-    t.integer  "entity_id",                   null: false
+    t.integer  "collaborator_id"
+    t.integer  "entity_id"
     t.integer  "type",            default: 0, null: false
     t.string   "account_number"
     t.datetime "deleted_at"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.index ["collaborator_id", "entity_id"], :name => "index_collaborator_entities_on_collaborator_id_and_entity_id", :unique => true
     t.index ["collaborator_id"], :name => "fk__collaborator_entities_collaborator_id"
     t.index ["deleted_at"], :name => "index_collaborator_entities_on_deleted_at"
     t.index ["entity_id"], :name => "fk__collaborator_entities_entity_id"
@@ -172,8 +171,8 @@ ActiveRecord::Schema.define(version: 20160212162858) do
   end
 
   create_table "contacts", force: :cascade do |t|
-    t.integer  "person_id",  null: false
-    t.integer  "client_id",  null: false
+    t.integer  "person_id"
+    t.integer  "client_id"
     t.string   "slug"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
@@ -248,6 +247,7 @@ ActiveRecord::Schema.define(version: 20160212162858) do
     t.datetime "deleted_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "status"
     t.index ["deleted_at"], :name => "index_estimations_on_deleted_at"
     t.index ["prospect_id"], :name => "fk__estimations_prospect_id"
     t.index ["slug"], :name => "index_estimations_on_slug", :unique => true
@@ -351,6 +351,7 @@ ActiveRecord::Schema.define(version: 20160212162858) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.integer  "partial_payment"
     t.index ["client_id"], :name => "fk__invoices_client_id"
     t.index ["currency_id"], :name => "fk__invoices_currency_id"
     t.index ["deleted_at"], :name => "index_invoices_on_deleted_at"
@@ -458,12 +459,13 @@ ActiveRecord::Schema.define(version: 20160212162858) do
   end
 
   create_table "relationships", force: :cascade do |t|
-    t.integer  "collaborator_id",             null: false
-    t.integer  "person_id",                   null: false
-    t.integer  "type",            default: 0, null: false
+    t.integer  "collaborator_id"
+    t.integer  "person_id"
+    t.integer  "type",            default: 0,     null: false
+    t.boolean  "emergency",       default: false
     t.datetime "deleted_at"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.index ["collaborator_id"], :name => "fk__relationships_collaborator_id"
     t.index ["deleted_at"], :name => "index_relationships_on_deleted_at"
     t.index ["person_id"], :name => "fk__relationships_person_id"

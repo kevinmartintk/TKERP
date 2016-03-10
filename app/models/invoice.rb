@@ -30,8 +30,8 @@ class Invoice < ActiveRecord::Base
   pg_search_scope :seek_ruc, against: [:ruc], using: { tsearch: { prefix: true  } }
   pg_search_scope :seek_invoice_number, against: [:invoice_number], using: { tsearch: { prefix: true  } }
 
-  enum status: [:to_issue, :issued, :paid, :canceled, :partial_payment]
-
+  enum status: [:to_issue, :issued, :partial_payment, :canceled, :paid ]
+  enum payment_type: [:transference, :check]
 
   def self.search_with company, ruc, invoice_number, from_date, to_date, status
     search_invoice_number(invoice_number).
@@ -91,16 +91,16 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.total_amount invoices, currency_id
-    amount = invoices.select{|invoice| invoice.currency == currency_id }.sum(&:amount)
+    amount = invoices.select{|invoice| invoice.currency_id == currency_id }.sum(&:amount)
     '%.2f' % amount
   end
 
   def self.total_soles invoices
-    self.total_amount(invoices, Currency.currency_symbol('Sol'))
+    self.total_amount(invoices, Currency.currency_id('Sol'))
   end
 
   def self.total_dolar invoices
-    self.total_amount(invoices, Currency.currency_symbol('Dolar'))
+    self.total_amount(invoices, Currency.currency_id('Dollar'))
   end
 
   def amount_decimal

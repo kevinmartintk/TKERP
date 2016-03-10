@@ -27,6 +27,7 @@
 //= require fullcalendar
 //= require bootstrap-datetimepicker
 //= require events
+//= require mask_plugin
 //= require pickers
 //= require turbolinks
 //= require_tree ./helpers
