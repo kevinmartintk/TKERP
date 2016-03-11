@@ -164,7 +164,7 @@
         <%= f.select :payment_type, class_enum_for_select("Invoice","payment_type"),{prompt: "- Select type -"}, class: "form-control"%>
       </div>
     </div>
-    <div class="form-group col-sm-6  <%= "hide" if params[:action] == "new" %> issued-hide paid-hide partial-payment-hide canceled-show">
+    <div class="form-group col-sm-6  <%= "hide" if params[:action] == "new" %> issued-hide paid-hide partial-payment-hide canceled-show" id="invoice_reason">
         <%= f.label :reason, class: "col-sm-4 text-left" %>
         <div class="col-sm-6">
           <%= f.text_area :reason, class: "form-control custom-textarea validate[required] " %>
