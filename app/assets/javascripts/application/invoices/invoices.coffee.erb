@@ -16,23 +16,21 @@ init = ->
 modify_mailer = ->
   $('a[id^="tag"]').on 'click', ->
     id = $(this).data("invoiceId")
+    invoice_number = $(this).data("invoiceNumber")
+    body_base = $(this).data("bodyMail")
+    title_base = $(this).data("titleMail")
+    greats_base = $(this).data("greatsMail")
     $('#' + 'send_invoice_modal_' + id ).on 'show.bs.modal', ->
-      edit_text( $('#' + 'contact_' + id).text(), id )
-      $("#contact").change ->
-        edit_text( $('#' + 'contact_' + id + 'option:selected').text(), id )
+      if $('#' + 'contact_' + id).val() == null
+        $('#' + 'submit_mail_' + id).prop('disabled', true);
+      else
+        edit_text( $('#' + 'contact_' + id + ' option:selected').text(), id, body_base, title_base,greats_base,invoice_number )
+        $('#' + 'contact_' + id).change ->
+          edit_text( $('#' + 'contact_' + id + ' option:selected').text(), id, body_base, title_base,greats_base,invoice_number )
 
-edit_text  =  (contact_value, id) ->
-  text_value = $('#' + 'message_' + id).val()
-  words = text_value.split(' ')
-  n = 0
-  while n < words.length
-    if words[n] = ","
-      words[n] =  contact_value
-      break
-    else
-      n++
-  text_edited = words.join(" ")
-  $('#' + 'message_' + id).text(text_edited)
+edit_text  =  (contact_value, id, body, title, greats, invoice) ->
+  text = title + contact_value + "\n\n " + body + invoice + "\n\n" +  greats
+  $('#' + 'message_' + id).text(text)
 
 show_contacts = ->
   action = $('#form_invoice').data("action")

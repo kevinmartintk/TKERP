@@ -1,9 +1,13 @@
 module InvoiceHelper
-  def content_mailer_to contact=nil
-"Estimado #{contact.name if contact} , 
+  def body_mailer_to contact=nil
+	"Te enviamos a continuación la factura generada N°"
+  end
 
-Te enviamos a continuación la factura N° 12345 generada.
+  def title_mailer_to
+  	" Estimado "
+  end
 
-Saludos,"
+  def finish
+  	"Saludos."
   end
 end
