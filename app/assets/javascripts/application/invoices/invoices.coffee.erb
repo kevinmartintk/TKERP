@@ -9,7 +9,28 @@ init = ->
   $('#invoice_status').change update_status
   invoice_us()
   show_contacts()
+  modify_mailer()
   show_icons()
+
+
+modify_mailer = ->
+  $('a[id^="tag"]').on 'click', ->
+    id = $(this).data("invoiceId")
+    invoice_number = $(this).data("invoiceNumber")
+    body_base = $(this).data("bodyMail")
+    title_base = $(this).data("titleMail")
+    greats_base = $(this).data("greatsMail")
+    $('#' + 'send_invoice_modal_' + id ).on 'show.bs.modal', ->
+      if $('#' + 'contact_' + id).val() == null
+        $('#' + 'submit_mail_' + id).prop('disabled', true);
+      else
+        edit_text( $('#' + 'contact_' + id + ' option:selected').text(), id, body_base, title_base,greats_base,invoice_number )
+        $('#' + 'contact_' + id).change ->
+          edit_text( $('#' + 'contact_' + id + ' option:selected').text(), id, body_base, title_base,greats_base,invoice_number )
+
+edit_text  =  (contact_value, id, body, title, greats, invoice) ->
+  text = title + contact_value + "\n\n " + body + invoice + "\n\n" +  greats
+  $('#' + 'message_' + id).text(text)
 
 show_contacts = ->
   action = $('#form_invoice').data("action")
