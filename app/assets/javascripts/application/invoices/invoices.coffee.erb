@@ -65,10 +65,16 @@ update_status = ->
   action = $('#form_invoice').data("action")
   $("#status-invoice").change ->
     status_value = default_format $('#status-invoice option:selected').text()  
+    partial_payment = $('#partial-payment')
     if status_value == "partial-payment"
-      $('#partial-payment').removeClass('hide')
+      partial_payment.removeClass('hide')
     else  
-      $('#partial-payment').removeClass('hide')
+      partial_payment.addClass('hide')
+    invoice_reason = $("#invoice_reason")
+    if status_value == "canceled"
+      invoice_reason.removeClass('hide')
+    else
+      invoice_reason.addClass('hide')
   switch action 
     when "edit", "update"
       show(value)
